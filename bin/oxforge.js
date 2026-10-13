@@ -36,7 +36,7 @@ async function init() {
   const present = await Promise.all(configNames.map((name) => exists(path.resolve(name))));
   const conflicts = configNames.filter((_, index) => present[index]);
 
-  if (conflicts.length) {
+  if (conflicts.length > 0) {
     throw new Error(
       `Existing config: ${conflicts.join(", ")}. Follow the README migration steps before initializing.`,
     );

@@ -26,7 +26,7 @@ const excluded = new Set([
 ]);
 
 const configNames =
-  /^(?:\.oxlint.*\.jsonc?|\.oxfmt.*\.jsonc?|oxlint\.config\.[cm]?ts|oxfmt\.config\.[cm]?ts|eslint\.config\.[cm]?[jt]s|\.prettierrc(?:\.json)?|prettier\.config\.[cm]?[jt]s)$/;
+  /^(?:\.oxlint.*\.jsonc?|\.oxfmt.*\.jsonc?|oxlint\.config\.[cm]?ts|oxfmt\.config\.[cm]?ts|eslint\.config\.[cm]?[jt]s|\.prettierrc(?:\.json)?|prettier\.config\.[cm]?[jt]s)$/u;
 
 async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -72,42 +72,38 @@ async function auditProject(entry) {
 
   const files = (await walk(directory)).toSorted();
 
-  const configs = await Promise.all(
-    files.map(async (file) => {
-      const content = await readFile(file, "utf8");
+  const configs = await Promise.all(files.map((file) => auditConfig(file)));
 
-      const kind = file.includes("oxlint")
-        ? "oxlint"
-        : file.includes("oxfmt")
-          ? "oxfmt"
-          : file.includes("eslint")
-            ? "eslint"
-            : "prettier";
+  return [{ name: entry.name, owned: /github\.com[:/]aranlucas\//u.test(remote), configs }];
+}
 
-      const row = { path: path.relative(root, file), kind };
+async function auditConfig(file) {
+  const content = await readFile(file, "utf8");
 
-      if (
-        file.endsWith(".json") ||
-        file.endsWith(".jsonc") ||
-        path.basename(file) === ".prettierrc"
-      ) {
-        const errors = [];
-        row.config = parse(content, errors, { allowTrailingComma: true });
+  const kind = file.includes("oxlint")
+    ? "oxlint"
+    : file.includes("oxfmt")
+      ? "oxfmt"
+      : file.includes("eslint")
+        ? "eslint"
+        : "prettier";
 
-        if (errors.length) {
-          throw new Error(
-            `${row.path}: ${errors.map((error) => printParseErrorCode(error.error)).join(", ")}`,
-          );
-        }
-      } else {
-        row.note = "Executable config inventoried; review source without executing it.";
-      }
+  const row = { path: path.relative(root, file), kind };
 
-      return row;
-    }),
-  );
+  if (file.endsWith(".json") || file.endsWith(".jsonc") || path.basename(file) === ".prettierrc") {
+    const errors = [];
+    row.config = parse(content, errors, { allowTrailingComma: true });
 
-  return [{ name: entry.name, owned: /github\.com[:/]aranlucas\//.test(remote), configs }];
+    if (errors.length > 0) {
+      throw new Error(
+        `${row.path}: ${errors.map((error) => printParseErrorCode(error.error)).join(", ")}`,
+      );
+    }
+  } else {
+    row.note = "Executable config inventoried; review source without executing it.";
+  }
+
+  return row;
 }
 
 const projectEntries = await readdir(root, { withFileTypes: true });

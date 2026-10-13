@@ -1,6 +1,6 @@
 {
   "name": "@aranlucas/oxforge",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "Lucas's opinionated Oxlint and Oxfmt policy. Strict types, readable code, no slop.",
   "keywords": [
     "anti-slop",

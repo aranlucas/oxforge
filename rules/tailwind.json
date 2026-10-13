@@ -2,7 +2,12 @@
   "tailwindcss/consistent-variant-order": "error",
   "tailwindcss/enforce-canonical": "error",
   "tailwindcss/enforce-consistent-important-position": "error",
-  "tailwindcss/enforce-consistent-line-wrapping": "off",
+  "tailwindcss/enforce-consistent-line-wrapping": [
+    "error",
+    {
+      "printWidth": 2000
+    }
+  ],
   "tailwindcss/enforce-consistent-variable-syntax": "error",
   "tailwindcss/enforce-logical": "error",
   "tailwindcss/enforce-negative-arbitrary-values": "error",

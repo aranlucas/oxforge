@@ -1,10 +1,7 @@
 {
   "rules": {
-    "eslint/max-lines": ["error", { "max": 300, "skipBlankLines": true, "skipComments": true }],
-    "eslint/max-lines-per-function": [
-      "error",
-      { "max": 120, "skipBlankLines": true, "skipComments": true }
-    ],
-    "import/max-dependencies": ["error", { "max": 16 }]
+    "eslint/max-lines": "error",
+    "eslint/max-lines-per-function": "error",
+    "import/max-dependencies": "error"
   }
 }

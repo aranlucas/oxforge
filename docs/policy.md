@@ -2,22 +2,23 @@
 
 Every explicit Oxlint rule from the owned projects is accounted for here. `docs/projects.json` retains the original options, ignores, and overrides. Shared presets select the strongest observed severity and promote warnings to errors; the deliberate resolutions below take precedence. Category defaults add rules beyond this explicit list.
 
-## Resolved disagreements
+## Strict consolidation in 0.2.0
 
-- Equality uses `===`, with `== null` allowed for a null/undefined boundary check (ai-shopping-mcp).
-- Type checking is on by default; floating promises must be handled even when prefixed with `void`.
-- Runtime `typeof` is forbidden; `allowTypeGuards: true` enables the existing type-guard exception.
-- Assertions require anti-slop safety comments. `no-unsafe-type-assertion` stays off because most projects disable it and it rejects documented boundary assertions.
-- Named object and tuple types are enforced with `oxforge/no-inline-types`, extracted from both system-design projects.
-- Filenames use `unicorn/filename-case` with its standard options. SDK-mandated `_meta`, `_unsafeUnwrap`, and `_unsafeUnwrapErr` are allowed.
-- Built-in errors need messages, disable comments name specific rules, key/value pairs use `Object.fromEntries`, backslash-heavy strings use `String.raw`, and arrays use `toReversed` rather than mutating `reverse`.
-- Unused variables prefixed with `_` are allowed, matching the MCP projects.
-- React uses the automatic JSX runtime and allows React Compiler context values. React checks and accessibility are opt-in together.
-- Pedantic checks are enabled by default; explicit rule settings take precedence over the category. Size limits remain opt-in because existing projects explicitly disagree on them.
-- `@ts-expect-error` needs a description, following janella-cookbook instructions. `@ts-ignore` and `@ts-nocheck` are forbidden.
-- Tailwind and shadcn default to strict shared policies. App-specific class allowlists, UI imports, generated paths, SVG exceptions, and test exceptions belong in the consuming config.
-- Native `oxc/no-map-spread` is disabled in favor of the existing anti-slop array rules.
-- Formatting defaults to 100 columns, semicolons, double quotes, and two spaces. 80-column projects, Vienna's 120-column/single-quote/no-semicolon choice, and `quoteProps: preserve` remain explicit overrides. Import sorting is opt-in because only Raleigh enables it.
+The portfolio rollout preserves the strongest existing rule settings rather than weakening a repository during migration. [Rule provenance](stricter-rules.json) lists the existing projects that supply stronger category-enabled rules.
+
+- Equality always uses strict operators, including null checks.
+- Files are limited to 300 lines, functions to 50 lines, and modules to 10 dependencies, including comments and blank lines. These are the native defaults already enabled by the website and Raleigh configurations. The size-limits preset remains an alias for the same defaults.
+- Unicode regular expressions, explicit length checks, arrow callbacks for array methods, number coercion, top-level await, positive conditions, separate comments, and sorted variable declarations are enforced.
+- Unsafe assertions, confusing void expressions, deprecated APIs, unnecessary type parameters, strict boolean expressions, and strict void returns are errors. The readonly-parameter policy comes from Raleigh, including its ReactNode, KeyboardEvent, and Promise exemptions and inferred-parameter handling.
+- All TypeScript suppression comments are forbidden except ts-check. Unused-variable and dangling-underscore exemptions no longer weaken the native defaults.
+- React accessibility, constructed context values, effect dependencies, target-blank protection, and unsafe lifecycle checks are errors. Custom Image components receive alt-text checks without excluding the native element defaults.
+- The Next.js preset keeps the component-export rule enabled while recognizing the framework's documented metadata and route-segment exports. Other mixed exports remain errors.
+- The Vitest preset requires typed mocks and unconditional tests.
+- The shadcn preset includes the existing native-element restrictions from set-and-signal, with messages referring to the consuming project's UI library. Implementation files must define native elements; their scoped implementation configuration remains local.
+- The MCP preset owns the server-import restrictions from ai-shopping-mcp, including the base restriction against deprecated react-test-renderer.
+- Tailwind line wrapping is enforced with the observed 2000-column class-list limit. Stylesheet paths, custom components, SDK globals, and generated-file paths remain project configuration.
+- All 18 anti-slop rules and module-level named types remain enabled. Assertions still require safety comments; a comment does not bypass the native unsafe-assertion rule.
+- Formatting defaults remain 100 columns, semicolons, double quotes, and two spaces. Explicit repository format choices can be retained with the static formatter export.
 
 ## Coverage
 

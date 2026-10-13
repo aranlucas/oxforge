@@ -95,10 +95,13 @@ test("consumer overrides win while plugin and ignore arrays stay additive", () =
 
 test("configs do not share mutable nested rule options", () => {
   const first = oxforge();
-  first.rules["eslint/eqeqeq"][2].null = "always";
+  first.rules["eslint/no-restricted-imports"][1].paths[0].name = "changed";
   first.ignorePatterns.push("everything/**");
   const second = oxforge();
-  assert.equal(second.rules["eslint/eqeqeq"][2].null, "ignore");
+  assert.equal(
+    second.rules["eslint/no-restricted-imports"][1].paths[0].name,
+    "react-test-renderer",
+  );
   assert.equal(second.ignorePatterns.includes("everything/**"), false);
 });
 
@@ -238,4 +241,31 @@ test("initializer rejects unknown options before writing", async (t) => {
   const result = run(path.join(root, "bin/oxforge.js"), ["init", "--typo"], directory);
   assert.equal(result.status, 1);
   await assert.rejects(readFile(path.join(directory, ".oxlintrc.json")), { code: "ENOENT" });
+});
+
+test("consolidated defaults reject null equality and unflagged regular expressions", async (t) => {
+  const result = await lint(
+    t,
+    oxforge({ typeAware: false }),
+    "export const missing = (value: string | null) => value == null;\nexport const pattern = /hello/;\n",
+  );
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /eqeqeq/);
+  assert.match(result.stdout, /require-unicode-regexp/);
+});
+
+test("Next metadata exports pass while unrelated mixed exports still fail", async (t) => {
+  const config = oxforge({ typeAware: false, nextjs: true });
+  const page =
+    'export const metadata = { title: "Home" };\n\nexport default function Page() { return <main>Home</main>; }\n';
+  const valid = await lint(t, config, page, "page.tsx");
+  assert.equal(valid.status, 0, valid.stdout + valid.stderr);
+  const invalid = await lint(
+    t,
+    config,
+    page + 'export const helper = () => "value";\n',
+    "page.tsx",
+  );
+  assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
+  assert.match(invalid.stdout, /only-export-components/);
 });

@@ -79,14 +79,14 @@ try {
   const invalid = pnpm(["exec", "oxlint", "invalid.ts"], directory);
 
   assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
-  assert.match(invalid.stdout + invalid.stderr, /no-chained-type-assertions/);
+  assert.match(invalid.stdout + invalid.stderr, /no-chained-type-assertions/u);
 
   await writeFile(path.join(directory, "invalid.ts"), "Promise.resolve(1);\n");
 
   const floating = pnpm(["exec", "oxlint", "invalid.ts"], directory);
 
   assert.equal(floating.status, 1, floating.stdout + floating.stderr);
-  assert.match(floating.stdout + floating.stderr, /no-floating-promises/);
+  assert.match(floating.stdout + floating.stderr, /no-floating-promises/u);
 
   await writeFile(
     path.join(directory, "invalid.ts"),
@@ -96,7 +96,7 @@ try {
   const inline = pnpm(["exec", "oxlint", "invalid.ts"], directory);
 
   assert.equal(inline.status, 1, inline.stdout + inline.stderr);
-  assert.match(inline.stdout + inline.stderr, /no-inline-types/);
+  assert.match(inline.stdout + inline.stderr, /no-inline-types/u);
 
   await mkdir(path.join(directory, "dist"));
   await writeFile(

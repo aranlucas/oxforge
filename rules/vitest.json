@@ -1,7 +1,7 @@
 {
-  "vitest/no-conditional-in-test": "off",
+  "vitest/no-conditional-in-test": "error",
   "vitest/no-disabled-tests": "error",
   "vitest/no-focused-tests": "error",
-  "vitest/require-mock-type-parameters": "off",
+  "vitest/require-mock-type-parameters": "error",
   "vitest/valid-expect": "error"
 }

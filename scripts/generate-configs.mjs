@@ -23,6 +23,7 @@ const configs = {
   nextjs: { extends: ["./react.json"], plugins: ["nextjs"], rules: rules.nextjs },
   "react-perf": { extends: ["./react.json"], plugins: ["react-perf"], rules: rules.reactPerf },
   vitest: { plugins: ["vitest"], rules: rules.vitest },
+  mcp: { rules: rules.mcp },
   tailwind: {
     jsPlugins: [{ name: "tailwindcss", specifier: "oxlint-tailwindcss" }],
     rules: rules.tailwind,
@@ -36,7 +37,7 @@ await Promise.all(
     const filename = `configs/${name}.json`;
     const result = await format(filename, JSON.stringify(config));
 
-    if (result.errors.length) {
+    if (result.errors.length > 0) {
       throw new Error(`Cannot format generated preset: ${filename}`);
     }
 

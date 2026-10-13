@@ -3,7 +3,7 @@
   "rules": {
     "shadcn/no-arbitrary-values": "error",
     "shadcn/no-inline-styles": "error",
-    "shadcn/no-raw-colors": ["error", { "allow": ["fill-none"] }],
+    "shadcn/no-raw-colors": "error",
     "shadcn/no-restyle": [
       "error",
       {
@@ -19,6 +19,47 @@
       }
     ],
     "shadcn/no-unknown-classes": "error",
-    "shadcn/require-static-classes": "error"
+    "shadcn/require-static-classes": "error",
+    "react/forbid-elements": [
+      "error",
+      {
+        "forbid": [
+          { "element": "button", "message": "Use Button from your shared UI library instead." },
+          { "element": "input", "message": "Use Input from your shared UI library instead." },
+          { "element": "textarea", "message": "Use Textarea from your shared UI library instead." },
+          {
+            "element": "select",
+            "message": "Use NativeSelect from your shared UI library instead."
+          },
+          {
+            "element": "option",
+            "message": "Use NativeSelectOption from your shared UI library instead."
+          },
+          {
+            "element": "optgroup",
+            "message": "Use NativeSelectOptGroup from your shared UI library instead."
+          },
+          { "element": "label", "message": "Use Label from your shared UI library instead." },
+          { "element": "fieldset", "message": "Use FieldSet from your shared UI library instead." },
+          {
+            "element": "legend",
+            "message": "Use FieldLegend from your shared UI library instead."
+          },
+          { "element": "table", "message": "Use Table from your shared UI library instead." },
+          { "element": "thead", "message": "Use TableHeader from your shared UI library instead." },
+          { "element": "tbody", "message": "Use TableBody from your shared UI library instead." },
+          { "element": "tfoot", "message": "Use TableFooter from your shared UI library instead." },
+          { "element": "tr", "message": "Use TableRow from your shared UI library instead." },
+          { "element": "th", "message": "Use TableHead from your shared UI library instead." },
+          { "element": "td", "message": "Use TableCell from your shared UI library instead." },
+          {
+            "element": "caption",
+            "message": "Use TableCaption from your shared UI library instead."
+          },
+          { "element": "hr", "message": "Use Separator from your shared UI library instead." },
+          { "element": "progress", "message": "Use Progress from your shared UI library instead." }
+        ]
+      }
+    ]
   }
 }

@@ -1,0 +1,284 @@
+{
+  "date": "2026-10-13",
+  "scope": "Tracked Oxlint configs in the primary owned checkouts; explicit rules and category-enabled rules compared with Oxforge 0.1.1.",
+  "rules": [
+    {
+      "rule": "jsx-a11y/control-has-associated-label",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "cavity-game",
+        "delivery-dash",
+        "elsewhere-by-post",
+        "happy-birthday-yani",
+        "janella-cookbook",
+        "leetcode",
+        "lucasarango.space",
+        "multiplayer-chat",
+        "oral-boards",
+        "pediatric-interviewer-esp32",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "snaphaul",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "vienna-travel"
+      ]
+    },
+    {
+      "rule": "jsx-a11y/heading-has-content",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "cavity-game",
+        "delivery-dash",
+        "elsewhere-by-post",
+        "happy-birthday-yani",
+        "janella-cookbook",
+        "leetcode",
+        "lucasarango.space",
+        "multiplayer-chat",
+        "oral-boards",
+        "pediatric-interviewer-esp32",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "snaphaul",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "vienna-travel"
+      ]
+    },
+    {
+      "rule": "jsx-a11y/no-noninteractive-element-interactions",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "cavity-game",
+        "delivery-dash",
+        "elsewhere-by-post",
+        "happy-birthday-yani",
+        "janella-cookbook",
+        "leetcode",
+        "lucasarango.space",
+        "multiplayer-chat",
+        "oral-boards",
+        "pediatric-interviewer-esp32",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "snaphaul",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "vienna-travel"
+      ]
+    },
+    {
+      "rule": "react/exhaustive-effect-dependencies",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "lucasarango.space",
+        "oral-boards",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "traverse"
+      ]
+    },
+    {
+      "rule": "react/jsx-no-constructed-context-values",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "oral-boards",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "system-design-chatgpt",
+        "system-design-companion"
+      ]
+    },
+    {
+      "rule": "react/no-unsafe",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "cavity-game",
+        "delivery-dash",
+        "elsewhere-by-post",
+        "garmin-friend-finder",
+        "happy-birthday-yani",
+        "janella-cookbook",
+        "leetcode",
+        "lucasarango.space",
+        "multiplayer-chat",
+        "oral-boards",
+        "pediatric-interviewer-esp32",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal",
+        "snaphaul",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "traverse",
+        "vienna-travel"
+      ]
+    },
+    {
+      "rule": "typescript/no-unnecessary-boolean-literal-compare",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "lucasarango.space",
+        "oral-boards",
+        "raleigh-travel",
+        "resume-chat",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "traverse"
+      ]
+    },
+    {
+      "rule": "typescript/no-unnecessary-type-parameters",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "lucasarango.space",
+        "oral-boards",
+        "raleigh-travel",
+        "resume-chat",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "traverse"
+      ]
+    },
+    {
+      "rule": "typescript/no-unsafe-type-assertion",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "lucasarango.space",
+        "oral-boards",
+        "raleigh-travel",
+        "resume-chat",
+        "set-and-signal"
+      ]
+    },
+    {
+      "rule": "oxc/no-map-spread",
+      "repositories": [
+        "agents-mobile",
+        "ai-shopping-mcp",
+        "elsewhere-by-post",
+        "raleigh-travel",
+        "set-and-signal"
+      ]
+    },
+    {
+      "rule": "jsx-a11y/prefer-tag-over-role",
+      "repositories": [
+        "ai-shopping-mcp",
+        "cavity-game",
+        "delivery-dash",
+        "elsewhere-by-post",
+        "happy-birthday-yani",
+        "janella-cookbook",
+        "leetcode",
+        "pediatric-interviewer-esp32",
+        "raleigh-travel",
+        "set-and-signal",
+        "snaphaul",
+        "system-design-chatgpt",
+        "system-design-companion",
+        "vienna-travel"
+      ]
+    },
+    {
+      "rule": "vitest/require-mock-type-parameters",
+      "repositories": ["ai-shopping-mcp", "elsewhere-by-post", "set-and-signal"]
+    },
+    {
+      "rule": "eslint/max-lines",
+      "repositories": ["elsewhere-by-post", "lucasarango.space"]
+    },
+    {
+      "rule": "eslint/max-lines-per-function",
+      "repositories": ["elsewhere-by-post", "lucasarango.space"]
+    },
+    {
+      "rule": "eslint/no-inline-comments",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "eslint/no-negated-condition",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "eslint/require-unicode-regexp",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "eslint/sort-vars",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "import/max-dependencies",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "react/jsx-no-target-blank",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel", "set-and-signal"]
+    },
+    {
+      "rule": "typescript/no-confusing-void-expression",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "typescript/no-deprecated",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "typescript/strict-boolean-expressions",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "typescript/strict-void-return",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "unicorn/explicit-length-check",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "unicorn/no-array-callback-reference",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "unicorn/no-negated-condition",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "unicorn/prefer-number-coercion",
+      "repositories": ["elsewhere-by-post", "lucasarango.space", "raleigh-travel"]
+    },
+    {
+      "rule": "vitest/no-conditional-in-test",
+      "repositories": ["elsewhere-by-post"]
+    },
+    {
+      "rule": "unicorn/prefer-top-level-await",
+      "repositories": ["lucasarango.space", "raleigh-travel", "set-and-signal"]
+    },
+    {
+      "rule": "react/forbid-elements",
+      "repositories": ["set-and-signal"]
+    }
+  ]
+}

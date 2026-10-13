@@ -78,10 +78,11 @@ For Next.js and Vitest:
 | `react.json`       | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                               |
 | `nextjs.json`      | React plus Next.js.                                                                                                |
 | `react-perf.json`  | React plus rules against fresh JSX prop objects and functions.                                                     |
+| `mcp.json`         | Server-only MCP SDK imports, plus the base deprecated-renderer restriction.                                        |
 | `vitest.json`      | Valid assertions; no focused or disabled tests.                                                                    |
 | `tailwind.json`    | Strict design-token and utility rules; use gap instead of `space-x/y`.                                             |
 | `shadcn.json`      | Variants own appearance; callers own layout.                                                                       |
-| `size-limits.json` | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                 |
+| `size-limits.json` | Alias for the default 300-line files, 50-line functions, and 10 dependencies.                                      |
 
 Ignore patterns belong in the project config: Oxlint resolves inherited patterns relative to the preset file inside `node_modules`. The initializer writes the standard patterns into `.oxlintrc.json`; hand-written configs should keep their existing ignores.
 
@@ -124,7 +125,7 @@ Keep app-specific paths and exceptions in native JSON fields:
 
 Local rules take precedence over inherited settings. To turn off named types, set `oxforge/no-inline-types: "off"`. For a Worker or Node project, set `env.worker` or `env.node`. React Native can use `react.json` with its existing `__DEV__` global, import allowlist, and platform-specific accessibility overrides.
 
-The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific import restrictions stay local.
+The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific server-import restrictions are shared in `mcp.json`; SDK globals and paths stay local.
 
 ## Formatting
 
@@ -134,6 +135,7 @@ Override the static config with ordinary object spread:
 
 ```ts
 import config from "@aranlucas/oxforge/format-config";
+import { ignorePatterns } from "@aranlucas/oxforge";
 
 const projectConfig = {
   ...config,
@@ -142,7 +144,7 @@ const projectConfig = {
     stylesheet: "app/globals.css",
     functions: ["cn", "clsx", "cva", "twMerge", "twJoin"],
   },
-  ignorePatterns: [...(config.ignorePatterns ?? []), "src/generated/**"],
+  ignorePatterns: [...ignorePatterns, "src/generated/**"],
 };
 
 export default projectConfig;
@@ -157,7 +159,7 @@ Vienna can keep `printWidth: 120`, `semi: false`, and `singleQuote: true`. The s
 - Strict correctness, suspicious-code, performance, and pedantic categories. Warnings fail the run; unused disable comments are errors.
 - No `any`, non-null assertions, chained assertions, vague `unknown` APIs, reflection escape hatches, module mocking, or unsafe dictionary types. Assertions need safety comments.
 - Named module-level object and tuple types. `oxforge/no-inline-types` covers signatures, casts, generics, and local declarations.
-- Kebab-case filenames, strict equality with `== null` allowed, control-flow braces, precise imports, handled promises, immutable array operations, and readable spacing.
+- Kebab-case filenames, strict equality including null checks, control-flow braces, precise imports, handled promises, immutable array operations, and readable spacing.
 - The initializer writes project-local ignores for build output, dependencies, coverage, and agent directories. App-specific generated files stay in app configs.
 
 The audit covers 75 local project directories, including 63 owned Git repositories, 59 Oxlint configs, 35 Oxfmt configs, and 257 distinct explicit Oxlint rules. [Inventory](docs/inventory.md), [policy decisions and coverage](docs/policy.md), and [the raw snapshot](docs/projects.json) record the source settings and conflicts. Legacy ESLint rules with no native Oxlint equivalent are documented there.
@@ -166,7 +168,7 @@ The audit covers 75 local project directories, including 63 owned Git repositori
 
 1. Install Oxforge and the required tools with pnpm. Add optional plugins for the presets you select.
 2. Add the desired presets to the existing `.oxlintrc.json` through `extends`.
-3. Remove repeated rules supplied by those presets. Keep differing rules, `settings`, `env`, `globals`, generated-file ignores, and file-specific overrides. Additional local plugins still use `jsPlugins`.
+3. Remove repeated rules supplied by those presets. Move stronger generic rules into Oxforge before migrating. Keep `settings`, `env`, `globals`, generated-file ignores, and file-specific overrides. Additional local plugins still use `jsPlugins`.
 4. Replace `.oxfmtrc.json` with `oxfmt.config.ts` importing the static formatter config and retaining relevant exceptions.
 5. Run `pnpm lint` and `pnpm format:check`. Oxforge strengthens several existing policies; review diagnostics before applying fixes.
 
@@ -179,7 +181,7 @@ Keep only one lint and one format config per directory. Nested Oxlint configs mu
 }
 ```
 
-Existing projects have not been modified by this extraction. Their exceptions are recorded in the inventory for migration.
+Existing projects have not been modified by this extraction. The portfolio rollout also records stronger category-enabled rules in [stricter-rules.json](docs/stricter-rules.json).
 
 ## Optional programmatic API
 
@@ -191,7 +193,7 @@ import { oxforge } from "@aranlucas/oxforge";
 export default oxforge({ nextjs: true, vitest: true });
 ```
 
-`oxforge()` accepts native config fields plus `react`, `nextjs`, `reactPerf`, `vitest`, `typeAware` (default true), `namedTypes` (default true), `allowTypeGuards`, `pedantic`, `sizeLimits`, `tailwind: { stylesheet, settings? }`, and `shadcn: { ui?, componentImports? }`. Project values win; plugin and ignore arrays are additive. `format()` from `@aranlucas/oxforge/format` accepts Oxfmt options. Static JSON presets are generated from the same rule definitions as this API.
+`oxforge()` accepts native config fields plus `react`, `nextjs`, `reactPerf`, `vitest`, `typeAware` (default true), `namedTypes` (default true), `allowTypeGuards`, `pedantic`, `sizeLimits`, `mcp`, `tailwind: { stylesheet, settings? }`, and `shadcn: { ui?, componentImports? }`. Project values win; plugin and ignore arrays are additive. `format()` from `@aranlucas/oxforge/format` accepts Oxfmt options. Static JSON presets are generated from the same rule definitions as this API.
 
 ## Develop and publish
 
@@ -205,6 +207,6 @@ pnpm publish --access public
 
 The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
-Publishing runs both checks first. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
+Publishing runs both checks first. Version 0.2.0 consolidates the stricter existing repository policies, including default size limits, readonly parameters, unsafe assertions, accessibility, Vitest, and SDK import rules. It retains the pedantic and Unicorn improvements from 0.1.1. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
 
 MIT licensed. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).

@@ -1,0 +1,23 @@
+{
+  "rules": {
+    "eslint/no-restricted-imports": [
+      "error",
+      {
+        "paths": [
+          {
+            "name": "react-test-renderer",
+            "message": "react-test-renderer is deprecated; use @testing-library/react instead."
+          },
+          {
+            "name": "agents/mcp",
+            "message": "Import from agents/mcp/server; the index bundles the MCP client and v1 SDK."
+          },
+          {
+            "name": "agents",
+            "message": "Import from agents/mcp/server; the index bundles the MCP client and v1 SDK."
+          }
+        ]
+      }
+    ]
+  }
+}
