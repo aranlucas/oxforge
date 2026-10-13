@@ -46,6 +46,9 @@ test("defaults combine all generic rules and strict type-aware policy", () => {
   const config = oxforge();
   assert.equal(config.options.typeAware, true);
   assert.equal(config.options.maxWarnings, 0);
+  assert.equal(config.categories.pedantic, "error");
+  assert.equal(oxforge({ pedantic: false }).categories.pedantic, "off");
+  assert.equal(config.rules["unicorn/filename-case"], "error");
   assert.equal(config.rules["oxforge/no-inline-types"], "error");
   assert.equal(Object.keys(rules.antiSlop).length, 18);
   assert.deepEqual(config.rules["typescript/no-floating-promises"], [

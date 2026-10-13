@@ -32,7 +32,7 @@ async function walk(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
 
   const files = await Promise.all(
-    entries.map(async (entry) => {
+    entries.map((entry) => {
       const absolute = path.join(directory, entry.name);
 
       if (entry.isDirectory() && !excluded.has(entry.name)) {
@@ -174,7 +174,7 @@ const lines = [
     .toSorted(([a], [b]) => a.localeCompare(b))
     .map(
       ([rule, variants]) =>
-        `| \`${rule}\` | ${[...variants].map(([value, count]) => `\`${value.replaceAll("|", "\\|")}\` (${count})`).join("; ")} |`,
+        `| \`${rule}\` | ${[...variants].map(([value, count]) => `\`${value.replaceAll("|", String.raw`\|`)}\` (${count})`).join("; ")} |`,
     ),
   "",
   "## Reproduce",

@@ -85,7 +85,7 @@ For Next.js and Vitest:
 
 Ignore patterns belong in the project config: Oxlint resolves inherited patterns relative to the preset file inside `node_modules`. The initializer writes the standard patterns into `.oxlintrc.json`; hand-written configs should keep their existing ignores.
 
-Framework presets are additive. `recommended.json` includes no frontend framework by itself. Pedantic rules are opt-in through `categories: { "pedantic": "error" }`.
+Framework presets are additive. `recommended.json` includes no frontend framework by itself. Pedantic rules are enabled by default; explicit rule settings take precedence. Opt out with `categories: { "pedantic": "off" }`.
 
 Install optional plugins before extending their presets:
 
@@ -154,7 +154,7 @@ Vienna can keep `printWidth: 120`, `semi: false`, and `singleQuote: true`. The s
 
 ## Policy and audit
 
-- Strict correctness, suspicious-code, and performance categories. Warnings fail the run; unused disable comments are errors.
+- Strict correctness, suspicious-code, performance, and pedantic categories. Warnings fail the run; unused disable comments are errors.
 - No `any`, non-null assertions, chained assertions, vague `unknown` APIs, reflection escape hatches, module mocking, or unsafe dictionary types. Assertions need safety comments.
 - Named module-level object and tuple types. `oxforge/no-inline-types` covers signatures, casts, generics, and local declarations.
 - Kebab-case filenames, strict equality with `== null` allowed, control-flow braces, precise imports, handled promises, immutable array operations, and readable spacing.
@@ -205,6 +205,6 @@ pnpm publish --access public
 
 The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
-Publishing runs both checks first. Version 0.1.0 is ready for the first npm release. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
+Publishing runs both checks first. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
 
 MIT licensed. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).

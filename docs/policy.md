@@ -9,10 +9,11 @@ Every explicit Oxlint rule from the owned projects is accounted for here. `docs/
 - Runtime `typeof` is forbidden; `allowTypeGuards: true` enables the existing type-guard exception.
 - Assertions require anti-slop safety comments. `no-unsafe-type-assertion` stays off because most projects disable it and it rejects documented boundary assertions.
 - Named object and tuple types are enforced with `oxforge/no-inline-types`, extracted from both system-design projects.
-- Kebab-case filenames; underscore-prefixed framework files are allowed. SDK-mandated `_meta`, `_unsafeUnwrap`, and `_unsafeUnwrapErr` are allowed.
+- Filenames use `unicorn/filename-case` with its standard options. SDK-mandated `_meta`, `_unsafeUnwrap`, and `_unsafeUnwrapErr` are allowed.
+- Built-in errors need messages, disable comments name specific rules, key/value pairs use `Object.fromEntries`, backslash-heavy strings use `String.raw`, and arrays use `toReversed` rather than mutating `reverse`.
 - Unused variables prefixed with `_` are allowed, matching the MCP projects.
 - React uses the automatic JSX runtime and allows React Compiler context values. React checks and accessibility are opt-in together.
-- Size limits and blanket pedantic categories are opt-in: existing projects explicitly disagree on them.
+- Pedantic checks are enabled by default; explicit rule settings take precedence over the category. Size limits remain opt-in because existing projects explicitly disagree on them.
 - `@ts-expect-error` needs a description, following janella-cookbook instructions. `@ts-ignore` and `@ts-nocheck` are forbidden.
 - Tailwind and shadcn default to strict shared policies. App-specific class allowlists, UI imports, generated paths, SVG exceptions, and test exceptions belong in the consuming config.
 - Native `oxc/no-map-spread` is disabled in favor of the existing anti-slop array rules.
