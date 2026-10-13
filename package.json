@@ -1,0 +1,101 @@
+{
+  "name": "@aranlucas/oxforge",
+  "version": "0.1.0",
+  "description": "Lucas's opinionated Oxlint and Oxfmt policy. Strict types, readable code, no slop.",
+  "keywords": [
+    "anti-slop",
+    "oxfmt",
+    "oxlint",
+    "oxlint-config",
+    "oxlint-plugin",
+    "typescript"
+  ],
+  "homepage": "https://github.com/aranlucas/oxforge#readme",
+  "bugs": "https://github.com/aranlucas/oxforge/issues",
+  "license": "MIT",
+  "author": "Lucas Arango",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aranlucas/oxforge.git"
+  },
+  "bin": {
+    "oxforge": "./bin/oxforge.js"
+  },
+  "files": [
+    "src/*.js",
+    "src/*.d.ts",
+    "dist",
+    "rules",
+    "bin",
+    "NOTICE.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.d.ts",
+      "default": "./src/index.js"
+    },
+    "./format": {
+      "types": "./src/format.d.ts",
+      "default": "./src/format.js"
+    },
+    "./plugin": {
+      "types": "./dist/plugin.d.ts",
+      "default": "./dist/plugin.js"
+    },
+    "./rules/*": "./rules/*.json",
+    "./package.json": "./package.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.api.json",
+    "test": "node --test test/*.test.mjs",
+    "lint": "oxlint",
+    "format": "oxfmt --write",
+    "format:check": "oxfmt --check",
+    "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
+    "prepack": "pnpm build",
+    "prepublishOnly": "pnpm check && pnpm test:package",
+    "audit:projects": "node scripts/audit-projects.mjs",
+    "test:package": "node scripts/test-package.mjs"
+  },
+  "dependencies": {
+    "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",
+    "@oxlint/plugins": "1.88.0"
+  },
+  "devDependencies": {
+    "@shadcn/lint": "0.2.1",
+    "@types/node": "^24.0.0",
+    "jsonc-parser": "^3.3.1",
+    "oxfmt": "0.73.0",
+    "oxlint": "1.88.0",
+    "oxlint-tailwindcss": "1.16.0",
+    "oxlint-tsgolint": "7.0.2004",
+    "typescript": "^7.0.2"
+  },
+  "peerDependencies": {
+    "@shadcn/lint": "^0.2.1",
+    "oxfmt": "^0.73.0",
+    "oxlint": "^1.88.0",
+    "oxlint-tailwindcss": "^1.16.0",
+    "oxlint-tsgolint": "^7.0.2004"
+  },
+  "peerDependenciesMeta": {
+    "oxlint-tsgolint": {
+      "optional": true
+    },
+    "oxlint-tailwindcss": {
+      "optional": true
+    },
+    "@shadcn/lint": {
+      "optional": true
+    }
+  },
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "packageManager": "pnpm@12.9.1"
+}

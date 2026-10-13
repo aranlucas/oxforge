@@ -1,0 +1,5536 @@
+{
+  "date": "2026-10-13",
+  "scope": "Primary local project directories; dependency, build, and temporary worktree directories excluded.",
+  "projects": [
+    {
+      "name": "agents",
+      "owned": true,
+      "configs": [
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "trailingComma": "all",
+            "bracketSameLine": false,
+            "singleAttributePerLine": false,
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "tw"
+              ],
+              "preserveDuplicates": false,
+              "preserveWhitespace": false
+            },
+            "ignorePatterns": [
+              "apps/mobile/uniwind-types.d.ts",
+              "pnpm-lock.yaml"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/apps/mobile/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../../packages/oxlint-config/base.json"
+            ],
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "es2026": true
+            },
+            "globals": {
+              "__DEV__": "readonly"
+            },
+            "settings": {
+              "react": {
+                "version": "19.2.7"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "import/no-unassigned-import": [
+                "warn",
+                {
+                  "allow": [
+                    "**/*.css",
+                    "**/env",
+                    "expo",
+                    "whatwg-fetch",
+                    "react-native/**"
+                  ]
+                }
+              ],
+              "react/style-prop-object": [
+                "warn",
+                {
+                  "allow": [
+                    "StatusBar"
+                  ]
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "jsx-a11y/aria-role": "off",
+                  "jsx-a11y/heading-has-content": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/components/chat/conversation.tsx"
+                ],
+                "rules": {
+                  "react-hooks/exhaustive-deps": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".expo/**",
+              "uniwind-types.d.ts"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/apps/oral-boards/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../../packages/oxlint-config/base.json"
+            ],
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "settings": {
+              "next": {
+                "rootDir": "."
+              },
+              "react": {
+                "version": "19.2.7"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off"
+            },
+            "ignorePatterns": [
+              ".next/**"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/apps/web/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../../packages/oxlint-config/base.json"
+            ],
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "settings": {
+              "next": {
+                "rootDir": "."
+              },
+              "react": {
+                "version": "19.2.7"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "no-restricted-imports": [
+                "error",
+                {
+                  "paths": [
+                    {
+                      "name": "react-test-renderer",
+                      "message": "react-test-renderer is deprecated; use @testing-library/react instead."
+                    }
+                  ]
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "jsx-a11y/aria-role": "off",
+                  "jsx-a11y/heading-has-content": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".next/**"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/packages/oxlint-config/base.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "warn",
+              "perf": "warn"
+            },
+            "plugins": [
+              "import",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "options": {
+              "typeAware": true,
+              "reportUnusedDisableDirectives": "warn"
+            },
+            "rules": {
+              "eslint/no-underscore-dangle": "off",
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "ignore": [
+                    "^_"
+                  ]
+                }
+              ],
+              "unicorn/prefer-node-protocol": "warn",
+              "unicorn/throw-new-error": "warn",
+              "unicorn/prefer-optional-catch-binding": "warn",
+              "unicorn/prefer-at": "warn",
+              "unicorn/no-array-for-each": "warn",
+              "typescript/prefer-optional-chain": "warn",
+              "typescript/prefer-nullish-coalescing": "warn",
+              "typescript/no-explicit-any": "warn",
+              "typescript/no-unnecessary-type-assertion": "warn",
+              "typescript/prefer-function-type": "warn",
+              "typescript/no-floating-promises": "warn",
+              "typescript/no-redundant-type-constituents": "warn",
+              "import/no-cycle": "warn",
+              "import/no-unassigned-import": [
+                "warn",
+                {
+                  "allow": [
+                    "**/*.css",
+                    "**/env"
+                  ]
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "typescript/no-unsafe-type-assertion": "off",
+                  "typescript/no-floating-promises": "off",
+                  "typescript/no-extraneous-class": "off",
+                  "eslint/no-await-in-loop": "off",
+                  "eslint/no-shadow": "off",
+                  "unicorn/consistent-function-scoping": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              "**/coverage/**",
+              ".claude/**",
+              ".agents/**"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/packages/types/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../oxlint-config/base.json"
+            ]
+          }
+        },
+        {
+          "path": "agents/.worktrees/codex-go-agents-migration/packages/ui/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../oxlint-config/base.json"
+            ],
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "settings": {
+              "react": {
+                "version": "19.2.7"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "jsx-a11y/prefer-tag-over-role": "off"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "src/components/ai-elements/**"
+                ],
+                "rules": {
+                  "jsx-a11y/anchor-has-content": "off",
+                  "jsx-a11y/control-has-associated-label": "off",
+                  "jsx-a11y/no-noninteractive-element-interactions": "off",
+                  "jsx-a11y/media-has-caption": "off",
+                  "jsx-a11y/heading-has-content": "off",
+                  "react/jsx-key": "off",
+                  "typescript/restrict-template-expressions": "off",
+                  "typescript/no-useless-default-assignment": "off",
+                  "typescript/no-redundant-type-constituents": "off",
+                  "typescript/no-unsafe-type-assertion": "off",
+                  "typescript/no-floating-promises": "off",
+                  "typescript/consistent-return": "off",
+                  "typescript/prefer-nullish-coalescing": "off",
+                  "typescript/prefer-optional-chain": "off",
+                  "react/self-closing-comp": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/components/pagination.tsx",
+                  "src/components/label.tsx",
+                  "src/components/input-group.tsx"
+                ],
+                "rules": {
+                  "jsx-a11y/anchor-has-content": "off",
+                  "jsx-a11y/label-has-associated-control": "off",
+                  "jsx-a11y/click-events-have-key-events": "off",
+                  "jsx-a11y/no-noninteractive-element-interactions": "off"
+                }
+              },
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "jsx-a11y/aria-role": "off",
+                  "jsx-a11y/heading-has-content": "off"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "agents-mobile",
+      "owned": true,
+      "configs": [
+        {
+          "path": "agents-mobile/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "trailingComma": "all",
+            "bracketSameLine": false,
+            "singleAttributePerLine": false,
+            "ignorePatterns": [
+              "pnpm-lock.yaml",
+              ".agents/**",
+              ".claude/**"
+            ]
+          }
+        },
+        {
+          "path": "agents-mobile/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "./packages/oxlint-config/base.json"
+            ],
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "es2026": true
+            },
+            "globals": {
+              "__DEV__": "readonly"
+            },
+            "settings": {
+              "react": {
+                "version": "19.2.3"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "import/no-unassigned-import": [
+                "warn",
+                {
+                  "allow": [
+                    "**/*.css",
+                    "**/env",
+                    "expo",
+                    "whatwg-fetch",
+                    "react-native/**"
+                  ]
+                }
+              ],
+              "react/style-prop-object": [
+                "warn",
+                {
+                  "allow": [
+                    "StatusBar"
+                  ]
+                }
+              ],
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "jsx-a11y/aria-role": "off",
+                  "jsx-a11y/heading-has-content": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".expo/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        },
+        {
+          "path": "agents-mobile/packages/oxlint-config/base.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "warn",
+              "perf": "warn"
+            },
+            "plugins": [
+              "import",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "options": {
+              "typeAware": true,
+              "reportUnusedDisableDirectives": "warn"
+            },
+            "rules": {
+              "eslint/no-underscore-dangle": "off",
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "ignore": [
+                    "^_"
+                  ]
+                }
+              ],
+              "unicorn/prefer-node-protocol": "warn",
+              "unicorn/throw-new-error": "warn",
+              "unicorn/prefer-optional-catch-binding": "warn",
+              "unicorn/prefer-at": "warn",
+              "unicorn/no-array-for-each": "warn",
+              "typescript/prefer-optional-chain": "warn",
+              "typescript/prefer-nullish-coalescing": "warn",
+              "typescript/no-explicit-any": "warn",
+              "typescript/no-unnecessary-type-assertion": "warn",
+              "typescript/prefer-function-type": "warn",
+              "typescript/no-floating-promises": "warn",
+              "typescript/no-redundant-type-constituents": "warn",
+              "import/no-cycle": "warn",
+              "import/no-unassigned-import": [
+                "warn",
+                {
+                  "allow": [
+                    "**/*.css",
+                    "**/env"
+                  ]
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "typescript/no-unsafe-type-assertion": "off",
+                  "typescript/no-floating-promises": "off",
+                  "typescript/no-extraneous-class": "off",
+                  "eslint/no-await-in-loop": "off",
+                  "eslint/no-shadow": "off",
+                  "unicorn/consistent-function-scoping": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              "**/coverage/**",
+              ".claude/**",
+              ".agents/**"
+            ]
+          }
+        },
+        {
+          "path": "agents-mobile/packages/types/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "../../node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "../oxlint-config/base.json"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "ai-shopping-mcp",
+      "owned": true,
+      "configs": [
+        {
+          "path": "ai-shopping-mcp/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 80,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "quoteProps": "as-needed",
+            "trailingComma": "all",
+            "bracketSpacing": true,
+            "bracketSameLine": false,
+            "arrowParens": "always",
+            "endOfLine": "lf",
+            "proseWrap": "preserve",
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "tw"
+              ],
+              "preserveDuplicates": false,
+              "preserveWhitespace": false,
+              "stylesheet": "./views/styles.css"
+            },
+            "ignorePatterns": [
+              "src/services/gateway/schema.d.ts",
+              "views/shared/ui/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "ai-shopping-mcp/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "extends": [
+              "./.oxlintrc.tailwind.json"
+            ],
+            "jsPlugins": [
+              "oxlint-tailwindcss",
+              "@shadcn/lint",
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "plugins": [
+              "eslint",
+              "typescript",
+              "oxc",
+              "unicorn",
+              "import",
+              "react",
+              "react-perf",
+              "jsx-a11y",
+              "promise",
+              "node",
+              "vitest"
+            ],
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "perf": "error",
+              "pedantic": "off",
+              "style": "off",
+              "restriction": "off",
+              "nursery": "off"
+            },
+            "rules": {
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "case": "kebabCase"
+                }
+              ],
+              "eslint/eqeqeq": [
+                "error",
+                "always",
+                {
+                  "null": "ignore"
+                }
+              ],
+              "eslint/no-shadow": "error",
+              "eslint/preserve-caught-error": "error",
+              "eslint/no-await-in-loop": "error",
+              "typescript/consistent-type-imports": "error",
+              "typescript/no-non-null-assertion": "error",
+              "typescript/no-explicit-any": "error",
+              "import/no-duplicates": "error",
+              "import/no-named-as-default": "error",
+              "eslint/no-restricted-imports": [
+                "error",
+                {
+                  "paths": [
+                    {
+                      "name": "agents/mcp",
+                      "message": "Import from agents/mcp/server; the index bundles the MCP client and v1 SDK."
+                    },
+                    {
+                      "name": "agents",
+                      "message": "Import from agents/mcp/server; the index bundles the MCP client and v1 SDK."
+                    }
+                  ]
+                }
+              ],
+              "react/react-in-jsx-scope": "off",
+              "unicorn/prefer-add-event-listener": "error",
+              "eslint/no-underscore-dangle": [
+                "error",
+                {
+                  "allow": [
+                    "_meta",
+                    "_unsafeUnwrap",
+                    "_unsafeUnwrapErr"
+                  ]
+                }
+              ],
+              "unicorn/no-array-sort": "error",
+              "react-perf/jsx-no-new-function-as-prop": "error",
+              "react-perf/jsx-no-jsx-as-prop": "error",
+              "react-perf/jsx-no-new-object-as-prop": "error",
+              "jsx-a11y/alt-text": "error",
+              "jsx-a11y/aria-props": "error",
+              "jsx-a11y/aria-role": "error",
+              "jsx-a11y/aria-unsupported-elements": "error",
+              "jsx-a11y/no-redundant-roles": "error",
+              "promise/param-names": "error",
+              "promise/no-nesting": "error",
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "settings": {
+              "shadcn": {
+                "componentImports": [
+                  "^(?:\\.\\./)*(?:\\./)?(?:shared/)?ui/",
+                  "^(?:\\.\\./)*(?:\\./)?(?:shared/)?components(?:\\.js)?$"
+                ]
+              },
+              "tailwindcss": {
+                "entryPoint": "views/styles.css",
+                "timeout": 120000
+              },
+              "jsx-a11y": {
+                "polymorphicPropName": null,
+                "components": {},
+                "attributes": {}
+              },
+              "next": {
+                "rootDir": []
+              },
+              "react": {
+                "formComponents": [],
+                "linkComponents": [],
+                "version": "19.0",
+                "componentWrapperFunctions": []
+              },
+              "jsdoc": {
+                "ignorePrivate": false,
+                "ignoreInternal": false,
+                "ignoreReplacesDocs": true,
+                "overrideReplacesDocs": true,
+                "augmentsExtendsReplacesDocs": false,
+                "implementsReplacesDocs": false,
+                "exemptDestructuredRootsFromChecks": false,
+                "tagNamePreference": {}
+              },
+              "vitest": {
+                "typecheck": false
+              }
+            },
+            "env": {
+              "builtin": true
+            },
+            "globals": {},
+            "ignorePatterns": [
+              "src/services/kroger/cart.d.ts",
+              "src/services/kroger/location.d.ts",
+              "src/services/kroger/product.d.ts",
+              "src/services/kroger/identity.d.ts",
+              "views/shared/ui/**",
+              "dist/**",
+              "coverage/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "overrides": [
+              {
+                "files": [
+                  "tests/strict-fake.ts"
+                ],
+                "rules": {
+                  "anti-slop/no-runtime-typeof": [
+                    "error",
+                    {
+                      "allowInTypeGuards": true
+                    }
+                  ]
+                }
+              },
+              {
+                "files": [
+                  "views/**/*.tsx"
+                ],
+                "rules": {
+                  "shadcn/no-restyle": [
+                    "error",
+                    {
+                      "allow": [
+                        "layout"
+                      ],
+                      "contracts": [
+                        {
+                          "pattern": "^(Card|CardHeader|CardContent|CardFooter|Empty)$",
+                          "allow": [
+                            "layout",
+                            "spacing"
+                          ]
+                        },
+                        {
+                          "pattern": "^CarouselItem$",
+                          "allow": [
+                            "layout",
+                            "ps"
+                          ]
+                        },
+                        {
+                          "pattern": "^Skeleton$",
+                          "allow": [
+                            "layout",
+                            "rounded"
+                          ]
+                        }
+                      ]
+                    }
+                  ],
+                  "shadcn/require-static-classes": "error",
+                  "shadcn/no-inline-styles": "error"
+                }
+              },
+              {
+                "files": [
+                  "scripts/**/*.mjs",
+                  "scripts/**/*.js"
+                ],
+                "rules": {
+                  "eslint/no-await-in-loop": "warn"
+                }
+              },
+              {
+                "files": [
+                  "tests/**/*.test.ts",
+                  "tests/**/*.ts"
+                ],
+                "rules": {
+                  "typescript/no-explicit-any": "error"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "path": "ai-shopping-mcp/.oxlintrc.tailwind.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "jsPlugins": [
+              "oxlint-tailwindcss"
+            ],
+            "rules": {
+              "tailwindcss/no-conflicting-classes": "error",
+              "tailwindcss/no-deprecated-classes": "error",
+              "tailwindcss/no-duplicate-classes": "error",
+              "tailwindcss/no-unknown-classes": [
+                "error",
+                {
+                  "allowlist": [
+                    "animated",
+                    "cn-input-otp",
+                    "is-assistant",
+                    "is-user",
+                    "node-container",
+                    "oral-boards-shell",
+                    "toaster"
+                  ]
+                }
+              ],
+              "tailwindcss/no-unnecessary-whitespace": "error",
+              "tailwindcss/no-dark-without-light": "warn",
+              "tailwindcss/no-contradicting-variants": "warn",
+              "tailwindcss/enforce-canonical": "warn",
+              "tailwindcss/enforce-sort-order": "warn",
+              "tailwindcss/enforce-shorthand": "warn",
+              "tailwindcss/enforce-logical": "warn",
+              "tailwindcss/enforce-physical": "off",
+              "tailwindcss/enforce-consistent-important-position": "warn",
+              "tailwindcss/enforce-negative-arbitrary-values": "warn",
+              "tailwindcss/enforce-consistent-variable-syntax": "warn",
+              "tailwindcss/consistent-variant-order": "warn",
+              "tailwindcss/max-class-count": [
+                "warn",
+                {
+                  "max": 100
+                }
+              ],
+              "tailwindcss/enforce-consistent-line-wrapping": [
+                "warn",
+                {
+                  "printWidth": 2000
+                }
+              ],
+              "tailwindcss/no-restricted-classes": [
+                "error",
+                {
+                  "patterns": [
+                    {
+                      "pattern": "^(?:[a-z0-9-]+:)*space-[xy]-",
+                      "message": "Use flex or grid with gap-* instead."
+                    }
+                  ]
+                }
+              ],
+              "tailwindcss/no-arbitrary-value": "error",
+              "tailwindcss/no-hardcoded-colors": "error",
+              "tailwindcss/no-unnecessary-arbitrary-value": "warn",
+              "tailwindcss/prefer-theme-tokens": "warn"
+            }
+          }
+        },
+        {
+          "path": "ai-shopping-mcp/.oxlintrc.type-aware.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "options": {
+              "typeAware": true
+            },
+            "plugins": [
+              "typescript"
+            ],
+            "categories": {
+              "correctness": "off",
+              "suspicious": "off",
+              "perf": "off",
+              "pedantic": "off",
+              "style": "off",
+              "restriction": "off",
+              "nursery": "off"
+            },
+            "rules": {
+              "typescript/no-floating-promises": [
+                "error",
+                {
+                  "checkThenables": true,
+                  "ignoreVoid": false
+                }
+              ],
+              "typescript/no-misused-promises": "error"
+            },
+            "ignorePatterns": [
+              "**/*.d.ts",
+              "views/shared/ui/**",
+              "dist/**",
+              "coverage/**"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "auth",
+      "owned": true,
+      "configs": [
+        {
+          "path": "auth/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": []
+          }
+        }
+      ]
+    },
+    {
+      "name": "better-bracket",
+      "owned": true,
+      "configs": [
+        {
+          "path": "better-bracket/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "build-a-feature",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "career-ops",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "cavity-game",
+      "owned": true,
+      "configs": [
+        {
+          "path": "cavity-game/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              "**/.cloudflare/**"
+            ]
+          }
+        },
+        {
+          "path": "cavity-game/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              "**/.cloudflare/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "delivery-dash",
+      "owned": true,
+      "configs": [
+        {
+          "path": "delivery-dash/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              ".cloudflare/**",
+              ".wrangler/**",
+              "output/playwright/**"
+            ]
+          }
+        },
+        {
+          "path": "delivery-dash/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "categories": {
+              "correctness": "error"
+            },
+            "rules": {
+              "react/react-in-jsx-scope": "off",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              ".cloudflare/**",
+              ".wrangler/**",
+              "output/playwright/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "dentistry-finetune",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "documentation",
+      "owned": true,
+      "configs": [
+        {
+          "path": "documentation/.prettierrc",
+          "kind": "prettier",
+          "config": {
+            "$schema": "https://json.schemastore.org/prettierrc",
+            "endOfLine": "lf",
+            "semi": false,
+            "singleQuote": false,
+            "tabWidth": 2,
+            "trailingComma": "es5"
+          }
+        },
+        {
+          "path": "documentation/eslint.config.mjs",
+          "kind": "eslint",
+          "note": "Executable config inventoried; review source without executing it."
+        }
+      ]
+    },
+    {
+      "name": "elsewhere-by-post",
+      "owned": true,
+      "configs": [
+        {
+          "path": "elsewhere-by-post/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "evidence/**",
+              "dist/**",
+              "package-lock.json",
+              "pnpm-lock.yaml"
+            ]
+          }
+        },
+        {
+          "path": "elsewhere-by-post/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "typescript",
+              "unicorn",
+              "oxc",
+              "react",
+              "jsx-a11y",
+              "import",
+              "promise",
+              "vitest"
+            ],
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "pedantic": "error",
+              "perf": "error"
+            },
+            "env": {
+              "browser": true,
+              "es2024": true
+            },
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**",
+              "evidence/**",
+              "pnpm-lock.yaml"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "eqeqeq": "error",
+              "no-var": "error",
+              "prefer-const": "error",
+              "no-console": "error",
+              "typescript/no-explicit-any": "error",
+              "typescript/consistent-type-imports": "error",
+              "typescript/no-non-null-assertion": "error",
+              "typescript/no-floating-promises": "error",
+              "typescript/no-misused-promises": "error",
+              "typescript/await-thenable": "error",
+              "typescript/no-unnecessary-type-assertion": "error",
+              "typescript/switch-exhaustiveness-check": "error",
+              "typescript/prefer-nullish-coalescing": "error",
+              "react/rules-of-hooks": "error",
+              "react/exhaustive-deps": "error",
+              "react/button-has-type": "error",
+              "react/no-array-index-key": "error",
+              "react/jsx-no-useless-fragment": "error",
+              "import/no-cycle": "error",
+              "import/no-duplicates": "error",
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "react/react-in-jsx-scope": "off",
+              "import/no-unassigned-import": [
+                "error",
+                {
+                  "allow": [
+                    "**/*.css"
+                  ]
+                }
+              ],
+              "jsx-a11y/label-has-associated-control": [
+                "error",
+                {
+                  "controlComponents": [
+                    "CommitInput"
+                  ],
+                  "assert": "either"
+                }
+              ],
+              "max-lines": [
+                "error",
+                {
+                  "max": 300,
+                  "skipBlankLines": true,
+                  "skipComments": true
+                }
+              ],
+              "max-lines-per-function": [
+                "error",
+                {
+                  "max": 120,
+                  "skipBlankLines": true,
+                  "skipComments": true
+                }
+              ],
+              "typescript/prefer-readonly-parameter-types": "off",
+              "unicorn/prefer-top-level-await": "off",
+              "import/max-dependencies": [
+                "error",
+                {
+                  "max": 16
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "tests/browser/**"
+                ],
+                "rules": {
+                  "no-await-in-loop": "off"
+                }
+              },
+              {
+                "files": [
+                  "**/*.d.ts"
+                ],
+                "rules": {
+                  "unicorn/require-module-specifiers": "off"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "exercises-dataset",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "framebreak",
+      "owned": true,
+      "configs": [
+        {
+          "path": "framebreak/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "garmin-friend-finder",
+      "owned": true,
+      "configs": [
+        {
+          "path": "garmin-friend-finder/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": []
+          }
+        },
+        {
+          "path": "garmin-friend-finder/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "import",
+              "typescript",
+              "unicorn",
+              "react",
+              "nextjs"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2022": true
+            },
+            "settings": {
+              "react": {
+                "version": "19.3.0"
+              },
+              "next": {
+                "rootDir": "."
+              }
+            },
+            "rules": {
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "node_modules/**",
+              "public/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "grocery-agent-mobile",
+      "owned": true,
+      "configs": [
+        {
+          "path": "grocery-agent-mobile/.prettierrc",
+          "kind": "prettier",
+          "config": {
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "trailingComma": "all",
+            "bracketSameLine": false,
+            "singleAttributePerLine": false
+          }
+        },
+        {
+          "path": "grocery-agent-mobile/eslint.config.js",
+          "kind": "eslint",
+          "note": "Executable config inventoried; review source without executing it."
+        }
+      ]
+    },
+    {
+      "name": "grok-bot-0.18-reconstructed",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "happy-birthday-yani",
+      "owned": true,
+      "configs": [
+        {
+          "path": "happy-birthday-yani/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "happy-birthday-yani/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "hardware",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "holdfast-local",
+      "owned": true,
+      "configs": [
+        {
+          "path": "holdfast-local/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "janella-cookbook",
+      "owned": true,
+      "configs": [
+        {
+          "path": "janella-cookbook/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "cva",
+                "clsx"
+              ],
+              "stylesheet": "./app/globals.css"
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts"
+            ]
+          }
+        },
+        {
+          "path": "janella-cookbook/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts"
+            ],
+            "overrides": [
+              {
+                "files": [
+                  "components/ai-elements/**/*.{js,jsx,ts,tsx}"
+                ],
+                "rules": {
+                  "nextjs/no-img-element": "off",
+                  "eslint/no-unused-vars": "off",
+                  "jsx-a11y/role-has-required-aria-props": "off",
+                  "react-hooks/exhaustive-deps": "off",
+                  "react/immutability": "off",
+                  "react/purity": "off",
+                  "react/set-state-in-effect": "off",
+                  "react/static-components": "off"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "job-application-agent",
+      "owned": false,
+      "configs": [
+        {
+          "path": "job-application-agent/site/eslint.config.mjs",
+          "kind": "eslint",
+          "note": "Executable config inventoried; review source without executing it."
+        }
+      ]
+    },
+    {
+      "name": "keyboard-studio",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "lanternwake",
+      "owned": true,
+      "configs": [
+        {
+          "path": "lanternwake/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": []
+          }
+        },
+        {
+          "path": "lanternwake/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "leavewell-departure-planner",
+      "owned": true,
+      "configs": [
+        {
+          "path": "leavewell-departure-planner/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "leetcode",
+      "owned": true,
+      "configs": [
+        {
+          "path": "leetcode/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "leetcode/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "apps/visualize/public/formatter/beautify.js",
+              "apps/visualize/public/formatter/dart-style.js",
+              "apps/visualize/public/formatter/parser-babel.mjs",
+              "apps/visualize/public/formatter/parser-java.js",
+              "apps/visualize/public/formatter/parser-typescript.mjs",
+              "apps/visualize/public/formatter/standalone.js",
+              "content/problems/*/solutions/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        },
+        {
+          "path": "leetcode/apps/flashcards/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".next/**",
+              "node_modules/**",
+              "public/**",
+              "prisma/generated/**"
+            ]
+          }
+        },
+        {
+          "path": "leetcode/apps/flashcards/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "node_modules/**",
+              "public/**",
+              "prisma/generated/**"
+            ],
+            "extends": [
+              "../../.oxlintrc.json"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "live-auction",
+      "owned": true,
+      "configs": [
+        {
+          "path": "live-auction/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "openapi.yaml",
+              ".playwright-cli/**",
+              "output/playwright/**",
+              "apps/web/src/routeTree.gen.ts",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "live-auction/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "LokalBot",
+      "owned": true,
+      "configs": [
+        {
+          "path": "LokalBot/Distribution/raycast/eslint.config.js",
+          "kind": "eslint",
+          "note": "Executable config inventoried; review source without executing it."
+        }
+      ]
+    },
+    {
+      "name": "lucas-plugins",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "lucasarango.space",
+      "owned": true,
+      "configs": [
+        {
+          "path": "lucasarango.space/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "trailingComma": "all",
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "cva"
+              ],
+              "stylesheet": "./src/app/globals.css"
+            },
+            "ignorePatterns": [
+              "pnpm-lock.yaml",
+              "src/components/ui/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "lucasarango.space/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "perf": "error",
+              "pedantic": "error",
+              "style": "off",
+              "restriction": "off",
+              "nursery": "off"
+            },
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "jsPlugins": [
+              "oxlint-tailwindcss",
+              "@shadcn/lint",
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "options": {
+              "typeAware": true,
+              "reportUnusedDisableDirectives": "warn"
+            },
+            "settings": {
+              "next": {
+                "rootDir": "."
+              },
+              "react": {
+                "version": "19.3.0"
+              },
+              "tailwindcss": {
+                "entryPoint": "src/app/globals.css"
+              }
+            },
+            "rules": {
+              "unicorn/filename-case": "error",
+              "react/self-closing-comp": "error",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "error",
+              "react/jsx-no-constructed-context-values": "off",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "import/no-cycle": "error",
+              "import/no-unassigned-import": [
+                "error",
+                {
+                  "allow": [
+                    "**/*.css"
+                  ]
+                }
+              ],
+              "typescript/no-explicit-any": "error",
+              "typescript/no-unsafe-type-assertion": "error",
+              "typescript/no-floating-promises": "error",
+              "typescript/no-unnecessary-type-assertion": "error",
+              "typescript/prefer-nullish-coalescing": "error",
+              "typescript/prefer-optional-chain": "error",
+              "tailwindcss/no-conflicting-classes": "error",
+              "tailwindcss/no-deprecated-classes": "error",
+              "tailwindcss/no-duplicate-classes": "error",
+              "tailwindcss/no-unknown-classes": "error",
+              "tailwindcss/no-unnecessary-whitespace": "error",
+              "tailwindcss/no-dark-without-light": "error",
+              "tailwindcss/no-contradicting-variants": "error",
+              "tailwindcss/enforce-canonical": "error",
+              "tailwindcss/enforce-sort-order": "error",
+              "tailwindcss/enforce-shorthand": "error",
+              "tailwindcss/enforce-logical": "error",
+              "tailwindcss/enforce-physical": "off",
+              "tailwindcss/enforce-consistent-important-position": "error",
+              "tailwindcss/enforce-negative-arbitrary-values": "error",
+              "tailwindcss/enforce-consistent-variable-syntax": "error",
+              "tailwindcss/consistent-variant-order": "error",
+              "tailwindcss/no-restricted-classes": [
+                "error",
+                {
+                  "patterns": [
+                    {
+                      "pattern": "^(?:[a-z0-9-]+:)*space-[xy]-",
+                      "message": "Use flex or grid with gap-* instead."
+                    }
+                  ]
+                }
+              ],
+              "tailwindcss/no-arbitrary-value": "error",
+              "tailwindcss/no-hardcoded-colors": "error",
+              "tailwindcss/no-unnecessary-arbitrary-value": "error",
+              "tailwindcss/prefer-theme-tokens": "error",
+              "typescript/prefer-readonly-parameter-types": "off",
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "src/components/chat/icons.tsx",
+                  "src/components/forest-link.tsx",
+                  "src/components/receipt-art.tsx"
+                ],
+                "rules": {
+                  "anti-slop/no-shape-in-symbol-names": "off"
+                }
+              },
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}"
+                ],
+                "rules": {
+                  "typescript/no-unsafe-type-assertion": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/components/ui/**"
+                ],
+                "rules": {
+                  "tailwindcss/no-arbitrary-value": "off",
+                  "tailwindcss/enforce-logical": "off",
+                  "tailwindcss/consistent-variant-order": "off",
+                  "tailwindcss/enforce-sort-order": "off",
+                  "tailwindcss/no-conflicting-classes": "off",
+                  "jsx-a11y/click-events-have-key-events": "off",
+                  "jsx-a11y/no-noninteractive-element-interactions": "off",
+                  "typescript/no-unsafe-type-assertion": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".next/**",
+              "next-env.d.ts",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "machine-learning",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "multiplayer-chat",
+      "owned": true,
+      "configs": [
+        {
+          "path": "multiplayer-chat/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              "worker-configuration.d.ts"
+            ]
+          }
+        },
+        {
+          "path": "multiplayer-chat/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "typescript",
+              "oxc",
+              "unicorn",
+              "import",
+              "react",
+              "jsx-a11y",
+              "promise",
+              "vitest"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              "dist/**",
+              "dist-preview/**",
+              "node_modules/**",
+              "worker-configuration.d.ts"
+            ],
+            "categories": {
+              "correctness": "error"
+            },
+            "options": {
+              "denyWarnings": true,
+              "reportUnusedDisableDirectives": "error",
+              "typeAware": true
+            },
+            "rules": {
+              "eqeqeq": [
+                "error",
+                "always"
+              ],
+              "curly": [
+                "error",
+                "all"
+              ],
+              "no-var": "error",
+              "prefer-const": "error",
+              "no-throw-literal": "error",
+              "no-warning-comments": "error",
+              "typescript/no-explicit-any": "error",
+              "typescript/ban-ts-comment": [
+                "error",
+                {
+                  "ts-ignore": true,
+                  "ts-nocheck": true,
+                  "ts-expect-error": true,
+                  "ts-check": false
+                }
+              ],
+              "typescript/no-floating-promises": "error",
+              "typescript/no-misused-promises": "error",
+              "typescript/await-thenable": "error",
+              "typescript/no-unsafe-assignment": "error",
+              "typescript/no-unsafe-call": "error",
+              "typescript/no-unsafe-member-access": "error",
+              "typescript/no-unsafe-return": "error",
+              "typescript/no-unsafe-argument": "error",
+              "typescript/no-non-null-assertion": "error",
+              "react/exhaustive-deps": "error",
+              "react/rules-of-hooks": "error",
+              "import/no-cycle": "error",
+              "import/no-duplicates": "error",
+              "vitest/no-focused-tests": "error",
+              "vitest/no-disabled-tests": "error",
+              "vitest/valid-expect": "error",
+              "react/react-in-jsx-scope": "off",
+              "no-shadow": "error",
+              "typescript/no-misused-spread": "error",
+              "typescript/unbound-method": "error",
+              "react/no-unstable-nested-components": [
+                "error",
+                {
+                  "allowAsProps": true
+                }
+              ],
+              "vitest/require-mock-type-parameters": "off",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "no-eval": "error",
+              "no-implied-eval": "error",
+              "no-new-func": "error",
+              "no-async-promise-executor": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.ts",
+                  "**/*.test.tsx"
+                ],
+                "rules": {
+                  "typescript/no-extraneous-class": "off"
+                }
+              }
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "neetcode-submissions",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "obsidian",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "onsite-lab",
+      "owned": true,
+      "configs": [
+        {
+          "path": "onsite-lab/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 80,
+            "sortPackageJson": false,
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              ".next/**",
+              "out/**",
+              "build/**",
+              "coverage/**",
+              "playwright-report/**",
+              "test-results/**",
+              "next-env.d.ts",
+              "pnpm-lock.yaml",
+              "public/**"
+            ]
+          }
+        },
+        {
+          "path": "onsite-lab/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              ".next/**",
+              "out/**",
+              "build/**",
+              "coverage/**",
+              "playwright-report/**",
+              "test-results/**",
+              "next-env.d.ts"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "react/display-name": 2,
+              "react/jsx-key": 2,
+              "react/jsx-no-comment-textnodes": 2,
+              "react/jsx-no-duplicate-props": 2,
+              "react/jsx-no-target-blank": "off",
+              "react/jsx-no-undef": 2,
+              "react/no-children-prop": 2,
+              "react/no-danger-with-children": 2,
+              "react/no-direct-mutation-state": 2,
+              "react/no-find-dom-node": 2,
+              "react/no-is-mounted": 2,
+              "react/no-render-return-value": 2,
+              "react/no-string-refs": 2,
+              "react/no-unescaped-entities": 2,
+              "react/no-unknown-property": "off",
+              "react/no-unsafe": 0,
+              "react/react-in-jsx-scope": "off",
+              "react/require-render-return": 2,
+              "react/rules-of-hooks": "error",
+              "react/exhaustive-deps": "warn",
+              "react/static-components": "error",
+              "react/use-memo": "error",
+              "react/preserve-manual-memoization": "error",
+              "react/incompatible-library": "warn",
+              "react/immutability": "error",
+              "react/globals": "error",
+              "react/refs": "error",
+              "react/set-state-in-effect": "error",
+              "react/error-boundaries": "error",
+              "react/purity": "error",
+              "react/set-state-in-render": "error",
+              "react/unsupported-syntax": "warn",
+              "nextjs/google-font-display": "warn",
+              "nextjs/google-font-preconnect": "warn",
+              "nextjs/next-script-for-ga": "warn",
+              "nextjs/no-async-client-component": "warn",
+              "nextjs/no-before-interactive-script-outside-document": "warn",
+              "nextjs/no-css-tags": "warn",
+              "nextjs/no-head-element": "warn",
+              "nextjs/no-html-link-for-pages": "error",
+              "nextjs/no-img-element": "warn",
+              "nextjs/no-page-custom-font": "warn",
+              "nextjs/no-styled-jsx-in-document": "warn",
+              "nextjs/no-sync-scripts": "error",
+              "nextjs/no-title-in-document-head": "warn",
+              "nextjs/no-typos": "warn",
+              "nextjs/no-unwanted-polyfillio": "warn",
+              "nextjs/inline-script-id": "error",
+              "nextjs/no-assign-module-variable": "error",
+              "nextjs/no-document-import-in-page": "error",
+              "nextjs/no-duplicate-head": "error",
+              "nextjs/no-head-import-in-document": "error",
+              "nextjs/no-script-component-in-head": "error",
+              "typescript/ban-ts-comment": "error",
+              "no-array-constructor": "error",
+              "typescript/no-duplicate-enum-values": "error",
+              "typescript/no-empty-object-type": "error",
+              "typescript/no-explicit-any": "error",
+              "typescript/no-extra-non-null-assertion": "error",
+              "typescript/no-misused-new": "error",
+              "typescript/no-namespace": "error",
+              "typescript/no-non-null-asserted-optional-chain": "error",
+              "typescript/no-require-imports": "error",
+              "typescript/no-this-alias": "error",
+              "typescript/no-unnecessary-type-constraint": "error",
+              "typescript/no-unsafe-declaration-merging": "error",
+              "typescript/no-unsafe-function-type": "error",
+              "no-unused-expressions": "error",
+              "no-unused-vars": "error",
+              "typescript/no-wrapper-object-types": "error",
+              "typescript/prefer-as-const": "error",
+              "typescript/prefer-namespace-keyword": "error",
+              "typescript/triple-slash-reference": "error",
+              "import/no-anonymous-default-export": "warn",
+              "jsx-a11y/alt-text": [
+                "warn",
+                {
+                  "elements": [
+                    "img"
+                  ],
+                  "img": [
+                    "Image"
+                  ]
+                }
+              ],
+              "jsx-a11y/aria-props": "warn",
+              "jsx-a11y/aria-proptypes": "warn",
+              "jsx-a11y/aria-unsupported-elements": "warn",
+              "jsx-a11y/role-has-required-aria-props": "warn",
+              "jsx-a11y/role-supports-aria-props": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "jsx-a11y/control-has-associated-label": "off",
+              "jsx-a11y/label-has-associated-control": "off",
+              "jsx-a11y/heading-has-content": "off",
+              "jsx-a11y/no-noninteractive-element-interactions": "off"
+            },
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "unicorn",
+              "typescript",
+              "oxc",
+              "react",
+              "nextjs",
+              "jsx-a11y",
+              "import"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "openmessage",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "oral-boards",
+      "owned": true,
+      "configs": [
+        {
+          "path": "oral-boards/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "tw"
+              ],
+              "preserveDuplicates": false,
+              "preserveWhitespace": false,
+              "stylesheet": "./app/globals.css"
+            },
+            "ignorePatterns": [
+              ".agents/skills/**",
+              ".github/skills/**",
+              ".github/agents/**"
+            ]
+          }
+        },
+        {
+          "path": "oral-boards/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "warn",
+              "perf": "warn"
+            },
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "options": {
+              "typeAware": true,
+              "reportUnusedDisableDirectives": "warn"
+            },
+            "rules": {
+              "eslint/no-underscore-dangle": "off",
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "ignore": [
+                    "^_"
+                  ]
+                }
+              ],
+              "unicorn/prefer-node-protocol": "warn",
+              "unicorn/throw-new-error": "warn",
+              "unicorn/prefer-optional-catch-binding": "warn",
+              "unicorn/prefer-at": "warn",
+              "unicorn/no-array-for-each": "warn",
+              "typescript/prefer-optional-chain": "warn",
+              "typescript/prefer-nullish-coalescing": "warn",
+              "typescript/no-explicit-any": "warn",
+              "typescript/no-unnecessary-type-assertion": "warn",
+              "typescript/prefer-function-type": "warn",
+              "typescript/no-floating-promises": "warn",
+              "typescript/no-redundant-type-constituents": "warn",
+              "import/no-cycle": "warn",
+              "import/no-unassigned-import": [
+                "warn",
+                {
+                  "allow": [
+                    "**/*.css",
+                    "**/env"
+                  ]
+                }
+              ],
+              "tailwindcss/no-conflicting-classes": "error",
+              "tailwindcss/no-deprecated-classes": "error",
+              "tailwindcss/no-duplicate-classes": "error",
+              "tailwindcss/no-unknown-classes": "error",
+              "tailwindcss/no-unnecessary-whitespace": "error",
+              "tailwindcss/no-dark-without-light": "warn",
+              "tailwindcss/no-contradicting-variants": "warn",
+              "tailwindcss/enforce-canonical": "warn",
+              "tailwindcss/enforce-shorthand": "warn",
+              "tailwindcss/enforce-logical": "warn",
+              "tailwindcss/enforce-physical": "off",
+              "tailwindcss/enforce-consistent-important-position": "warn",
+              "tailwindcss/enforce-negative-arbitrary-values": "warn",
+              "tailwindcss/enforce-consistent-variable-syntax": "warn",
+              "tailwindcss/consistent-variant-order": "warn",
+              "tailwindcss/max-class-count": [
+                "warn",
+                {
+                  "max": 100
+                }
+              ],
+              "tailwindcss/enforce-consistent-line-wrapping": [
+                "warn",
+                {
+                  "printWidth": 2000
+                }
+              ],
+              "tailwindcss/no-restricted-classes": [
+                "error",
+                {
+                  "patterns": [
+                    {
+                      "pattern": "^(?:[a-z0-9-]+:)*space-[xy]-",
+                      "message": "Use flex or grid with gap-* instead."
+                    }
+                  ]
+                }
+              ],
+              "tailwindcss/no-arbitrary-value": "error",
+              "tailwindcss/no-hardcoded-colors": "error",
+              "tailwindcss/no-unnecessary-arbitrary-value": "warn",
+              "tailwindcss/prefer-theme-tokens": "warn",
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "shadcn/no-raw-colors": "error",
+              "shadcn/no-inline-styles": "error",
+              "shadcn/require-static-classes": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "typescript/no-unsafe-type-assertion": "off",
+                  "typescript/no-floating-promises": "off",
+                  "typescript/no-extraneous-class": "off",
+                  "eslint/no-await-in-loop": "off",
+                  "eslint/no-shadow": "off",
+                  "unicorn/consistent-function-scoping": "off"
+                }
+              },
+              {
+                "files": [
+                  "components/ui/accordion.tsx",
+                  "components/ui/button.tsx",
+                  "components/ui/checkbox.tsx",
+                  "components/ui/dialog.tsx",
+                  "components/ui/dropdown-menu.tsx",
+                  "components/ui/field.tsx",
+                  "components/ui/input.tsx",
+                  "components/ui/input-group.tsx",
+                  "components/ui/kbd.tsx",
+                  "components/ui/label.tsx",
+                  "components/ui/popover.tsx",
+                  "components/ui/select.tsx",
+                  "components/ui/separator.tsx",
+                  "components/ui/sheet.tsx",
+                  "components/ui/textarea.tsx",
+                  "components/ui/toggle.tsx",
+                  "components/ui/toggle-group.tsx"
+                ],
+                "rules": {
+                  "tailwindcss/no-arbitrary-value": "off",
+                  "tailwindcss/enforce-logical": "off",
+                  "shadcn/require-static-classes": "off",
+                  "shadcn/no-inline-styles": "off",
+                  "anti-slop/require-safety-comment-for-type-assertion": "off",
+                  "anti-slop/require-readable-spacing": "off",
+                  "typescript/no-unsafe-type-assertion": "off",
+                  "typescript/prefer-nullish-coalescing": "off",
+                  "react/jsx-no-constructed-context-values": "off",
+                  "react/no-array-index-key": "off",
+                  "jsx-a11y/label-has-associated-control": "off",
+                  "jsx-a11y/click-events-have-key-events": "off",
+                  "jsx-a11y/no-noninteractive-element-interactions": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".github/skills/**",
+              ".next/**",
+              ".vercel/**",
+              "coverage/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              "oxlint-tailwindcss",
+              "@shadcn/lint",
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "settings": {
+              "shadcn": {
+                "ui": "@/components/ui"
+              },
+              "next": {
+                "rootDir": "."
+              },
+              "react": {
+                "version": "19.3.0"
+              },
+              "tailwindcss": {
+                "entryPoint": "app/globals.css",
+                "timeout": 300000
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "orthogonal-router-rust-lab",
+      "owned": true,
+      "configs": [
+        {
+          "path": "orthogonal-router-rust-lab/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "fixtures/original-route-orthogonal.ts",
+              "fixtures/scenes/dispatch-architecture.ts",
+              "browser/generated/**",
+              "browser/pkg/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "oxlint-plugin-anti-slop",
+      "owned": true,
+      "configs": [
+        {
+          "path": "oxlint-plugin-anti-slop/.oxfmtrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": []
+          }
+        },
+        {
+          "path": "oxlint-plugin-anti-slop/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "rules": {
+              "oxc/no-accumulating-spread": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "pantry-pulse",
+      "owned": true,
+      "configs": [
+        {
+          "path": "pantry-pulse/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "pantry-pulse/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "paper-options-lab",
+      "owned": true,
+      "configs": [
+        {
+          "path": "paper-options-lab/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "./web/node_modules/@aranlucas/oxlint-plugin-anti-slop/dist/index.js"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "tests/browser_qa.js"
+                ],
+                "rules": {
+                  "eslint/no-unused-expressions": "off"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pediatric-interviewer-esp32",
+      "owned": true,
+      "configs": [
+        {
+          "path": "pediatric-interviewer-esp32/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "rules": {
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            }
+          }
+        },
+        {
+          "path": "pediatric-interviewer-esp32/web/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts",
+              ".cloudflare/**",
+              ".open-next/**"
+            ]
+          }
+        },
+        {
+          "path": "pediatric-interviewer-esp32/web/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts",
+              ".cloudflare/**",
+              ".open-next/**"
+            ],
+            "extends": [
+              "../.oxlintrc.json"
+            ]
+          }
+        },
+        {
+          "path": "pediatric-interviewer-esp32/worker/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".cloudflare/**",
+              ".open-next/**"
+            ]
+          }
+        },
+        {
+          "path": "pediatric-interviewer-esp32/worker/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".cloudflare/**",
+              ".open-next/**"
+            ],
+            "extends": [
+              "../.oxlintrc.json"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "pocket-park",
+      "owned": true,
+      "configs": [
+        {
+          "path": "pocket-park/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "raleigh-travel",
+      "owned": true,
+      "configs": [
+        {
+          "path": "raleigh-travel/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "trailingComma": "all",
+            "arrowParens": "always",
+            "endOfLine": "lf",
+            "sortImports": {},
+            "sortPackageJson": true,
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "coverage/**",
+              "next-env.d.ts",
+              "pnpm-lock.yaml",
+              "node_modules/**",
+              "dist/**",
+              ".snapshot*",
+              "_site/**"
+            ]
+          }
+        },
+        {
+          "path": "raleigh-travel/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "typescript",
+              "unicorn",
+              "oxc",
+              "react",
+              "jsx-a11y",
+              "nextjs",
+              "import",
+              "promise"
+            ],
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "pedantic": "error",
+              "perf": "error"
+            },
+            "options": {
+              "typeAware": true,
+              "maxWarnings": 0
+            },
+            "env": {
+              "browser": true,
+              "es2022": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "coverage/**",
+              "next-env.d.ts",
+              "node_modules/**",
+              "dist/**",
+              ".snapshot*",
+              "_site/**"
+            ],
+            "rules": {
+              "eslint/eqeqeq": [
+                "error",
+                "always"
+              ],
+              "eslint/curly": [
+                "error",
+                "all"
+              ],
+              "eslint/no-console": "error",
+              "eslint/no-debugger": "error",
+              "eslint/no-unused-vars": "error",
+              "typescript/no-explicit-any": "error",
+              "typescript/no-non-null-assertion": "error",
+              "typescript/consistent-type-imports": "error",
+              "typescript/no-floating-promises": "error",
+              "typescript/no-misused-promises": "error",
+              "typescript/await-thenable": "error",
+              "typescript/no-unsafe-assignment": "error",
+              "typescript/no-unsafe-argument": "error",
+              "typescript/no-unsafe-call": "error",
+              "typescript/no-unsafe-member-access": "error",
+              "typescript/no-unsafe-return": "error",
+              "typescript/switch-exhaustiveness-check": "error",
+              "react/react-in-jsx-scope": "off",
+              "import/no-unassigned-import": [
+                "error",
+                {
+                  "allow": [
+                    "**/*.css"
+                  ]
+                }
+              ],
+              "eslint/max-lines": "off",
+              "eslint/max-lines-per-function": "off",
+              "typescript/prefer-readonly-parameter-types": [
+                "error",
+                {
+                  "ignoreInferredTypes": true,
+                  "allow": [
+                    "ReactNode",
+                    "KeyboardEvent",
+                    "Promise"
+                  ]
+                }
+              ],
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "settings": {
+              "react": {
+                "linkComponents": [
+                  {
+                    "name": "Link",
+                    "linkAttribute": "href"
+                  }
+                ]
+              },
+              "jsx-a11y": {
+                "components": {
+                  "Link": "a"
+                }
+              }
+            },
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "react-hook-form-mantine",
+      "owned": true,
+      "configs": [
+        {
+          "path": "react-hook-form-mantine/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "ignorePatterns": [
+              "CHANGELOG.md",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "react-hook-form-mantine/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "example",
+              "dist",
+              "storybook-static",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "reminder",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "repository-reels",
+      "owned": true,
+      "configs": [
+        {
+          "path": "repository-reels/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "compositions/**",
+              "evidence/**",
+              "manifest.json",
+              "public/data/**",
+              "pnpm-lock.yaml"
+            ]
+          }
+        },
+        {
+          "path": "repository-reels/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "resume",
+      "owned": true,
+      "configs": [
+        {
+          "path": "resume/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**",
+              ".agents/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "resume-carlos",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "resume-chat",
+      "owned": true,
+      "configs": [
+        {
+          "path": "resume-chat/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "jsxSingleQuote": false,
+            "trailingComma": "all",
+            "bracketSameLine": false,
+            "singleAttributePerLine": false,
+            "sortTailwindcss": {
+              "functions": [
+                "cn",
+                "tw"
+              ],
+              "preserveDuplicates": false,
+              "preserveWhitespace": false
+            },
+            "ignorePatterns": [
+              "pnpm-lock.yaml",
+              "src/app/typeset.css"
+            ]
+          }
+        },
+        {
+          "path": "resume-chat/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "import",
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "categories": {
+              "correctness": "error",
+              "suspicious": "warn",
+              "perf": "warn"
+            },
+            "settings": {
+              "next": {
+                "rootDir": "."
+              },
+              "react": {
+                "version": "19.2.7"
+              }
+            },
+            "rules": {
+              "react/self-closing-comp": "warn",
+              "react/react-in-jsx-scope": "off",
+              "react-hooks/exhaustive-deps": "warn",
+              "import/no-named-export": "off",
+              "import/prefer-default-export": "off",
+              "import/exports-last": "off",
+              "import/no-namespace": "off",
+              "import/consistent-type-specifier-style": "off",
+              "import/no-unassigned-import": "off",
+              "react/jsx-props-no-spreading": "off",
+              "react/jsx-max-depth": "off",
+              "react/no-array-index-key": "warn",
+              "unicorn/no-null": "off",
+              "unicorn/max-nested-calls": "off",
+              "eslint/sort-keys": "off",
+              "eslint/sort-imports": "off",
+              "eslint/new-cap": "off",
+              "eslint/no-ternary": "off",
+              "eslint/func-style": "off",
+              "eslint/max-statements": "off",
+              "eslint/no-magic-numbers": "off",
+              "eslint/id-length": "off",
+              "eslint/curly": "off",
+              "jsx-a11y/prefer-tag-over-role": "off",
+              "no-restricted-imports": [
+                "error",
+                {
+                  "paths": [
+                    {
+                      "name": "react-test-renderer",
+                      "message": "react-test-renderer is deprecated; use @testing-library/react instead."
+                    }
+                  ]
+                }
+              ]
+            },
+            "overrides": [
+              {
+                "files": [
+                  "**/*.test.{ts,tsx}",
+                  "**/test/**"
+                ],
+                "rules": {
+                  "jsx-a11y/aria-role": "off",
+                  "jsx-a11y/heading-has-content": "off"
+                }
+              }
+            ],
+            "ignorePatterns": [
+              ".next/**",
+              "node_modules/**",
+              "out/**",
+              ".agents/**",
+              ".claude/**"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "resume-template",
+      "owned": true,
+      "configs": [
+        {
+          "path": "resume-template/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "resume-yani",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "rippling-tech-screen",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "samsara-java-screen-practice",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "samsara-system-design",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "second-helping-meal-remixer",
+      "owned": true,
+      "configs": [
+        {
+          "path": "second-helping-meal-remixer/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "set-and-signal",
+      "owned": true,
+      "configs": [
+        {
+          "path": "set-and-signal/web/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "trailingComma": "all",
+            "sortTailwindcss": {
+              "stylesheet": "src/app/index.css",
+              "functions": [
+                "cn",
+                "clsx",
+                "cva",
+                "twMerge",
+                "twJoin"
+              ],
+              "attributes": [
+                "classNames",
+                "containerClassName",
+                "labelClassName"
+              ]
+            },
+            "ignorePatterns": [
+              "catalog/**",
+              "dist/**",
+              "src/i18n/locales/**",
+              "src/generated/**",
+              "node_modules/**",
+              "src/generated/exercises-data.ts",
+              "convex/_generated/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "tools/oxlint/anti-slop/**"
+            ]
+          }
+        },
+        {
+          "path": "set-and-signal/web/.oxlintrc.anti-slop.json",
+          "kind": "oxlint",
+          "config": {
+            "categories": {
+              "correctness": "off"
+            },
+            "plugins": [
+              "oxc"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "./tools/oxlint/anti-slop/index.ts"
+              }
+            ],
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "tools/oxlint/anti-slop/**"
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        },
+        {
+          "path": "set-and-signal/web/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "eslint",
+              "typescript",
+              "oxc",
+              "unicorn",
+              "react",
+              "import",
+              "jsx-a11y",
+              "vitest"
+            ],
+            "jsPlugins": [
+              "oxlint-tailwindcss",
+              "@shadcn/lint",
+              {
+                "name": "anti-slop",
+                "specifier": "./tools/oxlint/anti-slop/index.ts"
+              }
+            ],
+            "env": {
+              "browser": true,
+              "es2022": true
+            },
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "pedantic": "error",
+              "perf": "error"
+            },
+            "settings": {
+              "tailwindcss": {
+                "entryPoint": "src/app/index.css",
+                "rootFontSize": 16
+              }
+            },
+            "rules": {
+              "eslint/no-unused-vars": [
+                "error",
+                {
+                  "argsIgnorePattern": "^_",
+                  "caughtErrors": "none"
+                }
+              ],
+              "eslint/no-unused-expressions": [
+                "error",
+                {
+                  "allowShortCircuit": true,
+                  "allowTernary": true
+                }
+              ],
+              "eslint/no-irregular-whitespace": [
+                "error",
+                {
+                  "skipStrings": true,
+                  "skipComments": true
+                }
+              ],
+              "eslint/no-useless-assignment": "off",
+              "eslint/eqeqeq": [
+                "error",
+                "smart"
+              ],
+              "eslint/one-var": [
+                "error",
+                "never"
+              ],
+              "eslint/max-lines-per-function": "off",
+              "eslint/max-lines": "off",
+              "eslint/no-inline-comments": "off",
+              "eslint/require-unicode-regexp": "off",
+              "eslint/no-underscore-dangle": [
+                "error",
+                {
+                  "allow": [
+                    "_ts"
+                  ]
+                }
+              ],
+              "typescript/prefer-readonly-parameter-types": "off",
+              "typescript/strict-boolean-expressions": "off",
+              "typescript/prefer-nullish-coalescing": "off",
+              "typescript/no-confusing-void-expression": "off",
+              "typescript/strict-void-return": "off",
+              "typescript/no-unsafe-type-assertion": "error",
+              "typescript/no-misused-promises": "error",
+              "typescript/no-unnecessary-type-assertion": "error",
+              "typescript/no-unnecessary-type-conversion": "error",
+              "typescript/no-unsafe-argument": "error",
+              "typescript/no-unsafe-assignment": "error",
+              "typescript/consistent-return": "off",
+              "typescript/no-unsafe-member-access": "error",
+              "typescript/no-unnecessary-boolean-literal-compare": "off",
+              "typescript/no-unnecessary-type-parameters": "off",
+              "typescript/no-unsafe-return": "error",
+              "typescript/no-unsafe-call": "error",
+              "typescript/no-deprecated": "off",
+              "import/max-dependencies": "off",
+              "vitest/no-conditional-in-test": "off",
+              "unicorn/no-array-sort": "off",
+              "unicorn/no-array-reverse": "off",
+              "unicorn/no-array-callback-reference": "off",
+              "unicorn/consistent-function-scoping": "off",
+              "unicorn/prefer-number-coercion": "off",
+              "unicorn/no-negated-condition": "off",
+              "eslint/no-negated-condition": "off",
+              "unicorn/explicit-length-check": "off",
+              "eslint/sort-vars": "off",
+              "react/react-in-jsx-scope": "off",
+              "react/rules-of-hooks": "error",
+              "react/exhaustive-deps": "error",
+              "react/only-export-components": [
+                "error",
+                {
+                  "allowConstantExport": true
+                }
+              ],
+              "tailwindcss/no-duplicate-classes": "error",
+              "tailwindcss/no-conflicting-classes": "error",
+              "tailwindcss/no-deprecated-classes": "error",
+              "tailwindcss/no-unnecessary-whitespace": "error",
+              "tailwindcss/no-dark-without-light": "error",
+              "tailwindcss/no-contradicting-variants": "error",
+              "tailwindcss/enforce-canonical": "error",
+              "tailwindcss/prefer-scale-token": "error",
+              "tailwindcss/enforce-sort-order": "error",
+              "tailwindcss/enforce-shorthand": "error",
+              "tailwindcss/enforce-consistent-important-position": "error",
+              "tailwindcss/enforce-negative-arbitrary-values": "error",
+              "tailwindcss/enforce-consistent-variable-syntax": "error",
+              "tailwindcss/consistent-variant-order": "error",
+              "tailwindcss/no-hardcoded-colors": "error",
+              "tailwindcss/no-unnecessary-arbitrary-value": "error",
+              "tailwindcss/max-class-count": "off",
+              "tailwindcss/enforce-consistent-line-wrapping": "off",
+              "tailwindcss/no-restricted-classes": [
+                "error",
+                {
+                  "patterns": [
+                    {
+                      "pattern": "(^|:)leading-\\[(?:1|1\\.25|1\\.375|1\\.5|1\\.625|2)\\]$",
+                      "message": "Use the matching named leading-* utility (for example, leading-tight) instead of an arbitrary value."
+                    }
+                  ]
+                }
+              ],
+              "tailwindcss/prefer-theme-tokens": "error",
+              "react/forbid-elements": [
+                "error",
+                {
+                  "forbid": [
+                    {
+                      "element": "button",
+                      "message": "Use Button from \"@/shared/ui/button\" instead."
+                    },
+                    {
+                      "element": "input",
+                      "message": "Use Input from \"@/shared/ui/input\" instead."
+                    },
+                    {
+                      "element": "textarea",
+                      "message": "Use Textarea from \"@/shared/ui/textarea\" instead."
+                    },
+                    {
+                      "element": "select",
+                      "message": "Use NativeSelect from \"@/shared/ui/native-select\" instead."
+                    },
+                    {
+                      "element": "option",
+                      "message": "Use NativeSelectOption from \"@/shared/ui/native-select\" instead."
+                    },
+                    {
+                      "element": "optgroup",
+                      "message": "Use NativeSelectOptGroup from \"@/shared/ui/native-select\" instead."
+                    },
+                    {
+                      "element": "label",
+                      "message": "Use Label from \"@/shared/ui/label\" instead."
+                    },
+                    {
+                      "element": "fieldset",
+                      "message": "Use FieldSet from \"@/shared/ui/field\" instead."
+                    },
+                    {
+                      "element": "legend",
+                      "message": "Use FieldLegend from \"@/shared/ui/field\" instead."
+                    },
+                    {
+                      "element": "table",
+                      "message": "Use Table from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "thead",
+                      "message": "Use TableHeader from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "tbody",
+                      "message": "Use TableBody from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "tfoot",
+                      "message": "Use TableFooter from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "tr",
+                      "message": "Use TableRow from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "th",
+                      "message": "Use TableHead from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "td",
+                      "message": "Use TableCell from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "caption",
+                      "message": "Use TableCaption from \"@/shared/ui/table\" instead."
+                    },
+                    {
+                      "element": "hr",
+                      "message": "Use Separator from \"@/shared/ui/separator\" instead."
+                    },
+                    {
+                      "element": "progress",
+                      "message": "Use Progress from \"@/shared/ui/progress\" instead."
+                    }
+                  ]
+                }
+              ],
+              "shadcn/no-restyle": [
+                "error",
+                {
+                  "allow": [
+                    "layout",
+                    "panel-link",
+                    "preview-link",
+                    "dashboard-metric",
+                    "dashboard-start",
+                    "nav-backdrop",
+                    "nav-close",
+                    "topbar-menu",
+                    "topbar-search",
+                    "theme-toggle",
+                    "spotlight-start",
+                    "spotlight-adjust",
+                    "week-current",
+                    "training-day",
+                    "is-today",
+                    "exercise-preview-row",
+                    "recent-workout",
+                    "progress-highlight",
+                    "ai-dashboard-link"
+                  ]
+                }
+              ],
+              "shadcn/no-raw-colors": [
+                "error",
+                {
+                  "allow": [
+                    "fill-none"
+                  ]
+                }
+              ],
+              "shadcn/no-arbitrary-values": "error",
+              "shadcn/no-inline-styles": "error",
+              "shadcn/require-static-classes": "error",
+              "shadcn/no-unknown-classes": [
+                "error",
+                {
+                  "allow": [
+                    "plain",
+                    "metric-name",
+                    "metric-bar",
+                    "metric-value",
+                    "chk",
+                    "icn",
+                    "toaster"
+                  ]
+                }
+              ],
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "ignorePatterns": [
+              "dist/**",
+              "node_modules/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "tools/oxlint/anti-slop/**"
+            ],
+            "overrides": [
+              {
+                "files": [
+                  "src/shared/ui/button.tsx"
+                ],
+                "rules": {
+                  "react/only-export-components": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/shared/ui/field.tsx"
+                ],
+                "rules": {
+                  "jsx-a11y/prefer-tag-over-role": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/shared/ui/label.tsx"
+                ],
+                "rules": {
+                  "jsx-a11y/label-has-associated-control": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/shared/ui/textarea.tsx",
+                  "src/shared/ui/native-select.tsx",
+                  "src/shared/ui/label.tsx",
+                  "src/shared/ui/field.tsx",
+                  "src/shared/ui/table.tsx"
+                ],
+                "rules": {
+                  "react/forbid-elements": "off"
+                }
+              },
+              {
+                "files": [
+                  "src/shared/ui/**"
+                ],
+                "rules": {
+                  "shadcn/no-restyle": "off",
+                  "shadcn/require-static-classes": "off"
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "shipshape-mcp",
+      "owned": true,
+      "configs": [
+        {
+          "path": "shipshape-mcp/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 80,
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "pnpm-lock.yaml",
+              "dist/**",
+              "coverage/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ]
+          }
+        },
+        {
+          "path": "shipshape-mcp/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "options": {
+              "typeAware": true
+            },
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "dist/**",
+              "coverage/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "rules": {
+              "no-control-regex": "off",
+              "unicorn/no-new-array": "off",
+              "typescript/consistent-type-imports": "error",
+              "typescript/no-explicit-any": "error",
+              "typescript/no-floating-promises": "error",
+              "typescript/no-misused-promises": "error",
+              "eslint/no-unused-vars": [
+                "error",
+                {
+                  "argsIgnorePattern": "^_",
+                  "varsIgnorePattern": "^_"
+                }
+              ],
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "overrides": [
+              {
+                "files": [
+                  "tests/**/*.ts"
+                ],
+                "rules": {
+                  "typescript/no-base-to-string": "off",
+                  "typescript/no-unnecessary-type-assertion": "off",
+                  "typescript/no-unsafe-assignment": "off",
+                  "typescript/require-await": "off"
+                }
+              }
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "snaphaul",
+      "owned": true,
+      "configs": [
+        {
+          "path": "snaphaul/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts"
+            ]
+          }
+        },
+        {
+          "path": "snaphaul/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "software-eng",
+      "owned": true,
+      "configs": [
+        {
+          "path": "software-eng/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**",
+              "website/repo/views/lib/js/HomeSenseChart.js",
+              "website/repo/views/lib/js/amcharts.js",
+              "website/repo/views/lib/js/bootstrap*.js",
+              "website/repo/views/lib/js/jquery*.js",
+              "website/repo/views/lib/js/knockout*.js",
+              "website/repo/views/pages/jquery*.js"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "spoonworld",
+      "owned": true,
+      "configs": [
+        {
+          "path": "spoonworld/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "ignorePatterns": [
+              ".agents/**",
+              ".claude/**",
+              "pnpm-lock.yaml"
+            ]
+          }
+        },
+        {
+          "path": "spoonworld/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**",
+              ".cloudflare/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "spring-todo-api",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "symphony",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "system-design-chatgpt",
+      "owned": true,
+      "configs": [
+        {
+          "path": "system-design-chatgpt/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "public/mcp-view.html",
+              "pnpm-lock.yaml",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "printWidth": 100,
+            "quoteProps": "preserve"
+          }
+        },
+        {
+          "path": "system-design-chatgpt/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "perf": "error"
+            },
+            "plugins": [
+              "eslint",
+              "typescript",
+              "react",
+              "unicorn",
+              "oxc",
+              "import",
+              "jsx-a11y",
+              "promise"
+            ],
+            "rules": {
+              "react/react-in-jsx-scope": "off",
+              "react/exhaustive-effect-dependencies": "off",
+              "react/immutability": "error",
+              "react/memo-dependencies": "error",
+              "react/refs": "error",
+              "react-hooks/exhaustive-deps": "error",
+              "typescript/no-unsafe-type-assertion": "off",
+              "typescript/no-unnecessary-type-assertion": "error",
+              "typescript/no-base-to-string": "error",
+              "typescript/consistent-return": "error",
+              "unicorn/prefer-add-event-listener": "error",
+              "unicorn/no-array-sort": "error",
+              "unicorn/consistent-function-scoping": "error",
+              "unicorn/prefer-set-has": "error",
+              "unicorn/no-useless-fallback-in-spread": "error",
+              "unicorn/no-useless-spread": "error",
+              "import/no-unassigned-import": [
+                "error",
+                {
+                  "allow": [
+                    "**/*.css"
+                  ]
+                }
+              ],
+              "import/no-named-as-default-member": "error",
+              "oxc/no-map-spread": "off",
+              "eslint/no-underscore-dangle": "error",
+              "local/no-inline-types": "error",
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "case": "kebabCase"
+                }
+              ],
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "options": {
+              "typeAware": true,
+              "maxWarnings": 0,
+              "reportUnusedDisableDirectives": "error"
+            },
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "public/mcp-view.html",
+              "public/mcp-workspace.html",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              "./lint/types-plugin.ts",
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "overrides": [
+              {
+                "files": [
+                  "tests/helpers/strict-fake.ts",
+                  "tests/helpers/sqlite-d1.ts",
+                  "tests/helpers/awaited-rpc.ts",
+                  "src/app/validation.ts"
+                ],
+                "rules": {
+                  "anti-slop/no-runtime-typeof": [
+                    "error",
+                    {
+                      "allowInTypeGuards": true
+                    }
+                  ]
+                }
+              },
+              {
+                "files": [
+                  "src/worker/room.ts"
+                ],
+                "rules": {
+                  "anti-slop/no-runtime-typeof": [
+                    "error",
+                    {
+                      "allowInTypeGuards": true
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "system-design-companion",
+      "owned": true,
+      "configs": [
+        {
+          "path": "system-design-companion/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "public/mcp-view.html",
+              "pnpm-lock.yaml",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "printWidth": 100,
+            "quoteProps": "preserve"
+          }
+        },
+        {
+          "path": "system-design-companion/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "suspicious": "error",
+              "perf": "error"
+            },
+            "plugins": [
+              "eslint",
+              "typescript",
+              "react",
+              "unicorn",
+              "oxc",
+              "import",
+              "jsx-a11y",
+              "promise"
+            ],
+            "rules": {
+              "react/react-in-jsx-scope": "off",
+              "react/exhaustive-effect-dependencies": "off",
+              "react/immutability": "error",
+              "react/memo-dependencies": "error",
+              "react/refs": "error",
+              "react-hooks/exhaustive-deps": "error",
+              "typescript/no-unsafe-type-assertion": "off",
+              "typescript/no-unnecessary-type-assertion": "error",
+              "typescript/no-base-to-string": "error",
+              "typescript/consistent-return": "error",
+              "unicorn/prefer-add-event-listener": "error",
+              "unicorn/no-array-sort": "error",
+              "unicorn/consistent-function-scoping": "error",
+              "unicorn/prefer-set-has": "error",
+              "unicorn/no-useless-fallback-in-spread": "error",
+              "unicorn/no-useless-spread": "error",
+              "import/no-unassigned-import": [
+                "error",
+                {
+                  "allow": [
+                    "**/*.css"
+                  ]
+                }
+              ],
+              "import/no-named-as-default-member": "error",
+              "oxc/no-map-spread": "off",
+              "eslint/no-underscore-dangle": "error",
+              "local/no-inline-types": "error",
+              "unicorn/filename-case": [
+                "error",
+                {
+                  "case": "kebabCase"
+                }
+              ],
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            },
+            "options": {
+              "typeAware": true,
+              "maxWarnings": 0,
+              "reportUnusedDisableDirectives": "error"
+            },
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              "public/mcp-view.html",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              "./lint/types-plugin.ts",
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "overrides": [
+              {
+                "files": [
+                  "tests/helpers/strict-fake.ts",
+                  "tests/helpers/sqlite-d1.ts",
+                  "tests/helpers/awaited-rpc.ts",
+                  "src/app/validation.ts"
+                ],
+                "rules": {
+                  "anti-slop/no-runtime-typeof": [
+                    "error",
+                    {
+                      "allowInTypeGuards": true
+                    }
+                  ]
+                }
+              },
+              {
+                "files": [
+                  "src/worker/room.ts"
+                ],
+                "rules": {
+                  "anti-slop/no-runtime-typeof": [
+                    "error",
+                    {
+                      "allowInTypeGuards": true
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "t3-pstack",
+      "owned": false,
+      "configs": [
+        {
+          "path": "t3-pstack/plugins/pstack/skills/poteto-mode/scripts/.prettierrc.json",
+          "kind": "prettier",
+          "config": {
+            "trailingComma": "es5"
+          }
+        }
+      ]
+    },
+    {
+      "name": "trading-mcp",
+      "owned": true,
+      "configs": [
+        {
+          "path": "trading-mcp/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 100,
+            "tabWidth": 2,
+            "useTabs": false,
+            "semi": true,
+            "singleQuote": false,
+            "trailingComma": "all",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**"
+            ]
+          }
+        },
+        {
+          "path": "trading-mcp/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "import",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              "**/dist/**",
+              "**/node_modules/**",
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**"
+            ],
+            "rules": {
+              "eslint/no-unused-vars": [
+                "error",
+                {
+                  "argsIgnorePattern": "^_",
+                  "varsIgnorePattern": "^_"
+                }
+              ],
+              "typescript/no-explicit-any": "error",
+              "typescript/no-empty-object-type": "off",
+              "oxc/no-accumulating-spread": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "trailbraid",
+      "owned": true,
+      "configs": [
+        {
+          "path": "trailbraid/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": []
+          }
+        },
+        {
+          "path": "trailbraid/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "ignorePatterns": [
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**",
+              "dist/**",
+              ".cloudflare/**"
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "typescript/no-non-null-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "traverse",
+      "owned": true,
+      "configs": [
+        {
+          "path": "traverse/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "printWidth": 80,
+            "tabWidth": 2,
+            "semi": true,
+            "singleQuote": false,
+            "trailingComma": "all",
+            "ignorePatterns": [
+              ".agents/**",
+              ".claude/**"
+            ]
+          }
+        },
+        {
+          "path": "traverse/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "categories": {
+              "correctness": "error",
+              "perf": "error",
+              "suspicious": "error"
+            },
+            "plugins": [
+              "import",
+              "nextjs",
+              "react",
+              "typescript"
+            ],
+            "rules": {
+              "eslint/no-await-in-loop": "off",
+              "eslint/no-shadow": "off",
+              "import/no-unassigned-import": "off",
+              "nextjs/no-img-element": "off",
+              "react/jsx-no-constructed-context-values": "off",
+              "react/no-unstable-nested-components": "off",
+              "react/react-in-jsx-scope": "off",
+              "typescript/consistent-return": "off",
+              "typescript/no-unsafe-type-assertion": "off",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": [
+                "error",
+                {
+                  "allowInTypeGuards": true
+                }
+              ],
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error",
+              "oxc/no-accumulating-spread": "error"
+            },
+            "options": {
+              "typeAware": true,
+              "maxWarnings": 0
+            },
+            "ignorePatterns": [
+              "**/.next/**",
+              "**/build/**",
+              "**/dist/**",
+              ".agent/**",
+              ".agents/**",
+              ".claude/**",
+              ".codex/**",
+              ".continue/**",
+              ".cursor/**",
+              ".gemini/**",
+              ".opencode/**",
+              ".pi/**",
+              ".roo/**",
+              ".windsurf/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "trvl",
+      "owned": true,
+      "configs": []
+    },
+    {
+      "name": "upgrade-rehearsal",
+      "owned": true,
+      "configs": [
+        {
+          "path": "upgrade-rehearsal/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "ignorePatterns": [
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              ".next/**",
+              "_site/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "vienna-travel",
+      "owned": true,
+      "configs": [
+        {
+          "path": "vienna-travel/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "ignorePatterns": [
+              ".next/**",
+              "node_modules/**",
+              "build/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              "_site/**"
+            ],
+            "objectWrap": "preserve",
+            "printWidth": 120,
+            "proseWrap": "preserve",
+            "semi": false,
+            "singleQuote": true
+          }
+        },
+        {
+          "path": "vienna-travel/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "jsx-a11y",
+              "nextjs",
+              "react",
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "browser": true,
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              ".next/**",
+              "out/**",
+              "build/**",
+              "next-env.d.ts",
+              "node_modules/**",
+              "dist/**",
+              "coverage/**",
+              ".snapshot*",
+              "_site/**"
+            ],
+            "jsPlugins": [
+              {
+                "name": "anti-slop",
+                "specifier": "@aranlucas/oxlint-plugin-anti-slop"
+              }
+            ],
+            "rules": {
+              "oxc/no-accumulating-spread": "error",
+              "anti-slop/no-array-filter-map": "error",
+              "anti-slop/no-reduce-accumulator-copy": "error",
+              "anti-slop/no-chained-type-assertions": "error",
+              "anti-slop/no-conditional-empty-object-spread": "error",
+              "anti-slop/no-known-value-widening": "error",
+              "anti-slop/no-module-mocking": "error",
+              "anti-slop/no-object-parameters": "error",
+              "anti-slop/no-reflect-apply": "error",
+              "anti-slop/no-reflect-get": "error",
+              "anti-slop/no-runtime-typeof": "error",
+              "anti-slop/no-shape-in-symbol-names": "error",
+              "anti-slop/no-unknown-parameters": "error",
+              "anti-slop/no-unknown-returns": "error",
+              "anti-slop/no-unknown-type-aliases": "error",
+              "anti-slop/no-unsafe-dictionary-type": "error",
+              "anti-slop/no-widen-then-assert": "error",
+              "anti-slop/require-readable-spacing": "error",
+              "anti-slop/require-safety-comment-for-type-assertion": "error"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "waveshare_camera_cartoon",
+      "owned": false,
+      "configs": []
+    },
+    {
+      "name": "waveshare_touch_demo",
+      "owned": false,
+      "configs": [
+        {
+          "path": "waveshare_touch_demo/cloudflare/angry-cat-worker/.oxfmtrc.json",
+          "kind": "oxfmt",
+          "config": {
+            "$schema": "./node_modules/oxfmt/configuration_schema.json",
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              ".wrangler/**"
+            ]
+          }
+        },
+        {
+          "path": "waveshare_touch_demo/cloudflare/angry-cat-worker/.oxlintrc.json",
+          "kind": "oxlint",
+          "config": {
+            "$schema": "./node_modules/oxlint/configuration_schema.json",
+            "plugins": [
+              "typescript",
+              "unicorn"
+            ],
+            "env": {
+              "node": true,
+              "es2026": true
+            },
+            "ignorePatterns": [
+              "worker-configuration.d.ts",
+              ".wrangler/**"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "whatnot-coding-practice",
+      "owned": false,
+      "configs": []
+    }
+  ]
+}
