@@ -1,4 +1,18 @@
 {
+  "react/only-export-components": [
+    "error",
+    {
+      "allowConstantExport": true,
+      "allowExportNames": [
+        "metadata",
+        "viewport",
+        "generateMetadata",
+        "generateStaticParams",
+        "dynamic",
+        "revalidate"
+      ]
+    }
+  ],
   "nextjs/google-font-display": "error",
   "nextjs/google-font-preconnect": "error",
   "nextjs/inline-script-id": "error",
