@@ -9,7 +9,7 @@ The portfolio rollout preserves the strongest existing rule settings rather than
 - Equality always uses strict operators, including null checks.
 - Files are limited to 300 lines, functions to 50 lines, and modules to 10 dependencies, including comments and blank lines. These are the native defaults already enabled by the website and Raleigh configurations. The size-limits preset remains an alias for the same defaults.
 - Unicode regular expressions, explicit length checks, arrow callbacks for array methods, number coercion, top-level await, positive conditions, separate comments, and sorted variable declarations are enforced.
-- Unsafe assertions, confusing void expressions, deprecated APIs, unnecessary type parameters, strict boolean expressions, and strict void returns are errors. The readonly-parameter policy comes from Raleigh, including its ReactNode, KeyboardEvent, and Promise exemptions and inferred-parameter handling.
+- Unsafe assertions, confusing void expressions, deprecated APIs, unnecessary type parameters, strict boolean expressions, and strict void returns are errors. The readonly-parameter rule is explicitly disabled, including when the pedantic category is enabled.
 - All TypeScript suppression comments are forbidden except ts-check. Unused-variable and dangling-underscore exemptions no longer weaken the native defaults.
 - React accessibility, constructed context values, effect dependencies, target-blank protection, and unsafe lifecycle checks are errors. Custom Image components receive alt-text checks without excluding the native element defaults.
 - The Next.js preset keeps the component-export rule enabled while recognizing the framework's documented metadata and route-segment exports. Other mixed exports remain errors.

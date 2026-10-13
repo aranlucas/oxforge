@@ -201,6 +201,33 @@ test("type-aware preset catches floating promises using the installed checker", 
   assert.match(result.stdout, /no-floating-promises/);
 });
 
+test("readonly parameters stay disabled with pedantic and type-aware defaults", async (t) => {
+  const directory = await fixture(t);
+  const config = oxforge();
+  assert.equal(config.categories.pedantic, "error");
+  assert.equal(config.options.typeAware, true);
+  assert.equal(config.rules["typescript/prefer-readonly-parameter-types"], "off");
+  await writeFile(path.join(directory, ".oxlintrc.json"), JSON.stringify(config));
+  await writeFile(
+    path.join(directory, "tsconfig.json"),
+    JSON.stringify({
+      compilerOptions: { strict: true, target: "ES2024" },
+      include: ["*.ts"],
+    }),
+  );
+  await writeFile(
+    path.join(directory, "sample.ts"),
+    `type Item = { value: string; tags: string[] };
+
+export function readArray(items: string[]) { return items.length; }
+
+export function readObject(item: Item) { return item.value; }
+`,
+  );
+  const result = run(lintBin, ["sample.ts", "--format", "json"], directory);
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+});
+
 test("Oxfmt loads the shared config and honors local formatting exceptions", async (t) => {
   const directory = await fixture(t);
   await writeFile(

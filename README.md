@@ -125,7 +125,7 @@ Keep app-specific paths and exceptions in native JSON fields:
 
 Local rules take precedence over inherited settings. To turn off named types, set `oxforge/no-inline-types: "off"`. For a Worker or Node project, set `env.worker` or `env.node`. React Native can use `react.json` with its existing `__DEV__` global, import allowlist, and platform-specific accessibility overrides.
 
-The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific server-import restrictions are shared in `mcp.json`; SDK globals and paths stay local.
+The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, SDK globals, and paths stay local. SDK-specific server-import restrictions are shared in `mcp.json`.
 
 ## Formatting
 
@@ -207,6 +207,6 @@ pnpm publish --access public
 
 The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
-Publishing runs both checks first. Version 0.2.0 consolidates the stricter existing repository policies, including default size limits, readonly parameters, unsafe assertions, accessibility, Vitest, and SDK import rules. It retains the pedantic and Unicorn improvements from 0.1.1. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
+Publishing runs both checks first. Version 0.2.0 consolidates the stricter existing repository policies, including default size limits, unsafe assertions, accessibility, Vitest, and SDK import rules. The readonly-parameter rule is explicitly disabled even with pedantic checks enabled. It retains the pedantic and Unicorn improvements from 0.1.1. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
 
 MIT licensed. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).

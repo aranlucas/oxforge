@@ -41,11 +41,5 @@
   "typescript/strict-void-return": "error",
   "typescript/switch-exhaustiveness-check": "error",
   "typescript/unbound-method": "error",
-  "typescript/prefer-readonly-parameter-types": [
-    "error",
-    {
-      "ignoreInferredTypes": true,
-      "allow": ["ReactNode", "KeyboardEvent", "Promise"]
-    }
-  ]
+  "typescript/prefer-readonly-parameter-types": "off"
 }

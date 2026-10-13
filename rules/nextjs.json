@@ -36,7 +36,11 @@
         "fetchCache",
         "runtime",
         "preferredRegion",
-        "maxDuration"
+        "maxDuration",
+        "alt",
+        "size",
+        "contentType",
+        "generateImageMetadata"
       ]
     }
   ]
