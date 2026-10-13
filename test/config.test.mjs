@@ -220,17 +220,19 @@ test("initializer creates discoverable configs and protects existing configs", a
   const binary = path.join(root, "bin/oxforge.js");
   const result = run(binary, ["init", "--next", "--vitest"], directory);
   assert.equal(result.status, 0, result.stderr);
-  const config = await readFile(path.join(directory, "oxlint.config.ts"), "utf8");
-  assert.match(config, /nextjs: true/);
-  assert.match(config, /vitest: true/);
+  const config = await readFile(path.join(directory, ".oxlintrc.json"), "utf8");
+  const parsed = JSON.parse(config);
+  assert.equal(parsed.options.typeAware, true);
+  assert.ok(parsed.extends.some((preset) => preset.endsWith("nextjs.json")));
+  assert.ok(parsed.extends.some((preset) => preset.endsWith("vitest.json")));
   const again = run(binary, ["init"], directory);
   assert.equal(again.status, 1);
-  assert.equal(await readFile(path.join(directory, "oxlint.config.ts"), "utf8"), config);
+  assert.equal(await readFile(path.join(directory, ".oxlintrc.json"), "utf8"), config);
 });
 
 test("initializer rejects unknown options before writing", async (t) => {
   const directory = await fixture(t);
   const result = run(path.join(root, "bin/oxforge.js"), ["init", "--typo"], directory);
   assert.equal(result.status, 1);
-  await assert.rejects(readFile(path.join(directory, "oxlint.config.ts")), { code: "ENOENT" });
+  await assert.rejects(readFile(path.join(directory, ".oxlintrc.json")), { code: "ENOENT" });
 });

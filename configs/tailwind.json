@@ -1,0 +1,43 @@
+{
+  "jsPlugins": [{ "name": "tailwindcss", "specifier": "oxlint-tailwindcss" }],
+  "rules": {
+    "tailwindcss/consistent-variant-order": "error",
+    "tailwindcss/enforce-canonical": "error",
+    "tailwindcss/enforce-consistent-important-position": "error",
+    "tailwindcss/enforce-consistent-line-wrapping": "off",
+    "tailwindcss/enforce-consistent-variable-syntax": "error",
+    "tailwindcss/enforce-logical": "error",
+    "tailwindcss/enforce-negative-arbitrary-values": "error",
+    "tailwindcss/enforce-physical": "off",
+    "tailwindcss/enforce-shorthand": "error",
+    "tailwindcss/enforce-sort-order": "error",
+    "tailwindcss/max-class-count": ["error", { "max": 100 }],
+    "tailwindcss/no-arbitrary-value": "error",
+    "tailwindcss/no-conflicting-classes": "error",
+    "tailwindcss/no-contradicting-variants": "error",
+    "tailwindcss/no-dark-without-light": "error",
+    "tailwindcss/no-deprecated-classes": "error",
+    "tailwindcss/no-duplicate-classes": "error",
+    "tailwindcss/no-hardcoded-colors": "error",
+    "tailwindcss/no-restricted-classes": [
+      "error",
+      {
+        "patterns": [
+          {
+            "pattern": "^(?:[a-z0-9-]+:)*space-[xy]-",
+            "message": "Use flex or grid with gap-* instead."
+          },
+          {
+            "pattern": "(^|:)leading-\\[(?:1|1\\.25|1\\.375|1\\.5|1\\.625|2)\\]$",
+            "message": "Use the matching named leading-* utility instead of an arbitrary value."
+          }
+        ]
+      }
+    ],
+    "tailwindcss/no-unknown-classes": "error",
+    "tailwindcss/no-unnecessary-arbitrary-value": "error",
+    "tailwindcss/no-unnecessary-whitespace": "error",
+    "tailwindcss/prefer-scale-token": "error",
+    "tailwindcss/prefer-theme-tokens": "error"
+  }
+}

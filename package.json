@@ -27,7 +27,8 @@
     "dist",
     "rules",
     "bin",
-    "NOTICE.md"
+    "NOTICE.md",
+    "configs"
   ],
   "type": "module",
   "exports": {
@@ -44,13 +45,18 @@
       "default": "./dist/plugin.js"
     },
     "./rules/*": "./rules/*.json",
-    "./package.json": "./package.json"
+    "./package.json": "./package.json",
+    "./configs/*": "./configs/*.json",
+    "./format-config": {
+      "types": "./src/format-config.d.ts",
+      "default": "./src/format-config.js"
+    }
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json",
+    "build": "tsc -p tsconfig.json && node scripts/generate-configs.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.api.json",
     "test": "node --test test/*.test.mjs",
     "lint": "oxlint",

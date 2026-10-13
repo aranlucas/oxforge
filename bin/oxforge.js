@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import { access, writeFile } from "node:fs/promises";
 import path from "node:path";
+import { ignorePatterns } from "../src/index.js";
 
 const [command, ...args] = process.argv.slice(2);
 
@@ -41,31 +42,33 @@ async function init() {
     );
   }
 
-  const options = [];
+  const presets = [flags.has("--no-type-aware") ? "base" : "recommended"];
 
   if (flags.has("--next")) {
-    options.push("  nextjs: true,");
+    presets.push("nextjs");
   } else if (flags.has("--react")) {
-    options.push("  react: true,");
+    presets.push("react");
   }
 
   if (flags.has("--vitest")) {
-    options.push("  vitest: true,");
+    presets.push("vitest");
   }
 
-  if (flags.has("--no-type-aware")) {
-    options.push("  typeAware: false,");
-  }
+  const config = {
+    $schema: "./node_modules/oxlint/configuration_schema.json",
+    extends: presets.map((name) => `./node_modules/@aranlucas/oxforge/configs/${name}.json`),
+    options: { typeAware: !flags.has("--no-type-aware") },
+    ignorePatterns,
+  };
 
-  const lint = `import { oxforge } from "@aranlucas/oxforge";\n\nexport default oxforge({\n${options.join("\n")}\n});\n`;
+  const lint = `${JSON.stringify(config, null, 2)}\n`;
 
-  const format =
-    'import { format } from "@aranlucas/oxforge/format";\n\nexport default format();\n';
+  const format = 'export { default } from "@aranlucas/oxforge/format-config";\n';
 
-  await writeFile("oxlint.config.ts", lint, { flag: "wx" });
+  await writeFile(".oxlintrc.json", lint, { flag: "wx" });
   await writeFile("oxfmt.config.ts", format, { flag: "wx" });
   process.stdout.write(
-    "Created oxlint.config.ts and oxfmt.config.ts. Run pnpm exec oxlint and pnpm exec oxfmt --check.\n",
+    "Created .oxlintrc.json and oxfmt.config.ts. Run pnpm exec oxlint and pnpm exec oxfmt --check.\n",
   );
 }
 

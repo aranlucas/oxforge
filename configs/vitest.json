@@ -1,0 +1,10 @@
+{
+  "plugins": ["vitest"],
+  "rules": {
+    "vitest/no-conditional-in-test": "off",
+    "vitest/no-disabled-tests": "error",
+    "vitest/no-focused-tests": "error",
+    "vitest/require-mock-type-parameters": "off",
+    "vitest/valid-expect": "error"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "jsPlugins": [{ "name": "shadcn", "specifier": "@shadcn/lint" }],
+  "rules": {
+    "shadcn/no-arbitrary-values": "error",
+    "shadcn/no-inline-styles": "error",
+    "shadcn/no-raw-colors": ["error", { "allow": ["fill-none"] }],
+    "shadcn/no-restyle": [
+      "error",
+      {
+        "allow": ["layout"],
+        "contracts": [
+          {
+            "pattern": "^(Card|CardHeader|CardContent|CardFooter|Empty)$",
+            "allow": ["layout", "spacing"]
+          },
+          { "pattern": "^CarouselItem$", "allow": ["layout", "ps"] },
+          { "pattern": "^Skeleton$", "allow": ["layout", "rounded"] }
+        ]
+      }
+    ],
+    "shadcn/no-unknown-classes": "error",
+    "shadcn/require-static-classes": "error"
+  }
+}
