@@ -112,6 +112,7 @@
   "typescript/prefer-as-const": "error",
   "typescript/prefer-function-type": "error",
   "typescript/prefer-namespace-keyword": "error",
+  "typescript/prefer-readonly-parameter-types": "off",
   "typescript/triple-slash-reference": "error",
   "unicorn/consistent-function-scoping": "error",
   "unicorn/explicit-length-check": "off",
