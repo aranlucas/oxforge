@@ -95,10 +95,10 @@ test("consumer overrides win while plugin and ignore arrays stay additive", () =
 
 test("configs do not share mutable nested rule options", () => {
   const first = oxforge();
-  first.rules["eslint/eqeqeq"][2].null = "always";
+  first.rules["import/no-unassigned-import"][1].allow.push("**/env");
   first.ignorePatterns.push("everything/**");
   const second = oxforge();
-  assert.equal(second.rules["eslint/eqeqeq"][2].null, "ignore");
+  assert.deepEqual(second.rules["import/no-unassigned-import"][1].allow, ["**/*.css"]);
   assert.equal(second.ignorePatterns.includes("everything/**"), false);
 });
 

@@ -62,7 +62,7 @@
   "react/only-export-components": [
     "error",
     {
-      "allowConstantExport": true
+      "allowConstantExport": false
     }
   ],
   "react/preserve-manual-memoization": "error",
