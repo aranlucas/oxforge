@@ -71,13 +71,16 @@
     "prepack": "pnpm build",
     "prepublishOnly": "pnpm check",
     "audit:projects": "node scripts/audit-projects.mjs",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "semantic-release": "semantic-release"
   },
   "dependencies": {
     "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",
     "@oxlint/plugins": "1.88.0"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^7.0.0",
+    "@semantic-release/git": "^11.0.1",
     "@shadcn/lint": "0.2.1",
     "@types/node": "^26.6.5",
     "jsonc-parser": "^3.3.1",
@@ -86,6 +89,7 @@
     "oxlint-tailwindcss": "1.16.0",
     "oxlint-tsgolint": "7.0.2004",
     "publint": "^0.3.25",
+    "semantic-release": "^25.0.9",
     "typescript": "^7.0.2",
     "vite-plus": "^1.1.0",
     "vitest": "5.0.4"

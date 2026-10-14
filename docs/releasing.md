@@ -1,0 +1,42 @@
+# Releasing
+
+Releases are automatic. `.github/workflows/release.yml` runs
+[semantic-release](https://semantic-release.gitbook.io/) on every push to `main`, the same setup
+as `react-hook-form-mantine`.
+
+## How a release happens
+
+1. Merge a PR to `main` with a [Conventional Commits](https://www.conventionalcommits.org/)
+   title. Squash merges use the PR title as the commit message.
+2. The workflow runs `pnpm check`, then `pnpm semantic-release`, which looks at the commits since
+   the last `v*` tag:
+   - `fix:` → patch, `feat:` → minor, `!` or a `BREAKING CHANGE:` footer → major
+   - `build:`, `chore:`, `ci:`, `docs:`, `refactor:`, `test:` → no release
+3. If a release is due, semantic-release:
+   - sets `package.json` `version` and writes the notes to `CHANGELOG.md`
+   - publishes to npm over OIDC trusted publishing, with provenance and no npm token
+   - commits `CHANGELOG.md` and `package.json` back to `main` as `chore(release): x.y.z [skip ci]`
+   - tags `vx.y.z`, creates the GitHub Release, and comments on the issues and PRs it released
+
+Pushes to a `next` branch publish prereleases to the `next` dist-tag.
+
+Policy changes that tighten defaults should be `feat:` (or `feat!:` once past 1.0), not `fix:`, so
+they don't reach consumers on a patch range.
+
+## Preview a release
+
+```sh
+GITHUB_TOKEN=$(gh auth token) pnpm semantic-release --dry-run --no-ci
+```
+
+This prints the next version and its notes without publishing anything.
+
+## One-time setup
+
+- **npm trusted publisher:** on npmjs.com, open the package, go to **Settings → Trusted
+  publishing**, and add a GitHub Actions publisher with user `aranlucas`, repository `oxforge`,
+  workflow `release.yml`, and no environment. Once the first trusted publish works, set
+  **Publishing access** to "Require two-factor authentication and disallow tokens".
+- **Baseline tag:** semantic-release starts from the latest `v*` tag. `v0.2.2` marks `6a4bd38`,
+  the last commit before 0.2.2 was published by hand. Without it, the first run would publish
+  1.0.0.

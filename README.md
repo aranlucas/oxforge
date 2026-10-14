@@ -66,7 +66,7 @@ export default defineConfig({
 
 Version 0.2.0 is a compatibility-affecting policy update: stricter defaults can report errors in
 code that passed 0.1.3. Dependencies declared as `^0.1.3` do not select 0.2.0 automatically.
-See the [0.2.0 release candidate and migration notes](CHANGELOG.md#020-unreleased) before upgrading.
+See the [0.2.0 release candidate and migration notes](https://github.com/aranlucas/oxforge/blob/f273129/CHANGELOG.md#020-unreleased) before upgrading.
 Preparing or merging this version does not publish it or update consumers. Keep existing local
 protections until the released package passes the consuming project's package-age/security gates
 and its lint, type, test, and build checks.
@@ -245,8 +245,9 @@ pnpm install --frozen-lockfile
 pnpm check
 pnpm test:package
 pnpm pack
-pnpm publish --access public
 ```
+
+Releases are published automatically from `main` by semantic-release. See [docs/releasing.md](docs/releasing.md).
 
 The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests through Vitest. `pnpm test:watch` reruns tests during development. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
