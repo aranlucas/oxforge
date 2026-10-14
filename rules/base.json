@@ -125,5 +125,6 @@
   "unicorn/prefer-set-has": "error",
   "unicorn/prefer-string-raw": "error",
   "unicorn/prefer-top-level-await": "off",
-  "unicorn/throw-new-error": "error"
+  "unicorn/throw-new-error": "error",
+  "typescript/consistent-return": "off"
 }
