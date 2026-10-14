@@ -49,6 +49,15 @@ Add scripts to `package.json`:
 
 Oxlint and Oxfmt discover these files directly. Editors, CI, and the normal CLIs use the same policy.
 
+## Upgrading from 0.1.x
+
+Version 0.2.0 is a compatibility-affecting policy update: stricter defaults can report errors in
+code that passed 0.1.3. Dependencies declared as `^0.1.3` do not select 0.2.0 automatically.
+See the [0.2.0 release candidate and migration notes](CHANGELOG.md#020-unreleased) before upgrading.
+Preparing or merging this version does not publish it or update consumers. Keep existing local
+protections until the released package passes the consuming project's package-age/security gates
+and its lint, type, test, and build checks.
+
 ## Plugins and presets
 
 Oxlint's `plugins` array selects built-in Rust plugins such as `eslint`, `typescript`, `unicorn`, and `react`. Third-party custom rules use `jsPlugins`; shared rule settings use `extends`. Adding a plugin alone does not select all of Oxforge's opinionated rule settings. The presets declare the required built-in and custom plugins for you. See [Oxlint's config reference](https://oxc.rs/docs/guide/usage/linter/config-file-reference) and [JS plugin documentation](https://oxc.rs/docs/guide/usage/linter/js-plugins).
