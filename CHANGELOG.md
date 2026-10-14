@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.1 (unreleased)
+
+### Fixes
+
+- **Type-aware:** `prefer-readonly-parameter-types` is disabled again. The rule was re-enabled in the 0.2.0 release candidate but caused excessive false positives on explicit parameter types. Both generated presets (`rules/type-aware.json`, `configs/type-aware.json`) now set it to `"off"`.
+
 ## 0.2.0 (unreleased)
 
 This is a release candidate, not a statement that the package has been published. The new minor

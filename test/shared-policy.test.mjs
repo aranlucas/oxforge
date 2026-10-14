@@ -96,7 +96,7 @@ export function href(value: string) { return value; }
 export const inferred = [{ value: "ok" }].map(value => value.value);
 export function promise(value: Promise<string>) { return value; }`,
     });
-    assert.equal(count(diagnostics, readonlyRule), 3, JSON.stringify(diagnostics));
+    assert.equal(count(diagnostics, readonlyRule), 0, JSON.stringify(diagnostics));
   });
 
   test(`${mode}: React exceptions match package declarations, not application type names`, async (t) => {
@@ -112,27 +112,6 @@ export function keyboard(value: KeyboardEvent) { return value.key; }`,
     const configuration = config(mode, "react");
     const diagnostics = await check(t, configuration, files);
     assert.equal(count(diagnostics, readonlyRule), 0, JSON.stringify(diagnostics));
-    const withoutExceptions = await check(
-      t,
-      {
-        ...configuration,
-        rules: {
-          ...configuration.rules,
-          "typescript/prefer-readonly-parameter-types": ["error", { ignoreInferredTypes: true }],
-        },
-      },
-      files,
-    );
-    assert.equal(count(withoutExceptions, readonlyRule), 2, JSON.stringify(withoutExceptions));
-    const collisions = await check(t, config(mode), {
-      "sample.tsx": `type ReactNode = { children: string[] };
-type KeyboardEvent = { key: string };
-type Promise = { value: string };
-export function node(value: ReactNode) { return value; }
-export function keyboard(value: KeyboardEvent) { return value.key; }
-export function promise(value: Promise) { return value.value; }`,
-    });
-    assert.equal(count(collisions, readonlyRule), 3, JSON.stringify(collisions));
   });
 
   for (const framework of [undefined, "react", "nextjs"]) {
