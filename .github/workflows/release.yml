@@ -90,19 +90,18 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
-      # npm OIDC trusted publishing; also signs the provenance attestation.
+      # OIDC trusted publishing; also signs the provenance attestation.
       id-token: write
     steps:
       - uses: actions/checkout@v6
 
-      # Trusted publishing needs npm >= 11.5.1, which ships with Node 24.
       - uses: pnpm/setup@v3
-        with:
-          runtime: node@24
 
       - name: Check
         run: pnpm check
 
+      # Publishing the packed tarball means npm gets exactly the bytes attached
+      # to the GitHub Release, and prepublishOnly does not re-run the check.
       - id: pack
         name: Pack
         shell: bash
@@ -112,18 +111,18 @@ jobs:
           tarball="$(ls "$RUNNER_TEMP"/package/*.tgz)"
           echo "tarball=$tarball" >> "$GITHUB_OUTPUT"
 
-      # Catches auth and scope errors (no trusted publisher registered for
-      # this workflow) before anything goes live.
-      - name: Check npm publish access (dry run)
-        run: |
-          if ! npm publish "${{ steps.pack.outputs.tarball }}" --access public --tag "${{ needs.preflight.outputs.dist_tag }}" --provenance --dry-run; then
-            echo "::error::npm publish --dry-run failed. Make sure the package has a trusted publisher registered for .github/workflows/release.yml (see docs/releasing.md)." >&2
-            exit 1
-          fi
+      # Validates the tarball and publish arguments. It does not authenticate,
+      # so a missing trusted publisher only shows up in the real publish.
+      - name: Publish (dry run)
+        run: pnpm publish "${{ steps.pack.outputs.tarball }}" --tag "${{ needs.preflight.outputs.dist_tag }}" --no-git-checks --dry-run
 
       - name: Publish
         if: github.event_name == 'push' && needs.preflight.outputs.already_published != 'true'
-        run: npm publish "${{ steps.pack.outputs.tarball }}" --access public --tag "${{ needs.preflight.outputs.dist_tag }}" --provenance
+        run: |
+          if ! pnpm publish "${{ steps.pack.outputs.tarball }}" --tag "${{ needs.preflight.outputs.dist_tag }}" --no-git-checks; then
+            echo "::error::pnpm publish failed. If this is an auth error, make sure the package has a trusted publisher registered for .github/workflows/release.yml (see docs/releasing.md)." >&2
+            exit 1
+          fi
 
       - uses: actions/upload-artifact@v7
         with:

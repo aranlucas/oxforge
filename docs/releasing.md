@@ -19,15 +19,15 @@ The workflow then:
 - **preflight** fails if the tag is not `v` + the `package.json` version. It picks the npm dist-tag:
   `latest` for `x.y.z`, `next` for prereleases such as `x.y.z-beta.1`. It also checks whether npm
   already has this version.
-- **publish** runs `pnpm check` and `pnpm pack`, then `npm publish --dry-run`. If the dry run
-  passes, it publishes the tarball with `--provenance` over OIDC trusted publishing, so there is
-  no npm token. It skips the publish when npm already has the version, so re-running a failed
-  release is safe.
+- **publish** runs `pnpm check` and `pnpm pack`, then `pnpm publish --dry-run`, which validates
+  the tarball but does not check auth. `pnpm publish` then uploads the tarball over OIDC trusted
+  publishing, with no npm token, and pnpm attaches provenance automatically. It skips the publish
+  when npm already has the version, so re-running a failed release is safe.
 - **release** creates the GitHub Release with generated notes and attaches the tarball. A
   prerelease is marked as a prerelease and is not made "latest".
 
 To test the pipeline without publishing, start it manually from the Actions tab with
-`dry_run` checked. Everything up to the npm dry run runs, and nothing is published.
+`dry_run` checked. Everything up to the publish dry run runs, and nothing is published.
 
 ## One-time setup: npm trusted publisher
 
