@@ -87,7 +87,7 @@ For Next.js and Vitest:
 | `react.json`       | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                               |
 | `nextjs.json`      | React plus Next.js.                                                                                                |
 | `react-perf.json`  | React plus rules against fresh JSX prop objects and functions.                                                     |
-| `vitest.json`      | Valid assertions; no focused or disabled tests.                                                                    |
+| `vitest.json`      | Tests in `test/` with `.test.*` names; one runner; strict assertions and suite validity.                           |
 | `tailwind.json`    | Strict design-token and utility rules; use gap instead of `space-x/y`.                                             |
 | `shadcn.json`      | Variants own appearance; callers own layout.                                                                       |
 | `size-limits.json` | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                 |
@@ -122,7 +122,7 @@ Keep app-specific paths and exceptions in native JSON fields:
   "rules": { "eslint/no-console": "off" },
   "overrides": [
     {
-      "files": ["tests/strict-fake.ts"],
+      "files": ["test/strict-fake.ts"],
       "rules": {
         "anti-slop/no-runtime-typeof": ["error", { "allowInTypeGuards": true }]
       }
@@ -134,6 +134,29 @@ Keep app-specific paths and exceptions in native JSON fields:
 Local rules take precedence over inherited settings. To turn off named types, set `oxforge/no-inline-types: "off"`. For a Worker or Node project, set `env.worker` or `env.node`. React Native can use `react.json` with its existing `__DEV__` global, import allowlist, and platform-specific accessibility overrides.
 
 The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific import restrictions stay local.
+
+## Test layout and Vitest policy
+
+Keep tests in a package-level `test/` folder, separate from production code. Mirror the source
+path: `src/lib/pricing.ts` → `test/lib/pricing.test.ts`, or
+`packages/ui/src/button.tsx` → `packages/ui/test/button.test.tsx`. Use `.test.ts` / `.test.tsx`
+for TypeScript and preserve `.js`, `.jsx`, `.mjs`, `.cjs`, `.mts`, or `.cts` where appropriate.
+Helpers, setup modules, fixtures, and snapshots live below `test/` without pretending to be suites.
+
+The shared Vitest preset enforces a `test/` path segment and `.test.*` suffix for conventional
+`.test.*` and `.spec.*` files, with POSIX and Windows separators supported. Apply it across the
+package, not only the already-correct `test/` directory, so misplaced tests are linted too.
+It does not infer arbitrary test files from their contents or verify source-path mirroring.
+Audit runner globs and imports when migrating unmarked tests in `__tests__/` or old custom suites.
+
+It also rejects `node:test` imports, focused/disabled tests, conditional or misplaced expectations,
+duplicate/invalid titles, invalid suite callbacks, interpolated snapshots, and unspecified expected
+errors. Valid assertion messages, awaited async expectations, async Vitest suites, parameterized
+cases, and `node:assert/strict` remain supported. These checks are explicit in the standalone
+preset as well as the factory; they do not depend on a consumer enabling rule categories.
+
+See the [test-layout migration and strict-rule guide](docs/test-policy.md) for rule rationale,
+limits, runner configuration, and the consumer rollout checklist.
 
 ## Stricter shared defaults and adoption
 
