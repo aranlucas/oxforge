@@ -12,7 +12,8 @@
           "generateMetadata",
           "generateStaticParams",
           "dynamic",
-          "revalidate"
+          "revalidate",
+          "ensureStatic"
         ]
       }
     ],

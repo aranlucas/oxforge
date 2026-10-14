@@ -153,12 +153,27 @@ export function promise(value: Promise) { return value.value; }`,
     });
   }
 
+  test(`${mode}: Next.js ensureStatic allowance does not allow unrelated mixed exports`, async (t) => {
+    const files = {
+      "sample.tsx": `export const ensureStatic = "navigation";
+
+export const helper = 42;
+
+export default function Layout() { return <main />; }`,
+    };
+    const next = await check(t, config(mode, "nextjs", false), files);
+    assert.equal(count(next, "only-export-components"), 1, JSON.stringify(next));
+    const react = await check(t, config(mode, "react", false), files);
+    assert.equal(count(react, "only-export-components"), 2, JSON.stringify(react));
+  });
+
   test(`${mode}: Next.js keeps framework metadata and route configuration exports`, async (t) => {
     const files = {
       "sample.tsx": `export const metadata = { title: "Example" };
 export const viewport = { width: "device-width" };
 export const dynamic = "force-static";
 export const revalidate = 60;
+export const ensureStatic = "navigation";
 export function generateMetadata() { return {}; }
 export function generateStaticParams() { return []; }
 export default function Page() { return <div />; }`,
@@ -166,6 +181,6 @@ export default function Page() { return <div />; }`,
     const next = await check(t, config(mode, "nextjs", false), files);
     assert.equal(count(next, "only-export-components"), 0, JSON.stringify(next));
     const react = await check(t, config(mode, "react", false), files);
-    assert.equal(count(react, "only-export-components"), 6, JSON.stringify(react));
+    assert.equal(count(react, "only-export-components"), 7, JSON.stringify(react));
   });
 }

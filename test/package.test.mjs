@@ -52,11 +52,23 @@ try {
         module: "NodeNext",
         moduleResolution: "NodeNext",
       },
-      include: ["sample.ts", "invalid.ts"],
+      include: ["sample.ts", "invalid.ts", "app/**/*.tsx"],
     }),
   );
   await writeFile(path.join(directory, "sample.ts"), "export const answer=42\n");
   successful(pnpm(["exec", "oxlint", "sample.ts"], directory));
+
+  await mkdir(path.join(directory, "app"));
+  const layout = `export const ensureStatic = "navigation";
+
+export default function Layout() { return null; }
+`;
+  await writeFile(path.join(directory, "app/layout.tsx"), layout);
+  successful(pnpm(["exec", "oxlint", "app/layout.tsx"], directory));
+  await writeFile(path.join(directory, "app/layout.tsx"), `${layout}\nexport const helper = 42;\n`);
+  const mixedExports = pnpm(["exec", "oxlint", "app/layout.tsx"], directory);
+  assert.equal(mixedExports.status, 1, mixedExports.stdout + mixedExports.stderr);
+  assert.match(mixedExports.stdout + mixedExports.stderr, /only-export-components/);
 
   const printed = pnpm(["exec", "oxlint", "--print-config", "sample.ts"], directory);
 
