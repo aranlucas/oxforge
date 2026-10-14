@@ -1,7 +1,7 @@
 {
   "rules": {
     "typescript/await-thenable": "error",
-    "typescript/consistent-return": "error",
+    "typescript/consistent-return": "off",
     "typescript/no-base-to-string": "error",
     "typescript/no-confusing-void-expression": "off",
     "typescript/no-deprecated": "off",
@@ -21,6 +21,7 @@
     "typescript/no-unsafe-type-assertion": "off",
     "typescript/prefer-nullish-coalescing": "error",
     "typescript/prefer-optional-chain": "error",
+    "typescript/prefer-readonly-parameter-types": "off",
     "typescript/restrict-template-expressions": [
       "error",
       {

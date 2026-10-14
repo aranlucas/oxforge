@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
-import { test } from "node:test";
-import { mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
+import { test } from "vitest";
+import { mkdir, mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -20,7 +20,7 @@ function run(binary, args, cwd) {
 
 async function fixture(t) {
   const directory = await mkdtemp(path.join(tmpdir(), "oxforge-test-"));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.onTestFinished(() => rm(directory, { recursive: true, force: true }));
   await writeFile(path.join(directory, "package.json"), '{"type":"module"}\n');
   return directory;
 }
@@ -28,6 +28,7 @@ async function fixture(t) {
 async function lint(t, config, source, filename = "sample.ts") {
   const directory = await fixture(t);
   await writeFile(path.join(directory, ".oxlintrc.json"), JSON.stringify(config));
+  await mkdir(path.dirname(path.join(directory, filename)), { recursive: true });
   await writeFile(path.join(directory, filename), source);
   return run(lintBin, [filename, "--format", "json"], directory);
 }
@@ -95,10 +96,10 @@ test("consumer overrides win while plugin and ignore arrays stay additive", () =
 
 test("configs do not share mutable nested rule options", () => {
   const first = oxforge();
-  first.rules["eslint/eqeqeq"][2].null = "always";
+  first.rules["import/no-unassigned-import"][1].allow.push("**/env");
   first.ignorePatterns.push("everything/**");
   const second = oxforge();
-  assert.equal(second.rules["eslint/eqeqeq"][2].null, "ignore");
+  assert.deepEqual(second.rules["import/no-unassigned-import"][1].allow, ["**/*.css"]);
   assert.equal(second.ignorePatterns.includes("everything/**"), false);
 });
 
@@ -239,3 +240,44 @@ test("initializer rejects unknown options before writing", async (t) => {
   assert.equal(result.status, 1);
   await assert.rejects(readFile(path.join(directory, ".oxlintrc.json")), { code: "ENOENT" });
 });
+
+for (const mode of ["factory", "generated"]) {
+  test(`${mode}: Vitest accepts assertion messages and rejects malformed expectations`, async (t) => {
+    const factory = oxforge({ typeAware: false, vitest: true });
+    const config =
+      mode === "factory"
+        ? {
+            plugins: ["vitest"],
+            categories: categoriesOff,
+            rules: { "vitest/valid-expect": factory.rules["vitest/valid-expect"] },
+          }
+        : {
+            extends: [path.join(root, "configs/vitest.json")],
+            categories: categoriesOff,
+          };
+    // Vitest documents the second message argument: https://vitest.dev/api/expect.html
+    const valid = await lint(
+      t,
+      config,
+      'import { test, expect } from "vitest"; test("assertion messages", async () => { expect(42).toBe(42); expect(42, "answer context").toBe(42); await expect(Promise.resolve(42), "async context").resolves.toBe(42); });',
+      "test/sample.test.ts",
+    );
+    assert.equal(valid.status, 0, valid.stdout + valid.stderr);
+
+    for (const assertion of [
+      "expect().toBe(42);",
+      'expect(42, "context", "extra").toBe(42);',
+      'expect(42, "context");',
+      'expect(Promise.resolve(42), "context").resolves.toBe(42);',
+    ]) {
+      const invalid = await lint(
+        t,
+        config,
+        `import { test, expect } from "vitest"; test("invalid expectation", async () => { ${assertion} });`,
+        "test/sample.test.ts",
+      );
+      assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
+      assert.match(invalid.stdout, /valid-expect/);
+    }
+  });
+}

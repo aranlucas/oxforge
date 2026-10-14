@@ -1,7 +1,27 @@
 {
+  "vitest/consistent-test-filename": [
+    "error",
+    {
+      "allTestPattern": "\\.(test|spec)\\.([cm]?[jt]s|[jt]sx)$",
+      "pattern": "(^|[\\\\/])test[\\\\/]([^\\\\/]+[\\\\/])*[^\\\\/]+\\.test\\.([cm]?[jt]s|[jt]sx)$"
+    }
+  ],
+  "vitest/no-conditional-expect": "error",
   "vitest/no-conditional-in-test": "off",
   "vitest/no-disabled-tests": "error",
   "vitest/no-focused-tests": "error",
+  "vitest/no-identical-title": "error",
+  "vitest/no-import-node-test": "error",
+  "vitest/no-interpolation-in-snapshots": "error",
+  "vitest/no-standalone-expect": "error",
   "vitest/require-mock-type-parameters": "off",
-  "vitest/valid-expect": "error"
+  "vitest/require-to-throw-message": "error",
+  "vitest/valid-describe-callback": "error",
+  "vitest/valid-expect": [
+    "error",
+    {
+      "maxArgs": 2
+    }
+  ],
+  "vitest/valid-title": "error"
 }

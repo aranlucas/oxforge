@@ -2,14 +2,15 @@
   "react/only-export-components": [
     "error",
     {
-      "allowConstantExport": true,
+      "allowConstantExport": false,
       "allowExportNames": [
         "metadata",
         "viewport",
         "generateMetadata",
         "generateStaticParams",
         "dynamic",
-        "revalidate"
+        "revalidate",
+        "ensureStatic"
       ]
     }
   ],

@@ -1,12 +1,6 @@
 {
   "eslint/curly": ["error", "all"],
-  "eslint/eqeqeq": [
-    "error",
-    "always",
-    {
-      "null": "ignore"
-    }
-  ],
+  "eslint/eqeqeq": ["error", "always"],
   "eslint/func-style": "off",
   "eslint/id-length": "off",
   "eslint/max-lines": "off",
@@ -45,13 +39,7 @@
     }
   ],
   "eslint/no-unused-expressions": "error",
-  "eslint/no-unused-vars": [
-    "error",
-    {
-      "argsIgnorePattern": "^_",
-      "varsIgnorePattern": "^_"
-    }
-  ],
+  "eslint/no-unused-vars": "error",
   "eslint/no-useless-assignment": "off",
   "eslint/no-var": "error",
   "eslint/no-warning-comments": "error",
@@ -75,7 +63,7 @@
   "import/no-unassigned-import": [
     "error",
     {
-      "allow": ["**/*.css", "**/env"]
+      "allow": ["**/*.css"]
     }
   ],
   "import/prefer-default-export": "off",
@@ -137,5 +125,6 @@
   "unicorn/prefer-set-has": "error",
   "unicorn/prefer-string-raw": "error",
   "unicorn/prefer-top-level-await": "off",
-  "unicorn/throw-new-error": "error"
+  "unicorn/throw-new-error": "error",
+  "typescript/consistent-return": "off"
 }

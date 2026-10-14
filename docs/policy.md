@@ -4,14 +4,17 @@ Every explicit Oxlint rule from the owned projects is accounted for here. `docs/
 
 ## Resolved disagreements
 
-- Equality uses `===`, with `== null` allowed for a null/undefined boundary check (ai-shopping-mcp).
+- Equality always uses `===`/`!==`, including null/undefined boundaries. Write both checks explicitly when both values are valid.
 - Type checking is on by default; floating promises must be handled even when prefixed with `void`.
 - Runtime `typeof` is forbidden; `allowTypeGuards: true` enables the existing type-guard exception.
 - Assertions require anti-slop safety comments. `no-unsafe-type-assertion` stays off because most projects disable it and it rejects documented boundary assertions.
 - Named object and tuple types are enforced with `oxforge/no-inline-types`, extracted from both system-design projects.
 - Filenames use `unicorn/filename-case` with its standard options. SDK-mandated `_meta`, `_unsafeUnwrap`, and `_unsafeUnwrapErr` are allowed.
 - Built-in errors need messages, disable comments name specific rules, key/value pairs use `Object.fromEntries`, backslash-heavy strings use `String.raw`, and arrays use `toReversed` rather than mutating `reverse`.
-- Unused variables prefixed with `_` are allowed, matching the MCP projects.
+- Unused names use Oxlint's native defaults: underscore-prefixed variables and named parameters are allowed, but a bare `_` parameter is checked. The severity-only rule is not a ban on underscore-prefixed names.
+- Side-effect imports allow CSS only. Environment initialization imports need an explicit, justified project exception.
+- Type-aware presets require readonly-compatible explicit parameters and ignore inferred callback types. Exceptions match built-in `Promise` and `ReactNode`/`KeyboardEvent` declarations from the React package, not unrelated application types sharing those names.
+- React component modules reject unrelated constant exports. Next.js keeps its existing metadata and route-configuration export allowlist in the framework preset.
 - React uses the automatic JSX runtime and allows React Compiler context values. React checks and accessibility are opt-in together.
 - Pedantic checks are enabled by default; explicit rule settings take precedence over the category. Size limits remain opt-in because existing projects explicitly disagree on them.
 - `@ts-expect-error` needs a description, following janella-cookbook instructions. `@ts-ignore` and `@ts-nocheck` are forbidden.
@@ -248,7 +251,7 @@ Every explicit Oxlint rule from the owned projects is accounted for here. `docs/
 | `typescript/prefer-namespace-keyword`                  | `base`                                                         |
 | `typescript/prefer-nullish-coalescing`                 | `type-aware`                                                   |
 | `typescript/prefer-optional-chain`                     | `type-aware`                                                   |
-| `typescript/prefer-readonly-parameter-types`           | Project override (application-specific or conflicting options) |
+| `typescript/prefer-readonly-parameter-types`           | `type-aware`                                                   |
 | `typescript/strict-boolean-expressions`                | `type-aware`                                                   |
 | `typescript/strict-void-return`                        | `type-aware`                                                   |
 | `typescript/switch-exhaustiveness-check`               | `type-aware`                                                   |
