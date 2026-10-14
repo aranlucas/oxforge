@@ -226,7 +226,7 @@ pnpm pack
 pnpm publish --access public
 ```
 
-The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
+The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests through Vitest. `pnpm test:watch` reruns tests during development. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
 Publishing runs both checks first. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
 

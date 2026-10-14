@@ -58,15 +58,16 @@
   "scripts": {
     "build": "tsc -p tsconfig.json && node scripts/generate-configs.mjs",
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.api.json",
-    "test": "node --test test/*.test.mjs",
-    "lint": "oxlint",
+    "test": "vitest run",
+    "lint": "oxlint && oxlint --config configs/vitest.json test --deny-warnings",
     "format": "oxfmt --write",
     "format:check": "oxfmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
     "prepublishOnly": "pnpm check && pnpm test:package",
     "audit:projects": "node scripts/audit-projects.mjs",
-    "test:package": "node scripts/test-package.mjs"
+    "test:package": "node scripts/test-package.mjs",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",
@@ -80,7 +81,8 @@
     "oxlint": "1.88.0",
     "oxlint-tailwindcss": "1.16.0",
     "oxlint-tsgolint": "7.0.2004",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vitest": "5.0.3"
   },
   "peerDependencies": {
     "@shadcn/lint": "^0.2.1",
