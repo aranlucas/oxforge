@@ -46,6 +46,14 @@ replace them. Paths remain consumer-specific. Sorting stays disabled when omitte
 and non-Tailwind consumers gain no Tailwind requirement. Keep local sorting lists until this
 candidate is actually published and adopted. See the [migration guide](docs/tailwind-formatting-adoption.md).
 
+### Dedicated Tailwind formatter default
+
+`@aranlucas/oxforge/format-tailwind` provides a default export containing the complete base
+formatting policy with Tailwind sorting enabled. Generic `format-config` stays unchanged.
+A direct re-export works for default utilities; projects with custom themes spread
+`tailwind.sortTailwindcss` and supply their own stylesheet path. The preset is framework-neutral.
+Types and packed consumers verify the default import and the theme-aware override.
+
 ### Test layout and strict Vitest policy
 
 The Vitest preset requires conventional `.test.*` / `.spec.*` files to live under a `test/`

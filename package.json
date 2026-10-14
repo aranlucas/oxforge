@@ -51,6 +51,10 @@
     "./format-config": {
       "types": "./src/format-config.d.ts",
       "default": "./src/format-config.js"
+    },
+    "./format-tailwind": {
+      "types": "./src/format-tailwind.d.ts",
+      "default": "./src/format-tailwind.js"
     }
   },
   "publishConfig": {

@@ -185,6 +185,27 @@ consumer lockfiles. Keep package-age and security policies in place during adopt
 
 Defaults: 100 columns, semicolons, double quotes, two spaces, trailing commas, LF endings, sorted package manifests, and preserved prose wrapping. Import sorting and Tailwind class sorting are opt-in. Non-Tailwind consumers do not need to install Tailwind.
 
+Use the dedicated Tailwind default when the project uses Tailwind (Next.js, Vite, or another
+framework). It includes all base formatting plus class sorting with the shared helper/attribute lists:
+
+```ts
+export { default } from "@aranlucas/oxforge/format-tailwind";
+```
+
+For a custom Tailwind theme, keep the stylesheet path in the project config:
+
+```ts
+import tailwind from "@aranlucas/oxforge/format-tailwind";
+
+export default {
+  ...tailwind,
+  sortTailwindcss: { ...tailwind.sortTailwindcss, stylesheet: "src/app/index.css" },
+};
+```
+
+`format-config` remains the generic default with no Tailwind sorting. The dedicated preset
+does not assume Next.js, a stylesheet location, or a Tailwind configuration path.
+
 Override the static config with ordinary object spread:
 
 ```ts

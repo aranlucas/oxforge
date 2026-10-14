@@ -5,7 +5,7 @@ import staticConfig, {
   tailwindSortConfig as staticTailwindSortConfig,
 } from "../src/format-config.js";
 
-test("Tailwind sorting is opt-in for both formatter entrypoints", () => {
+test("Tailwind sorting stays opt-in for the generic formatter entrypoints", () => {
   assert.equal(staticConfig, formatConfig);
   assert.equal(staticTailwindSortConfig, tailwindSortConfig);
   assert.equal(Object.hasOwn(formatConfig, "sortTailwindcss"), false);
@@ -65,4 +65,16 @@ test("Tailwind results do not share mutable arrays with options or other calls",
     "containerClassName",
     "labelClassName",
   ]);
+});
+
+import tailwindConfig, { formatTailwindConfig } from "../src/format-tailwind.js";
+
+test("Tailwind default preset includes the complete base and enables shared sorting", () => {
+  assert.equal(tailwindConfig, formatTailwindConfig);
+  assert.deepEqual(tailwindConfig, format({ sortTailwindcss: true }));
+  assert.deepEqual(tailwindConfig.sortTailwindcss, tailwindSortConfig);
+  assert.notEqual(tailwindConfig.ignorePatterns, formatConfig.ignorePatterns);
+  assert.notEqual(tailwindConfig.sortTailwindcss.functions, tailwindSortConfig.functions);
+  assert.equal(Object.hasOwn(tailwindConfig.sortTailwindcss, "stylesheet"), false);
+  assert.equal(Object.hasOwn(formatConfig, "sortTailwindcss"), false);
 });

@@ -80,7 +80,36 @@ export default format({ sortTailwindcss: ${sortTailwindcss} });`,
   );
 }
 
-export async function testTailwindFormatting(directory, pnpm) {
+export async function testTailwindFormatting(directory, pnpm, root) {
+  await writeFile(
+    path.join(directory, "test/tailwind-api.test.ts"),
+    `
+import type { FormatConfig } from "oxfmt";
+import tailwind, { formatTailwindConfig } from "@aranlucas/oxforge/format-tailwind";
+const direct: FormatConfig = tailwind;
+const customized: FormatConfig = { ...formatTailwindConfig, sortTailwindcss: {
+  ...formatTailwindConfig.sortTailwindcss, stylesheet: "src/app/index.css",
+} };
+export { direct, customized };
+`,
+  );
+  await writeFile(
+    path.join(directory, "tsconfig.format.json"),
+    JSON.stringify({
+      compilerOptions: {
+        strict: true,
+        noEmit: true,
+        target: "ES2024",
+        module: "NodeNext",
+        moduleResolution: "NodeNext",
+        skipLibCheck: false,
+      },
+      include: ["test/tailwind-api.test.ts"],
+    }),
+  );
+  successful(
+    pnpm(["exec", "tsc", "--project", path.join(directory, "tsconfig.format.json")], root),
+  );
   const configs = [
     // The original Set & Signal shape is the output-equivalence baseline.
     `import base from "@aranlucas/oxforge/format-config";
@@ -96,6 +125,10 @@ export default { ...base, sortTailwindcss: {
     `import { format } from "@aranlucas/oxforge/format";
 export default format({ sortTailwindcss: { stylesheet: "src/app/index.css" },
   ignorePatterns: ["catalog/**"] });`,
+    `import base from "@aranlucas/oxforge/format-tailwind";
+export default { ...base, sortTailwindcss: {
+  ...base.sortTailwindcss, stylesheet: "src/app/index.css",
+}, ignorePatterns: [...base.ignorePatterns, "catalog/**"] };`,
   ];
 
   const outputs = await Promise.all(
@@ -104,5 +137,19 @@ export default format({ sortTailwindcss: { stylesheet: "src/app/index.css" },
 
   assert.equal(outputs[1], outputs[0]);
   assert.equal(outputs[2], outputs[0]);
+  assert.equal(outputs[3], outputs[0]);
   await Promise.all([true, false].map((enabled) => testToggle(directory, pnpm, enabled)));
+  const direct = path.join(directory, "default-tailwind-preset");
+  await mkdir(direct);
+  await writeFile(
+    path.join(direct, "oxfmt.config.ts"),
+    'export { default } from "@aranlucas/oxforge/format-tailwind";\n',
+  );
+  await writeFile(path.join(direct, "sample.tsx"), 'export const classes = cn("p-4 flex");\n');
+  successful(pnpm(["exec", "oxfmt", "--write", "sample.tsx"], direct));
+  assert.equal(
+    await readFile(path.join(direct, "sample.tsx"), "utf8"),
+    'export const classes = cn("flex p-4");\n',
+  );
+  successful(pnpm(["exec", "oxfmt", "--check", "sample.tsx"], direct));
 }

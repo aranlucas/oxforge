@@ -38,3 +38,11 @@ defineFormatConfig({
   ...formatConfig,
   sortTailwindcss: { ...staticTailwindSortConfig, stylesheet: "src/app/index.css" },
 });
+
+import tailwindConfig, { formatTailwindConfig } from "../src/format-tailwind.js";
+
+defineFormatConfig(tailwindConfig);
+defineFormatConfig({
+  ...formatTailwindConfig,
+  sortTailwindcss: { ...formatTailwindConfig.sortTailwindcss, stylesheet: "src/app/index.css" },
+});
