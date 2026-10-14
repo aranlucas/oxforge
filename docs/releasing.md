@@ -1,43 +1,42 @@
 # Releasing
 
-`.github/workflows/release.yml` publishes `@aranlucas/oxforge` to npm and creates the matching
-GitHub Release. Pushing a `v*.*.*` tag triggers it.
+Releases are automatic. `.github/workflows/release.yml` runs
+[semantic-release](https://semantic-release.gitbook.io/) on every push to `main`, the same setup
+as `react-hook-form-mantine`.
 
-## Cut a release
+## How a release happens
 
-1. Bump `version` in `package.json` and move the `CHANGELOG.md` entry out of "unreleased".
-2. Merge to `main`.
-3. Tag the merge commit and push the tag:
+1. Merge a PR to `main` with a [Conventional Commits](https://www.conventionalcommits.org/)
+   title. Squash merges use the PR title as the commit message.
+2. The workflow runs `pnpm check`, then `pnpm semantic-release`, which looks at the commits since
+   the last `v*` tag:
+   - `fix:` → patch, `feat:` → minor, `!` or a `BREAKING CHANGE:` footer → major
+   - `build:`, `chore:`, `ci:`, `docs:`, `refactor:`, `test:` → no release
+3. If a release is due, semantic-release:
+   - sets `package.json` `version` and writes the notes to `CHANGELOG.md`
+   - publishes to npm over OIDC trusted publishing, with provenance and no npm token
+   - commits `CHANGELOG.md` and `package.json` back to `main` as `chore(release): x.y.z [skip ci]`
+   - tags `vx.y.z`, creates the GitHub Release, and comments on the issues and PRs it released
 
-   ```sh
-   git tag v0.2.3
-   git push origin v0.2.3
-   ```
+Pushes to a `next` branch publish prereleases to the `next` dist-tag.
 
-The workflow then:
+Policy changes that tighten defaults should be `feat:` (or `feat!:` once past 1.0), not `fix:`, so
+they don't reach consumers on a patch range.
 
-- **preflight** fails if the tag is not `v` + the `package.json` version. It picks the npm dist-tag:
-  `latest` for `x.y.z`, `next` for prereleases such as `x.y.z-beta.1`. It also checks whether npm
-  already has this version.
-- **publish** runs `pnpm check` and `pnpm pack`, then `pnpm publish --dry-run`, which validates
-  the tarball but does not check auth. `pnpm publish` then uploads the tarball over OIDC trusted
-  publishing, with no npm token, and pnpm attaches provenance automatically. It skips the publish
-  when npm already has the version, so re-running a failed release is safe.
-- **release** creates the GitHub Release with generated notes and attaches the tarball. A
-  prerelease is marked as a prerelease and is not made "latest".
+## Preview a release
 
-To test the pipeline without publishing, start it manually from the Actions tab with
-`dry_run` checked. Everything up to the publish dry run runs, and nothing is published.
+```sh
+GITHUB_TOKEN=$(gh auth token) pnpm semantic-release --dry-run --no-ci
+```
 
-## One-time setup: npm trusted publisher
+This prints the next version and its notes without publishing anything.
 
-Trusted publishing replaces `NPM_TOKEN`. On npmjs.com, open the package, go to
-**Settings → Trusted publishing**, and add a GitHub Actions publisher:
+## One-time setup
 
-- Organization or user: `aranlucas`
-- Repository: `oxforge`
-- Workflow filename: `release.yml`
-- Environment: leave empty
-
-Once the first trusted publish works, set **Publishing access** to "Require two-factor
-authentication and disallow tokens" so CI is the only way to publish.
+- **npm trusted publisher:** on npmjs.com, open the package, go to **Settings → Trusted
+  publishing**, and add a GitHub Actions publisher with user `aranlucas`, repository `oxforge`,
+  workflow `release.yml`, and no environment. Once the first trusted publish works, set
+  **Publishing access** to "Require two-factor authentication and disallow tokens".
+- **Baseline tag:** semantic-release starts from the latest `v*` tag. `v0.2.2` marks `6a4bd38`,
+  the last commit before 0.2.2 was published by hand. Without it, the first run would publish
+  1.0.0.
