@@ -30,9 +30,17 @@ review narrow boundary-specific exceptions; do not hide diagnostics with casts o
 disables. A shallow `Readonly<T>` does not make every nested contract readonly. See the
 [strict-policy adoption guide](docs/strict-policy-adoption.md) for tested cases and known limits.
 
+### Vitest API compatibility
+
+The shared Vitest preset accepts the documented second message argument in `expect(actual,
+message)`. The `valid-expect` rule stays enabled at error severity and still rejects zero/three
+arguments, missing matchers, and unawaited async expectations. Paired factory/generated-preset
+fixtures cover both accepted and rejected forms.
+
 ### Maintainer tests
 
-The package's 34 existing policy/CLI tests now run with Vitest 5.0.3, retaining strict Node
+The package's 34 existing policy/CLI tests plus two assertion-API regression tests run with
+Vitest 5.0.3, retaining strict Node
 assertions and per-test cleanup. `pnpm test:watch` provides watch mode. Test files use the
 package's own existing Vitest lint preset. Vitest is a development dependency; consumers do not
 need to add it to use Oxforge, and no new runtime configuration export is introduced.

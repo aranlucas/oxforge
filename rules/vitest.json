@@ -3,5 +3,10 @@
   "vitest/no-disabled-tests": "error",
   "vitest/no-focused-tests": "error",
   "vitest/require-mock-type-parameters": "off",
-  "vitest/valid-expect": "error"
+  "vitest/valid-expect": [
+    "error",
+    {
+      "maxArgs": 2
+    }
+  ]
 }
