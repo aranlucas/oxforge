@@ -1,1 +1,1 @@
-export { formatConfig as default } from "./format.js";
+export { formatConfig as default, tailwindSortConfig } from "./format.js";

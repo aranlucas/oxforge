@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "vitest";
-import { mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -28,6 +28,7 @@ async function fixture(t) {
 async function lint(t, config, source, filename = "sample.ts") {
   const directory = await fixture(t);
   await writeFile(path.join(directory, ".oxlintrc.json"), JSON.stringify(config));
+  await mkdir(path.dirname(path.join(directory, filename)), { recursive: true });
   await writeFile(path.join(directory, filename), source);
   return run(lintBin, [filename, "--format", "json"], directory);
 }
@@ -258,8 +259,8 @@ for (const mode of ["factory", "generated"]) {
     const valid = await lint(
       t,
       config,
-      'import { expect } from "vitest"; expect(42).toBe(42); expect(42, "answer context").toBe(42); await expect(Promise.resolve(42), "async context").resolves.toBe(42);',
-      "sample.test.ts",
+      'import { test, expect } from "vitest"; test("assertion messages", async () => { expect(42).toBe(42); expect(42, "answer context").toBe(42); await expect(Promise.resolve(42), "async context").resolves.toBe(42); });',
+      "test/sample.test.ts",
     );
     assert.equal(valid.status, 0, valid.stdout + valid.stderr);
 
@@ -272,8 +273,8 @@ for (const mode of ["factory", "generated"]) {
       const invalid = await lint(
         t,
         config,
-        `import { expect } from "vitest"; ${assertion}`,
-        "sample.test.ts",
+        `import { test, expect } from "vitest"; test("invalid expectation", async () => { ${assertion} });`,
+        "test/sample.test.ts",
       );
       assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
       assert.match(invalid.stdout, /valid-expect/);
