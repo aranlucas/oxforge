@@ -46,6 +46,20 @@ replace them. Paths remain consumer-specific. Sorting stays disabled when omitte
 and non-Tailwind consumers gain no Tailwind requirement. Keep local sorting lists until this
 candidate is actually published and adopted. See the [migration guide](docs/tailwind-formatting-adoption.md).
 
+### Test layout and strict Vitest policy
+
+The Vitest preset requires conventional `.test.*` / `.spec.*` files to live under a `test/`
+path segment and use `.test.*` names. Keep the folder beside the package's production source
+and mirror its relative paths. JavaScript and module-specific extensions remain supported;
+setup, helper, fixture, and snapshot files do not need test suffixes. The filename rule cannot
+identify arbitrary unconventionally named suites or validate source-path mirroring.
+
+The preset now rejects `node:test` imports, conditional/standalone expectations, duplicate or
+invalid titles, invalid suite callbacks, interpolated snapshots, and unspecified expected errors,
+in addition to focused/disabled tests and malformed/unawaited expectations. The second assertion
+message, Node assertions, async Vitest suites, parameterized cases, and negated `not.toThrow()`
+remain supported. See the [policy and migration guide](docs/test-policy.md).
+
 ### Maintainer tests
 
 The policy/CLI suites, assertion-API regressions, and formatter-default tests run with
@@ -53,6 +67,10 @@ Vitest 5.0.3, retaining strict Node
 assertions and per-test cleanup. `pnpm test:watch` provides watch mode. Test files use the
 package's own existing Vitest lint preset. Vitest is a development dependency; consumers do not
 need to add it to use Oxforge.
+
+The compile-time API test is `test/api.test.ts`; package installation and formatting checks
+are kept in `test/package.test.mjs` with helpers below `test/helpers/`. The package check runs
+separately via `pnpm test:package`, as before, and is excluded from the ordinary Vitest run.
 
 ### Consumer upgrade checklist
 
