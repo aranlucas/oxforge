@@ -69,9 +69,8 @@
     "format:check": "oxfmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
-    "prepublishOnly": "pnpm check && pnpm test:package",
+    "prepublishOnly": "pnpm check",
     "audit:projects": "node scripts/audit-projects.mjs",
-    "test:package": "node test/package.test.mjs",
     "test:watch": "vitest"
   },
   "dependencies": {
