@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { testTailwindFormatting } from "./test-tailwind-formatting.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 
@@ -35,6 +36,7 @@ try {
         "@aranlucas/oxforge": `file:${archive}`,
         oxlint: "1.88.0",
         oxfmt: "0.73.0",
+        tailwindcss: "4.3.3",
         "oxlint-tsgolint": "7.0.2004",
       },
     }),
@@ -119,8 +121,9 @@ try {
     "export const value = 1 as unknown as string;\n",
   );
   successful(pnpm(["exec", "oxlint", "sample.ts", "dist/ignored.ts"], directory));
+  await testTailwindFormatting(directory, pnpm);
   process.stdout.write(
-    "Packed package passes installation, initializer, typed linting, plugin loading, and formatting in a separate consumer.\n",
+    "Packed package passes installation, initializer, typed linting, plugin loading, formatting, and shared Tailwind sorting in a separate consumer.\n",
   );
 } finally {
   await rm(directory, { recursive: true, force: true });

@@ -160,20 +160,17 @@ consumer lockfiles. Keep package-age and security policies in place during adopt
 
 ## Formatting
 
-Defaults: 100 columns, semicolons, double quotes, two spaces, trailing commas, LF endings, sorted package manifests, and preserved prose wrapping. Import sorting is opt-in.
+Defaults: 100 columns, semicolons, double quotes, two spaces, trailing commas, LF endings, sorted package manifests, and preserved prose wrapping. Import sorting and Tailwind class sorting are opt-in. Non-Tailwind consumers do not need to install Tailwind.
 
 Override the static config with ordinary object spread:
 
 ```ts
-import config from "@aranlucas/oxforge/format-config";
+import config, { tailwindSortConfig } from "@aranlucas/oxforge/format-config";
 
 const projectConfig = {
   ...config,
   printWidth: 80,
-  sortTailwindcss: {
-    stylesheet: "app/globals.css",
-    functions: ["cn", "clsx", "cva", "twMerge", "twJoin"],
-  },
+  sortTailwindcss: { ...tailwindSortConfig, stylesheet: "app/globals.css" },
   ignorePatterns: [...(config.ignorePatterns ?? []), "src/generated/**"],
 };
 
@@ -181,6 +178,37 @@ export default projectConfig;
 ```
 
 Oxfmt does not offer JSON preset inheritance, so its shared config uses a static module export. No function call is needed. See [Oxfmt's configuration documentation](https://oxc.rs/docs/guide/usage/formatter/config).
+
+The shared Tailwind sorting defaults cover `cn`, `clsx`, `cva`, `twMerge`, and `twJoin`, plus
+`classNames`, `containerClassName`, and `labelClassName`. Oxfmt also sorts its built-in `class`
+and `className` attributes. Names match exactly; no wildcard or regex matching is added.
+
+The optional helper applies these defaults whenever `sortTailwindcss` is `true` or an object:
+
+```ts
+import { format } from "@aranlucas/oxforge/format";
+
+export default format({
+  sortTailwindcss: { stylesheet: "src/app/index.css" },
+  ignorePatterns: ["catalog/**", "src/generated/**"],
+});
+```
+
+Omitting `sortTailwindcss` keeps it disabled; `false` explicitly disables it. Keep the project's
+Tailwind installation and v4 `stylesheet` (or v3 `config`) path in the consumer config. Oxfmt
+resolves these paths relative to that config file, not the Oxforge package. With `true`, Oxfmt
+uses its usual Tailwind discovery. See [Oxfmt's Tailwind options](https://oxc.rs/docs/guide/usage/formatter/config-file-reference#sorttailwindcss).
+
+Explicit local fields win, including `functions` and `attributes` arrays. Use `[]` to remove
+Oxforge's extra names, or spread `tailwindSortConfig.functions` / `.attributes` when extending
+them. The helper still appends local ignore patterns to the shared ignores and returns an
+independent config. Static object spread follows ordinary JavaScript semantics, so spread the
+shared ignore patterns yourself as shown above. Nested Oxfmt overrides also retain native
+semantics; spread `tailwindSortConfig` explicitly in an override if needed.
+
+These additions are in the unreleased 0.2.0 candidate. Keep existing consumer sorting rules
+until a version containing them is published, satisfies the project's normal release-age and
+security policies, and passes its normal checks. See the [Set & Signal migration](docs/tailwind-formatting-adoption.md).
 
 Vienna can keep `printWidth: 120`, `semi: false`, and `singleQuote: true`. The system-design projects can keep `quoteProps: "preserve"`; projects relying on manifest order can keep `sortPackageJson: false`. Documentation can keep `semi: false` and `trailingComma: "es5"`.
 
