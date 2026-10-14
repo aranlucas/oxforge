@@ -137,6 +137,7 @@
     "unicorn/prefer-string-raw": "error",
     "unicorn/prefer-top-level-await": "off",
     "unicorn/throw-new-error": "error",
+    "typescript/consistent-return": "off",
     "anti-slop/no-array-filter-map": "error",
     "anti-slop/no-chained-type-assertions": "error",
     "anti-slop/no-conditional-empty-object-spread": "error",

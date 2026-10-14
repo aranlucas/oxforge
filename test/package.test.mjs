@@ -4,6 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { testTailwindFormatting } from "./helpers/tailwind-formatting.mjs";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 
@@ -35,6 +36,7 @@ try {
         "@aranlucas/oxforge": `file:${archive}`,
         oxlint: "1.88.0",
         oxfmt: "0.73.0",
+        tailwindcss: "4.3.3",
         "oxlint-tsgolint": "7.0.2004",
       },
     }),
@@ -119,8 +121,28 @@ try {
     "export const value = 1 as unknown as string;\n",
   );
   successful(pnpm(["exec", "oxlint", "sample.ts", "dist/ignored.ts"], directory));
+  const vitestPreset = "node_modules/@aranlucas/oxforge/configs/vitest.json";
+  await mkdir(path.join(directory, "test"));
+  await mkdir(path.join(directory, "src"));
+  await writeFile(path.join(directory, "test/valid.test.ts"), "export const answer = 42;\n");
+  successful(pnpm(["exec", "oxlint", "--config", vitestPreset, "test/valid.test.ts"], directory));
+  await writeFile(path.join(directory, "src/invalid.test.ts"), "export const answer = 42;\n");
+  const misplaced = pnpm(
+    ["exec", "oxlint", "--config", vitestPreset, "src/invalid.test.ts"],
+    directory,
+  );
+  assert.equal(misplaced.status, 1, misplaced.stdout + misplaced.stderr);
+  assert.match(misplaced.stdout + misplaced.stderr, /consistent-test-filename/);
+  await writeFile(path.join(directory, "test/runner.test.ts"), 'import "node:test";\n');
+  const wrongRunner = pnpm(
+    ["exec", "oxlint", "--config", vitestPreset, "test/runner.test.ts"],
+    directory,
+  );
+  assert.equal(wrongRunner.status, 1, wrongRunner.stdout + wrongRunner.stderr);
+  assert.match(wrongRunner.stdout + wrongRunner.stderr, /no-import-node-test/);
+  await testTailwindFormatting(directory, pnpm, root);
   process.stdout.write(
-    "Packed package passes installation, initializer, typed linting, plugin loading, and formatting in a separate consumer.\n",
+    "Packed package passes installation, initializer, typed linting, plugin loading, formatting, test layout, Vitest runner enforcement, and shared Tailwind sorting in a separate consumer.\n",
   );
 } finally {
   await rm(directory, { recursive: true, force: true });
