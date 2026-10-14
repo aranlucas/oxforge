@@ -4,7 +4,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { test } from "node:test";
+import { test } from "vitest";
 import { oxforge } from "../src/index.js";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -26,7 +26,7 @@ function config(mode, framework, typeAware = true) {
 
 async function check(t, configuration, files) {
   const directory = await mkdtemp(path.join(tmpdir(), "oxforge-policy-"));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.onTestFinished(() => rm(directory, { recursive: true, force: true }));
   const fixtureFiles = {
     "package.json": '{"type":"module"}',
     "tsconfig.json": JSON.stringify({

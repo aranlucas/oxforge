@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { test } from "node:test";
+import { test } from "vitest";
 import { mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -20,7 +20,7 @@ function run(binary, args, cwd) {
 
 async function fixture(t) {
   const directory = await mkdtemp(path.join(tmpdir(), "oxforge-test-"));
-  t.after(() => rm(directory, { recursive: true, force: true }));
+  t.onTestFinished(() => rm(directory, { recursive: true, force: true }));
   await writeFile(path.join(directory, "package.json"), '{"type":"module"}\n');
   return directory;
 }
