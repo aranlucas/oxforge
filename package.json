@@ -22,8 +22,6 @@
     "oxforge": "./bin/oxforge.js"
   },
   "files": [
-    "src/*.js",
-    "src/*.d.ts",
     "dist",
     "rules",
     "bin",
@@ -34,12 +32,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./src/index.d.ts",
-      "default": "./src/index.js"
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
     },
     "./format": {
-      "types": "./src/format.d.ts",
-      "default": "./src/format.js"
+      "types": "./dist/format.d.ts",
+      "default": "./dist/format.js"
     },
     "./plugin": {
       "types": "./dist/plugin.d.ts",
@@ -49,24 +47,24 @@
     "./package.json": "./package.json",
     "./configs/*": "./configs/*.json",
     "./format-config": {
-      "types": "./src/format-config.d.ts",
-      "default": "./src/format-config.js"
+      "types": "./dist/format-config.d.ts",
+      "default": "./dist/format-config.js"
     },
     "./format-tailwind": {
-      "types": "./src/format-tailwind.d.ts",
-      "default": "./src/format-tailwind.js"
+      "types": "./dist/format-tailwind.d.ts",
+      "default": "./dist/format-tailwind.js"
     }
   },
   "publishConfig": {
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && node scripts/generate-configs.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.api.json",
+    "build": "vp pack && node scripts/generate-configs.mjs",
+    "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "lint": "oxlint && oxlint --config configs/vitest.json . --deny-warnings",
-    "format": "oxfmt --write",
-    "format:check": "oxfmt --check",
+    "lint": "vp lint && vp lint --config configs/vitest.json . --deny-warnings",
+    "format": "vp fmt --write",
+    "format:check": "vp fmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
     "prepublishOnly": "pnpm check",
@@ -85,7 +83,9 @@
     "oxlint": "1.88.0",
     "oxlint-tailwindcss": "1.16.0",
     "oxlint-tsgolint": "7.0.2004",
+    "publint": "^0.3.25",
     "typescript": "^7.0.2",
+    "vite-plus": "^1.1.0",
     "vitest": "5.0.4"
   },
   "peerDependencies": {
