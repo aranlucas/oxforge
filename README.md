@@ -126,6 +126,29 @@ Local rules take precedence over inherited settings. To turn off named types, se
 
 The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific import restrictions stay local.
 
+## Stricter shared defaults and adoption
+
+The shared defaults include strict equality at null boundaries, CSS-only side-effect imports,
+readonly-compatible explicit parameter types in type-aware presets, and component-only exports
+in React modules. Next.js retains its existing metadata and route-configuration export names;
+those names are not allowed by the generic React preset.
+
+Readonly checks ignore inferred callback parameter types. The allowlist is declaration-scoped:
+TypeScript's built-in `Promise` and React's `ReactNode` and `KeyboardEvent` are allowed. Locally
+defined types with the same names are still checked. No React package is required by consumers
+that do not use React. The untyped base keeps this checker-dependent rule disabled.
+
+`no-unused-vars: "error"` uses Oxlint's native defaults. Named underscore-prefixed variables and
+parameters remain allowed; a bare `_` parameter is checked. Removing explicit ignore patterns
+does not mean all underscore-prefixed names now fail. See the [rule documentation](https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars).
+
+These changes can reveal existing source violations. Do not remove stricter project protection
+until a released shared version containing the same effective behavior is actually installed and
+validated with that project's normal checks. In particular, Raleigh's narrower Next.js export
+allowlist remains a stricter local policy. This source change does not release a package or update
+consumer lockfiles. Keep package-age and security policies in place during adoption. See the
+[consumer evidence and migration guidance](docs/strict-policy-adoption.md).
+
 ## Formatting
 
 Defaults: 100 columns, semicolons, double quotes, two spaces, trailing commas, LF endings, sorted package manifests, and preserved prose wrapping. Import sorting is opt-in.

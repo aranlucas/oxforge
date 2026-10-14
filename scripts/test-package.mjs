@@ -98,6 +98,21 @@ try {
   assert.equal(inline.status, 1, inline.stdout + inline.stderr);
   assert.match(inline.stdout + inline.stderr, /no-inline-types/);
 
+  await writeFile(
+    path.join(directory, "invalid.ts"),
+    "type Item = { value: string };\n\nexport function read(value: Item) { return value.value; }\n",
+  );
+
+  const mutable = pnpm(["exec", "oxlint", "invalid.ts"], directory);
+
+  assert.equal(mutable.status, 1, mutable.stdout + mutable.stderr);
+  assert.match(mutable.stdout + mutable.stderr, /prefer-readonly-parameter-types/);
+  await writeFile(
+    path.join(directory, "invalid.ts"),
+    "type Item = { readonly value: string };\n\nexport function read(value: Item) { return value.value; }\n",
+  );
+  successful(pnpm(["exec", "oxlint", "invalid.ts"], directory));
+
   await mkdir(path.join(directory, "dist"));
   await writeFile(
     path.join(directory, "dist/ignored.ts"),

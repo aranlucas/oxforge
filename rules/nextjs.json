@@ -2,7 +2,7 @@
   "react/only-export-components": [
     "error",
     {
-      "allowConstantExport": true,
+      "allowConstantExport": false,
       "allowExportNames": [
         "metadata",
         "viewport",
