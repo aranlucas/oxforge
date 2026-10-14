@@ -239,3 +239,44 @@ test("initializer rejects unknown options before writing", async (t) => {
   assert.equal(result.status, 1);
   await assert.rejects(readFile(path.join(directory, ".oxlintrc.json")), { code: "ENOENT" });
 });
+
+for (const mode of ["factory", "generated"]) {
+  test(`${mode}: Vitest accepts assertion messages and rejects malformed expectations`, async (t) => {
+    const factory = oxforge({ typeAware: false, vitest: true });
+    const config =
+      mode === "factory"
+        ? {
+            plugins: ["vitest"],
+            categories: categoriesOff,
+            rules: { "vitest/valid-expect": factory.rules["vitest/valid-expect"] },
+          }
+        : {
+            extends: [path.join(root, "configs/vitest.json")],
+            categories: categoriesOff,
+          };
+    // Vitest documents the second message argument: https://vitest.dev/api/expect.html
+    const valid = await lint(
+      t,
+      config,
+      'import { expect } from "vitest"; expect(42).toBe(42); expect(42, "answer context").toBe(42); await expect(Promise.resolve(42), "async context").resolves.toBe(42);',
+      "sample.test.ts",
+    );
+    assert.equal(valid.status, 0, valid.stdout + valid.stderr);
+
+    for (const assertion of [
+      "expect().toBe(42);",
+      'expect(42, "context", "extra").toBe(42);',
+      'expect(42, "context");',
+      'expect(Promise.resolve(42), "context").resolves.toBe(42);',
+    ]) {
+      const invalid = await lint(
+        t,
+        config,
+        `import { expect } from "vitest"; ${assertion}`,
+        "sample.test.ts",
+      );
+      assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
+      assert.match(invalid.stdout, /valid-expect/);
+    }
+  });
+}
