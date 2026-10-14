@@ -245,8 +245,9 @@ pnpm install --frozen-lockfile
 pnpm check
 pnpm test:package
 pnpm pack
-pnpm publish --access public
 ```
+
+Releases are published from CI when a `v*.*.*` tag is pushed. See [docs/releasing.md](docs/releasing.md).
 
 The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests through Vitest. `pnpm test:watch` reruns tests during development. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
 
