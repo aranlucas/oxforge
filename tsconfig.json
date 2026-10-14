@@ -4,11 +4,9 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "strict": true,
-    "skipLibCheck": true,
+    "skipLibCheck": false,
     "verbatimModuleSyntax": true,
-    "declaration": true,
-    "rootDir": "src",
-    "outDir": "dist"
+    "noEmit": true
   },
-  "include": ["src/plugin.ts"]
+  "include": ["src/plugin.ts", "src/*.d.ts", "test/api.test.ts"]
 }

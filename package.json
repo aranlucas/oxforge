@@ -61,12 +61,12 @@
     "access": "public"
   },
   "scripts": {
-    "build": "tsc -p tsconfig.json && node scripts/generate-configs.mjs",
-    "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p tsconfig.api.json",
+    "build": "vp pack && node scripts/generate-configs.mjs",
+    "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "lint": "oxlint && oxlint --config configs/vitest.json . --deny-warnings",
-    "format": "oxfmt --write",
-    "format:check": "oxfmt --check",
+    "lint": "vp lint && vp lint --config configs/vitest.json . --deny-warnings",
+    "format": "vp fmt --write",
+    "format:check": "vp fmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
     "prepublishOnly": "pnpm check",
@@ -79,14 +79,16 @@
   },
   "devDependencies": {
     "@shadcn/lint": "0.2.1",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.6.5",
     "jsonc-parser": "^3.3.1",
     "oxfmt": "0.73.0",
     "oxlint": "1.88.0",
     "oxlint-tailwindcss": "1.16.0",
     "oxlint-tsgolint": "7.0.2004",
+    "publint": "^0.3.25",
     "typescript": "^7.0.2",
-    "vitest": "5.0.3"
+    "vite-plus": "^1.1.0",
+    "vitest": "5.0.4"
   },
   "peerDependencies": {
     "@shadcn/lint": "^0.2.1",
@@ -109,5 +111,5 @@
   "engines": {
     "node": ">=22.18.0"
   },
-  "packageManager": "pnpm@12.9.1"
+  "packageManager": "pnpm@12.11.2"
 }

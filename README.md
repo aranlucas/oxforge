@@ -49,6 +49,19 @@ Add scripts to `package.json`:
 
 Oxlint and Oxfmt discover these files directly. Editors, CI, and the normal CLIs use the same policy.
 
+### TypeScript config
+
+With Oxlint's `oxlint.config.ts`, import the config object instead of pointing at JSON files. Package imports work there, and options are typed:
+
+```ts
+import { defineConfig } from "oxlint";
+import { oxforge } from "@aranlucas/oxforge";
+
+export default defineConfig({
+  extends: [oxforge({ react: true, vitest: true })],
+});
+```
+
 ## Upgrading from 0.1.x
 
 Version 0.2.0 is a compatibility-affecting policy update: stricter defaults can report errors in
