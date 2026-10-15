@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "vitest";
-import { oxforge, rules } from "../src/index.js";
+import { oxforge, rules } from "@aranlucas/oxforge";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const lintBin = path.join(root, "node_modules/oxlint/bin/oxlint");
@@ -18,14 +18,17 @@ const validTest =
   'import { test, expect } from "vitest"; test("adds numbers", () => { expect(2 + 2).toBe(4); });';
 
 function config(mode) {
+  const factory = oxforge({ vitest: true, typeAware: false });
   return mode === "factory"
-    ? { plugins: ["vitest"], categories, rules: oxforge({ vitest: true, typeAware: false }).rules }
+    ? { plugins: ["vitest"], categories, rules: factory.rules, overrides: factory.overrides }
     : { extends: [path.join(root, "configs/vitest.json")], categories };
 }
 
-async function lint(t, mode, files) {
+async function lint(t, mode, files, relativeRoot = ".") {
   const directory = await mkdtemp(path.join(tmpdir(), "oxforge-vitest-policy-"));
   t.onTestFinished(() => rm(directory, { recursive: true, force: true }));
+  const workingDirectory = path.join(directory, relativeRoot);
+  await mkdir(workingDirectory, { recursive: true });
   // Select only the Vitest rules in the factory; generic application rules have separate tests.
   const configuration = config(mode);
   if (mode === "factory") {
@@ -33,18 +36,18 @@ async function lint(t, mode, files) {
       Object.entries(configuration.rules).filter(([name]) => name.startsWith("vitest/")),
     );
   }
-  await writeFile(path.join(directory, ".oxlintrc.json"), JSON.stringify(configuration));
-  await writeFile(path.join(directory, "package.json"), '{"type":"module"}');
+  await writeFile(path.join(workingDirectory, ".oxlintrc.json"), JSON.stringify(configuration));
+  await writeFile(path.join(workingDirectory, "package.json"), '{"type":"module"}');
   const targets = [];
   for (const [filename, source] of Object.entries(files)) {
     const nativeFilename = filename.replaceAll("\\", path.sep);
-    const target = path.join(directory, nativeFilename);
+    const target = path.join(workingDirectory, nativeFilename);
     await mkdir(path.dirname(target), { recursive: true });
     await writeFile(target, source);
     targets.push(nativeFilename);
   }
   const result = spawnSync(process.execPath, [lintBin, ...targets, "--format", "json"], {
-    cwd: directory,
+    cwd: workingDirectory,
     encoding: "utf8",
   });
   assert.ifError(result.error);
@@ -65,6 +68,16 @@ const acceptedPaths = [
   "packages/ui/test/button.test.tsx",
   "apps/web/test/lib/math.test.ts",
   "packages\\ui\\test\\lib\\math.test.ts",
+  "e2e/login.spec.ts",
+  "e2e/auth/login.test.ts",
+  "e2e/login.spec.mjs",
+  "packages/ui/e2e/button.spec.tsx",
+  "apps/web/e2e/auth/login.test.ts",
+  "packages\\ui\\e2e\\login.spec.ts",
+  "login.e2e.ts",
+  "browser/login.e2e.ts",
+  "packages/ui/button.e2e.tsx",
+  "apps\\web\\browser\\login.e2e.ts",
 ];
 const rejectedPaths = [
   "math.test.ts",
@@ -82,6 +95,23 @@ const rejectedPaths = [
   "packages/ui/tests/math.test.ts",
   "packages\\ui\\src\\math.test.ts",
   "packages\\ui\\__tests__\\math.spec.ts",
+  "browser/login.spec.ts",
+  "browser/login.e2e.spec.ts",
+  "e2e-tests/login.spec.ts",
+  "packages/ui/e2e-tests/login.test.ts",
+];
+const sourcePaths = [
+  "src/test/math.test.ts",
+  "src/lib/test/math.test.ts",
+  "packages/ui/src/test/button.test.tsx",
+  "test/src/math.test.ts",
+  "packages/ui/test/src/math.test.ts",
+  "packages\\ui\\src\\test\\math.test.ts",
+  "src/login.e2e.ts",
+  "src/e2e/login.spec.ts",
+  "e2e/src/login.test.ts",
+  "packages/ui/src/e2e/login.test.ts",
+  "apps/web/src/browser/login.e2e.ts",
 ];
 
 // The same patterns must match both native separators, including absolute CLI paths.
@@ -101,8 +131,29 @@ test("filename patterns support POSIX and Windows paths", () => {
   }
 });
 
+test("generated test policy matches the factory, including source-tree restrictions", async () => {
+  const generated = JSON.parse(await readFile(path.join(root, "configs/vitest.json"), "utf8"));
+  const factory = oxforge({ vitest: true, typeAware: false });
+  assert.deepEqual(generated.rules, rules.vitest);
+  assert.deepEqual(generated.overrides, factory.overrides);
+  assert.equal(Object.hasOwn(oxforge(), "overrides"), false);
+});
+
+test("explicit consumer filename rules and overrides keep precedence", () => {
+  const custom = ["error", { allTestPattern: "test", pattern: "custom" }];
+  const override = { files: ["fixtures/**"], rules: { "vitest/consistent-test-filename": "off" } };
+  const configured = oxforge({
+    vitest: true,
+    rules: { "vitest/consistent-test-filename": custom },
+    overrides: [override],
+  });
+  assert.deepEqual(configured.rules["vitest/consistent-test-filename"], custom);
+  assert.deepEqual(configured.overrides[0].rules["vitest/consistent-test-filename"], custom);
+  assert.deepEqual(configured.overrides[1], override);
+});
+
 for (const mode of ["factory", "generated"]) {
-  test(`${mode}: tests belong in test folders with a test suffix`, async (t) => {
+  test(`${mode}: unit and end-to-end tests use their own filename conventions`, async (t) => {
     const valid = await lint(
       t,
       mode,
@@ -112,13 +163,37 @@ for (const mode of ["factory", "generated"]) {
     const invalid = await lint(
       t,
       mode,
-      Object.fromEntries(rejectedPaths.map((name) => [name, "void 0;"])),
+      Object.fromEntries([...rejectedPaths, ...sourcePaths].map((name) => [name, "void 0;"])),
     );
     const failures = invalid.diagnostics.filter((item) =>
       item.code?.endsWith("(consistent-test-filename)"),
     );
     assert.equal(invalid.status, 1, invalid.stdout + invalid.stderr);
-    assert.equal(failures.length, rejectedPaths.length, invalid.stdout);
+    assert.equal(failures.length, rejectedPaths.length + sourcePaths.length, invalid.stdout);
+  });
+
+  test(`${mode}: conventional Playwright imports remain valid`, async (t) => {
+    const source =
+      'import { test, expect } from "@playwright/test"; test("loads", async ({ page }) => { await page.goto("/"); await expect(page).toHaveTitle("Home"); });';
+    const result = await lint(t, mode, {
+      "e2e/home.spec.ts": source,
+      "browser/home.e2e.ts": source,
+    });
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+  });
+
+  test(`${mode}: a repository inside a parent src directory remains valid`, async (t) => {
+    const result = await lint(
+      t,
+      mode,
+      {
+        "test/math.test.ts": "void 0;",
+        "packages/ui/e2e/button.spec.tsx": "void 0;",
+        "browser/login.e2e.ts": "void 0;",
+      },
+      "src/consumer",
+    );
+    assert.equal(result.status, 0, result.stdout + result.stderr);
   });
 
   test(`${mode}: helpers, fixtures, and ordinary source files keep their names`, async (t) => {
@@ -132,6 +207,9 @@ for (const mode of ["factory", "generated"]) {
       "src/specification.ts",
       "src/test.ts",
       "test/api.d.ts",
+      "e2e/login.ts",
+      "e2e/helpers/session.ts",
+      "src/test/helpers.ts",
     ];
     const result = await lint(
       t,

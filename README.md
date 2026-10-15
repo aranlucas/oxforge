@@ -151,14 +151,13 @@ The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skelet
 ## Stricter shared defaults and adoption
 
 The shared defaults include strict equality at null boundaries, CSS-only side-effect imports,
-readonly-compatible explicit parameter types in type-aware presets, and component-only exports
-in React modules. Next.js retains its existing metadata and route-configuration export names;
-those names are not allowed by the generic React preset.
+and component-only exports in React modules. Next.js retains its existing metadata and
+route-configuration export names; those names are not allowed by the generic React preset.
+`typescript/prefer-readonly-parameter-types` remains disabled in every preset.
 
-Readonly checks ignore inferred callback parameter types. The allowlist is declaration-scoped:
-TypeScript's built-in `Promise` and React's `ReactNode` and `KeyboardEvent` are allowed. Locally
-defined types with the same names are still checked. No React package is required by consumers
-that do not use React. The untyped base keeps this checker-dependent rule disabled.
+The Vitest preset requires unit tests in `test/` folders with a `.test` suffix. End-to-end tests
+may use an `e2e/` folder or an `.e2e` suffix. Test paths cannot contain a `src/` segment relative
+to the consumer project. Filename checks do not identify arbitrary test code in helper files.
 
 `no-unused-vars: "error"` uses Oxlint's native defaults. Named underscore-prefixed variables and
 parameters remain allowed; a bare `_` parameter is checked. Removing explicit ignore patterns

@@ -1,10 +1,10 @@
 import { defineConfig } from "oxlint";
 import { defineConfig as defineFormatConfig } from "oxfmt";
-import oxforge from "../src/index.js";
-import format, { tailwindSortConfig } from "../src/format.js";
+import oxforge from "@aranlucas/oxforge";
+import format, { tailwindSortConfig } from "@aranlucas/oxforge/format";
 import formatConfig, {
   tailwindSortConfig as staticTailwindSortConfig,
-} from "../src/format-config.js";
+} from "@aranlucas/oxforge/format-config";
 
 defineConfig(
   oxforge({
@@ -39,7 +39,7 @@ defineFormatConfig({
   sortTailwindcss: { ...staticTailwindSortConfig, stylesheet: "src/app/index.css" },
 });
 
-import tailwindConfig, { formatTailwindConfig } from "../src/format-tailwind.js";
+import tailwindConfig, { formatTailwindConfig } from "@aranlucas/oxforge/format-tailwind";
 
 defineFormatConfig(tailwindConfig);
 defineFormatConfig({

@@ -157,6 +157,28 @@ export function oxforge(options = {}) {
     ignorePatterns: [...ignorePatterns, ...(project.ignorePatterns ?? [])],
     settings: { ...project.settings, ...settings },
     rules: { ...selectedRules, ...project.rules },
+    ...(vitest
+      ? {
+          overrides: [
+            {
+              // Match consumer-relative paths, not an absolute parent directory named src.
+              files: ["**/src/**"],
+              rules: {
+                "vitest/consistent-test-filename": project.rules?.[
+                  "vitest/consistent-test-filename"
+                ] ?? [
+                  "error",
+                  {
+                    ...rules.vitest["vitest/consistent-test-filename"][1],
+                    pattern: "^$",
+                  },
+                ],
+              },
+            },
+            ...(project.overrides ?? []),
+          ],
+        }
+      : {}),
   });
 }
 
