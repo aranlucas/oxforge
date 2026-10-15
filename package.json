@@ -61,6 +61,7 @@
     "access": "public"
   },
   "scripts": {
+    "prepare": "husky",
     "build": "vp pack && node scripts/generate-configs.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
@@ -83,7 +84,9 @@
     "@semantic-release/git": "^11.0.1",
     "@shadcn/lint": "0.2.1",
     "@types/node": "^26.6.5",
+    "husky": "^9.1.7",
     "jsonc-parser": "^3.3.1",
+    "lint-staged": "^17.6.0",
     "oxfmt": "0.73.0",
     "oxlint": "1.88.0",
     "oxlint-tailwindcss": "1.16.0",
@@ -111,6 +114,15 @@
     "@shadcn/lint": {
       "optional": true
     }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,mjs,cjs,mts,cts}": [
+      "vp lint --fix",
+      "vp fmt --write --no-error-on-unmatched-pattern"
+    ],
+    "*.{json,jsonc,json5,css,scss,md,mdx,yml,yaml,html,toml,vue,svelte,astro,graphql}": [
+      "vp fmt --write --no-error-on-unmatched-pattern"
+    ]
   },
   "engines": {
     "node": ">=22.18.0"
