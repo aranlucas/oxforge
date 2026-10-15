@@ -5,7 +5,7 @@ import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 import { test } from "vitest";
-import { oxforge } from "../src/index.js";
+import { oxforge } from "@aranlucas/oxforge";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const lintBin = path.join(root, "node_modules/oxlint/bin/oxlint");

@@ -5,8 +5,8 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { oxforge, rules } from "../src/index.js";
-import { format } from "../src/format.js";
+import { oxforge, rules } from "@aranlucas/oxforge";
+import { format } from "@aranlucas/oxforge/format";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const lintBin = path.join(root, "node_modules/oxlint/bin/oxlint");
@@ -91,7 +91,11 @@ test("consumer overrides win while plugin and ignore arrays stay additive", () =
     "error",
     { allowInTypeGuards: true },
   ]);
-  assert.equal(config.overrides.length, 1);
+  assert.equal(config.overrides.length, 2);
+  assert.deepEqual(config.overrides[1], {
+    files: ["**/*.test.ts"],
+    rules: { "anti-slop/no-runtime-typeof": "off" },
+  });
 });
 
 test("configs do not share mutable nested rule options", () => {
@@ -203,7 +207,7 @@ test("Oxfmt loads the shared config and honors local formatting exceptions", asy
   const directory = await fixture(t);
   await writeFile(
     path.join(directory, "oxfmt.config.ts"),
-    `import { format } from ${JSON.stringify(new URL("../src/format.js", import.meta.url).href)};\nexport default format({ semi: false, singleQuote: true, printWidth: 120 });\n`,
+    `import { format } from ${JSON.stringify(import.meta.resolve("@aranlucas/oxforge/format"))};\nexport default format({ semi: false, singleQuote: true, printWidth: 120 });\n`,
   );
   await writeFile(path.join(directory, "sample.ts"), 'export const message="hello";\n');
   const result = run(formatBin, ["--write", "sample.ts"], directory);

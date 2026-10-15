@@ -1,9 +1,9 @@
 import assert from "node:assert/strict";
 import { test } from "vitest";
-import { format, formatConfig, tailwindSortConfig } from "../src/format.js";
+import { format, formatConfig, tailwindSortConfig } from "@aranlucas/oxforge/format";
 import staticConfig, {
   tailwindSortConfig as staticTailwindSortConfig,
-} from "../src/format-config.js";
+} from "@aranlucas/oxforge/format-config";
 
 test("Tailwind sorting stays opt-in for the generic formatter entrypoints", () => {
   assert.equal(staticConfig, formatConfig);
@@ -67,7 +67,7 @@ test("Tailwind results do not share mutable arrays with options or other calls",
   ]);
 });
 
-import tailwindConfig, { formatTailwindConfig } from "../src/format-tailwind.js";
+import tailwindConfig, { formatTailwindConfig } from "@aranlucas/oxforge/format-tailwind";
 
 test("Tailwind default preset includes the complete base and enables shared sorting", () => {
   assert.equal(tailwindConfig, formatTailwindConfig);

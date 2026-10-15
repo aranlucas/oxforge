@@ -2,8 +2,8 @@
   "vitest/consistent-test-filename": [
     "error",
     {
-      "allTestPattern": "\\.(test|spec)\\.([cm]?[jt]s|[jt]sx)$",
-      "pattern": "(^|[\\\\/])test[\\\\/]([^\\\\/]+[\\\\/])*[^\\\\/]+\\.test\\.([cm]?[jt]s|[jt]sx)$"
+      "allTestPattern": "\\.(test|spec|e2e)\\.([cm]?[jt]s|[jt]sx)$",
+      "pattern": "(^|[\\\\/])(test[\\\\/]([^\\\\/]+[\\\\/])*[^\\\\/]+\\.test|e2e[\\\\/]([^\\\\/]+[\\\\/])*[^\\\\/]+\\.(test|spec)|[^\\\\/]+\\.e2e)\\.([cm]?[jt]s|[jt]sx)$"
     }
   ],
   "vitest/no-conditional-expect": "error",

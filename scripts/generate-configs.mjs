@@ -22,7 +22,11 @@ const configs = {
   react: { plugins: ["react", "jsx-a11y"], env: { browser: true }, rules: rules.react },
   nextjs: { extends: ["./react.json"], plugins: ["nextjs"], rules: rules.nextjs },
   "react-perf": { extends: ["./react.json"], plugins: ["react-perf"], rules: rules.reactPerf },
-  vitest: { plugins: ["vitest"], rules: rules.vitest },
+  vitest: {
+    plugins: ["vitest"],
+    rules: rules.vitest,
+    overrides: oxforge({ vitest: true, typeAware: false }).overrides,
+  },
   tailwind: {
     jsPlugins: [{ name: "tailwindcss", specifier: "oxlint-tailwindcss" }],
     rules: rules.tailwind,

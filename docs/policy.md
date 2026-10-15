@@ -13,7 +13,7 @@ Every explicit Oxlint rule from the owned projects is accounted for here. `docs/
 - Built-in errors need messages, disable comments name specific rules, key/value pairs use `Object.fromEntries`, backslash-heavy strings use `String.raw`, and arrays use `toReversed` rather than mutating `reverse`.
 - Unused names use Oxlint's native defaults: underscore-prefixed variables and named parameters are allowed, but a bare `_` parameter is checked. The severity-only rule is not a ban on underscore-prefixed names.
 - Side-effect imports allow CSS only. Environment initialization imports need an explicit, justified project exception.
-- Type-aware presets require readonly-compatible explicit parameters and ignore inferred callback types. Exceptions match built-in `Promise` and `ReactNode`/`KeyboardEvent` declarations from the React package, not unrelated application types sharing those names.
+- `typescript/prefer-readonly-parameter-types` remains disabled, including in type-aware presets.
 - React component modules reject unrelated constant exports. Next.js keeps its existing metadata and route-configuration export allowlist in the framework preset.
 - React uses the automatic JSX runtime and allows React Compiler context values. React checks and accessibility are opt-in together.
 - Pedantic checks are enabled by default; explicit rule settings take precedence over the category. Size limits remain opt-in because existing projects explicitly disagree on them.
