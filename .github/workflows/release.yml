@@ -34,7 +34,7 @@ jobs:
           cache: true
           require-lockfile: true
       - name: Verify
-        run: pnpm check
+        run: pnpm prepublishOnly
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

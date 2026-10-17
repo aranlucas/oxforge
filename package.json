@@ -64,16 +64,17 @@
     "prepare": "husky",
     "build": "vp pack && node scripts/generate-configs.mjs",
     "typecheck": "tsc -p tsconfig.json",
-    "test": "vitest run",
+    "test": "vitest run --project unit",
     "lint": "vp lint && vp lint --config configs/vitest.json . --deny-warnings",
     "format": "vp fmt --write",
     "format:check": "vp fmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
-    "prepublishOnly": "pnpm check",
+    "prepublishOnly": "pnpm check && pnpm test:package",
     "audit:projects": "node scripts/audit-projects.mjs",
-    "test:watch": "vitest",
-    "semantic-release": "semantic-release"
+    "test:watch": "vitest --project unit",
+    "semantic-release": "semantic-release",
+    "test:package": "vitest run --project package"
   },
   "dependencies": {
     "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",

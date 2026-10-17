@@ -8,7 +8,8 @@ as `react-hook-form-mantine`.
 
 1. Merge a PR to `main` with a [Conventional Commits](https://www.conventionalcommits.org/)
    title. Squash merges use the PR title as the commit message.
-2. The workflow runs `pnpm check`, then `pnpm semantic-release`, which looks at the commits since
+2. The workflow runs `pnpm prepublishOnly` (`pnpm check` and `pnpm test:package`), then
+   `pnpm semantic-release`, which looks at the commits since
    the last `v*` tag:
    - `fix:` → patch, `feat:` → minor, `!` or a `BREAKING CHANGE:` footer → major
    - `build:`, `chore:`, `ci:`, `docs:`, `refactor:`, `test:` → no release
@@ -22,6 +23,11 @@ Pushes to a `next` branch publish prereleases to the `next` dist-tag.
 
 Policy changes that tighten defaults should be `feat:` (or `feat!:` once past 1.0), not `fix:`, so
 they don't reach consumers on a patch range.
+
+`pnpm check` runs only the existing `unit` Vitest project. `pnpm test:package` runs
+`vitest run --project package` once, with one isolated tarball/consumer fixture and
+runner-owned tests. CI uses the same two gates. `prepack` stays build-only, so
+packing inside the package fixture never re-enters either test project.
 
 ## Preview a release
 
