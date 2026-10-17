@@ -24,6 +24,11 @@ Pushes to a `next` branch publish prereleases to the `next` dist-tag.
 Policy changes that tighten defaults should be `feat:` (or `feat!:` once past 1.0), not `fix:`, so
 they don't reach consumers on a patch range.
 
+`pnpm check` runs only the existing `unit` Vitest project. `pnpm test:package` runs
+`vitest run --project package` once, with one isolated tarball/consumer fixture and
+runner-owned tests. CI uses the same two gates. `prepack` stays build-only, so
+packing inside the package fixture never re-enters either test project.
+
 ## Preview a release
 
 ```sh

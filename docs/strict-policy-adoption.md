@@ -26,7 +26,8 @@ policies, readonly positive/negative cases, scoped exception matching, disabled 
 mode, and React versus Next.js exports. The historical packed-package consumer checked a
 mutable parameter failure and a readonly success before its removal in `6a4bd38`. Those
 policy matrices now run in the checkout Vitest suite (`pnpm test`). The bounded replacement
-(`pnpm test:package`) checks installed exports/declarations, CLI/preset/plugin resolution,
+(`pnpm test:package`, or `pnpm exec vitest run --project package`) uses Vitest fixture
+hooks and cases to check installed exports/declarations, CLI/preset/plugin resolution,
 a floating-promise diagnostic, and basic formatting; it does not repeat the readonly matrix.
 
 An isolated snapshot of [Raleigh #15](https://github.com/aranlucas/raleigh-travel/pull/15) at
