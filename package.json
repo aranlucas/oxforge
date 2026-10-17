@@ -70,10 +70,11 @@
     "format:check": "vp fmt --check",
     "check": "pnpm build && pnpm typecheck && pnpm lint && pnpm format:check && pnpm test",
     "prepack": "pnpm build",
-    "prepublishOnly": "pnpm check",
+    "prepublishOnly": "pnpm check && pnpm test:package",
     "audit:projects": "node scripts/audit-projects.mjs",
     "test:watch": "vitest",
-    "semantic-release": "semantic-release"
+    "semantic-release": "semantic-release",
+    "test:package": "node test/package-smoke.mjs"
   },
   "dependencies": {
     "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",

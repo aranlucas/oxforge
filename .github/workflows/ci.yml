@@ -24,3 +24,4 @@ jobs:
         with:
           require-lockfile: true
       - run: pnpm check
+      - run: pnpm test:package

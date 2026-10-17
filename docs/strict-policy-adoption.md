@@ -23,8 +23,11 @@ package-age/security policies and its normal checks pass.
 
 The factory and generated JSON presets have paired behavioral fixtures covering all five
 policies, readonly positive/negative cases, scoped exception matching, disabled type-aware
-mode, and React versus Next.js exports. The packed-package consumer also checks a mutable
-parameter failure and a readonly success.
+mode, and React versus Next.js exports. The historical packed-package consumer checked a
+mutable parameter failure and a readonly success before its removal in `6a4bd38`. Those
+policy matrices now run in the checkout Vitest suite (`pnpm test`). The bounded replacement
+(`pnpm test:package`) checks installed exports/declarations, CLI/preset/plugin resolution,
+a floating-promise diagnostic, and basic formatting; it does not repeat the readonly matrix.
 
 An isolated snapshot of [Raleigh #15](https://github.com/aranlucas/raleigh-travel/pull/15) at
 `43e58406f88ffd5a544616da3554e084a6014e8a` reports zero diagnostics before and after substituting

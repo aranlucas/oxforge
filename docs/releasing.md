@@ -8,7 +8,8 @@ as `react-hook-form-mantine`.
 
 1. Merge a PR to `main` with a [Conventional Commits](https://www.conventionalcommits.org/)
    title. Squash merges use the PR title as the commit message.
-2. The workflow runs `pnpm check`, then `pnpm semantic-release`, which looks at the commits since
+2. The workflow runs `pnpm prepublishOnly` (`pnpm check` and `pnpm test:package`), then
+   `pnpm semantic-release`, which looks at the commits since
    the last `v*` tag:
    - `fix:` → patch, `feat:` → minor, `!` or a `BREAKING CHANGE:` footer → major
    - `build:`, `chore:`, `ci:`, `docs:`, `refactor:`, `test:` → no release
