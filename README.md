@@ -8,10 +8,10 @@ Built on [@aranlucas/oxlint-plugin-anti-slop](https://github.com/aranlucas/oxlin
 
 ## Install
 
-Requires Node 22.18+ or 24+, Oxlint 1.88+ within v1, and Oxfmt 0.73 within v0.73.
+Requires Node 22.18+ or 24+, Oxlint 1.88+ within v1, and Oxfmt 0.73+ within v0.
 
 ```sh
-pnpm add -D @aranlucas/oxforge oxlint@^1.88.0 oxfmt@^0.73.0 oxlint-tsgolint@^7.0.2004
+pnpm add -D @aranlucas/oxforge oxlint@^1.88.0 oxfmt@^0.74.0 oxlint-tsgolint@^7.0.2004
 pnpm exec oxforge init
 ```
 
