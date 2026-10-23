@@ -182,6 +182,25 @@ test("anti-slop dependency reports actual assertion violations", async (t) => {
   assert.match(result.stdout, /no-chained-type-assertions/);
 });
 
+for (const mode of ["factory", "generated"]) {
+  test(`${mode}: anti-slop keeps single-line bindings grouped and separates leading comments`, async (t) => {
+    const config =
+      mode === "factory"
+        ? oxforge({ typeAware: false, namedTypes: false, categories: categoriesOff })
+        : { extends: [path.join(root, "configs/base.json")], categories: categoriesOff };
+    const grouped = await lint(t, config, "export const first = 1;\nexport const second = 2;\n");
+    assert.equal(grouped.status, 0, grouped.stdout + grouped.stderr);
+
+    const documented = await lint(
+      t,
+      config,
+      "export const first = 1;\n/** Starts a new group. */\nexport const second = 2;\n",
+    );
+    assert.equal(documented.status, 1, documented.stdout + documented.stderr);
+    assert.match(documented.stdout, /require-readable-spacing/);
+  });
+}
+
 test("type-aware preset catches floating promises using the installed checker", async (t) => {
   const directory = await fixture(t);
   await writeFile(path.join(directory, ".oxlintrc.json"), JSON.stringify(oxforge()));

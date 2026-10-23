@@ -1,5 +1,5 @@
 minimumReleaseAgeExclude:
-  - "@aranlucas/oxlint-plugin-anti-slop@0.1.0"
+  - "@aranlucas/oxlint-plugin-anti-slop@0.1.1"
   - "@oxfmt/binding-android-arm-eabi@0.73.0"
   - "@oxfmt/binding-android-arm64@0.73.0"
   - "@oxfmt/binding-darwin-arm64@0.73.0"
