@@ -76,7 +76,7 @@
     "semantic-release": "semantic-release"
   },
   "dependencies": {
-    "@aranlucas/oxlint-plugin-anti-slop": "0.1.0",
+    "@aranlucas/oxlint-plugin-anti-slop": "0.1.1",
     "@oxlint/plugins": "1.89.0"
   },
   "devDependencies": {

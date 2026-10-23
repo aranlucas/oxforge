@@ -6,6 +6,8 @@ Lucas's opinionated [Oxlint](https://oxc.rs/docs/guide/usage/linter) and [Oxfmt]
 
 Built on [@aranlucas/oxlint-plugin-anti-slop](https://github.com/aranlucas/oxlint-plugin-anti-slop), Lucas's published packaging fork of [Dillon Mulroy's anti-slop](https://github.com/dmmulroy/anti-slop). All 18 generic anti-slop rules are enabled. Oxforge adds a named-types plugin, strict native rules, framework presets, and shared formatting. See [provenance](NOTICE.md).
 
+Anti-slop `0.1.1` keeps consecutive single-line bindings grouped at any scope, including exported bindings. Leading comments start a new group; multiline bindings and control-flow boundaries still receive blank lines. Existing blank lines are preserved.
+
 ## Install
 
 Requires Node 22.18+ or 24+, Oxlint 1.88+ within v1, and Oxfmt 0.73+ within v0.
