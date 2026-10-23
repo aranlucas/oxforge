@@ -4,7 +4,12 @@ import config from "./src/format-config.js";
 export default defineConfig({
   fmt: {
     ...config,
-    ignorePatterns: [...(config.ignorePatterns ?? []), "dist/**", "docs/projects.json"],
+    ignorePatterns: [
+      ...(config.ignorePatterns ?? []),
+      "dist/**",
+      "docs/projects.json",
+      "CHANGELOG.md",
+    ],
   },
   pack: {
     entry: { plugin: "src/plugin.ts" },
