@@ -1,0 +1,8 @@
+## [0.2.3](https://github.com/aranlucas/oxforge/compare/v0.2.2...v0.2.3) (2026-10-23)
+
+
+### Bug Fixes
+
+* align shared test and React standards ([#15](https://github.com/aranlucas/oxforge/issues/15)) ([deefab2](https://github.com/aranlucas/oxforge/commit/deefab2d39faa79157addda56da0efb4ba7f0b4c))
+* allow newer oxfmt 0.x peer versions ([#20](https://github.com/aranlucas/oxforge/issues/20)) ([fcf5bc9](https://github.com/aranlucas/oxforge/commit/fcf5bc9f022bfde1c088ec5e14c1ec7096531313))
+* update anti-slop to 0.1.1 ([#23](https://github.com/aranlucas/oxforge/issues/23)) ([1538779](https://github.com/aranlucas/oxforge/commit/153877941991682c27bc115f6eddf404899e6cd3))
