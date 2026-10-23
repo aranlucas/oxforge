@@ -1,3 +1,10 @@
+## [0.2.4](https://github.com/aranlucas/oxforge/compare/v0.2.3...v0.2.4) (2026-10-23)
+
+
+### Bug Fixes
+
+* exclude generated release notes from format checks ([#24](https://github.com/aranlucas/oxforge/issues/24)) ([ab49447](https://github.com/aranlucas/oxforge/commit/ab49447f439f42c0a4d27290e757d06640d68eaf))
+
 ## [0.2.3](https://github.com/aranlucas/oxforge/compare/v0.2.2...v0.2.3) (2026-10-23)
 
 
