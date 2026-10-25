@@ -244,14 +244,13 @@ export default oxforge({ nextjs: true, vitest: true });
 ```sh
 pnpm install --frozen-lockfile
 pnpm check
-pnpm test:package
 pnpm pack
 ```
 
 Releases are published automatically from `main` by semantic-release. See [docs/releasing.md](docs/releasing.md).
 
-The build emits the typed plugin and generates deterministic JSON presets. `pnpm check` checks the public API, lints the package using its JSON preset, verifies formatting, and runs real CLI tests through Vitest. `pnpm test:watch` reruns tests during development. `pnpm test:package` installs a tarball in a separate pnpm consumer and verifies preset inheritance, custom plugin resolution, typed diagnostics, shared ignores, static formatting, and initializer behavior.
+The build emits the typed plugin, checks package metadata with Publint, and generates deterministic JSON presets. `pnpm check` builds first, checks the public API types, lints the package using its JSON preset, verifies formatting, and runs real CLI tests through Vitest. `pnpm test:watch` reruns tests during development. The integration cases exercise preset inheritance, custom plugin resolution, typed diagnostics, static formatting, and initializer behavior from this checkout; they do not install the packed tarball into a separate consumer.
 
-Publishing runs both checks first. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. CI validates Node 22 and 24 on Linux and macOS. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
+Publishing runs `pnpm check` first. `pnpm pack` builds again through `prepack` and creates the local archive without publishing it. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. The current CI runs `pnpm check` on Ubuntu; it has no Node-version or operating-system matrix. Regenerate the inventory with `pnpm audit:projects /path/to/Projects`; this does not automatically change the curated rules.
 
 MIT licensed. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
