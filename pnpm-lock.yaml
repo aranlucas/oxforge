@@ -185,6 +185,9 @@ importers:
       '@types/node':
         specifier: ^26.6.5
         version: 26.6.5
+      execa:
+        specifier: 10.2.0
+        version: 10.2.0
       husky:
         specifier: ^9.1.7
         version: 9.1.7
