@@ -1,0 +1,4 @@
+{
+  "eslint/complexity": ["error", { "max": 9, "variant": "classic" }],
+  "eslint/max-depth": ["error", 3]
+}

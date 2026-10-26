@@ -16,6 +16,7 @@ export const rules = Object.freeze({
   tailwind: load("tailwind"),
   shadcn: load("shadcn"),
   sizeLimits: load("size-limits"),
+  maintainability: load("maintainability"),
 });
 
 export const ignorePatterns = [
@@ -41,144 +42,188 @@ export const ignorePatterns = [
   ].map((name) => `**/.${name}/**`),
 ];
 
-/** Create a fresh config; project rules, settings, and overrides win. */
-export function oxforge(options = {}) {
-  const {
-    react = false,
-    nextjs = false,
-    reactPerf = false,
-    vitest = false,
-    typeAware = true,
-    namedTypes = true,
-    allowTypeGuards = false,
-    pedantic = true,
-    sizeLimits = false,
-    tailwind = false,
-    shadcn = false,
-    ...project
-  } = options;
+const featureDefaults = {
+  react: false,
+  nextjs: false,
+  reactPerf: false,
+  vitest: false,
+  typeAware: true,
+  namedTypes: true,
+  allowTypeGuards: false,
+  pedantic: true,
+  sizeLimits: false,
+  maintainability: false,
+  tailwind: false,
+  shadcn: false,
+};
 
-  const plugins = ["eslint", "typescript", "unicorn", "oxc", "import", "promise", "node"];
+const presetPlugins = {
+  react: ["react", "jsx-a11y"],
+  nextjs: ["nextjs"],
+  reactPerf: ["react-perf"],
+  vitest: ["vitest"],
+};
 
-  const jsPlugins = [
+/** Preserve destructuring defaults: only undefined selects a feature's default. */
+function splitOptions(options) {
+  const features = {};
+  const project = { ...options };
+
+  for (const [name, fallback] of Object.entries(featureDefaults)) {
+    const value = options[name];
+    features[name] = value === undefined ? fallback : value;
+    delete project[name];
+  }
+
+  return { features, project };
+}
+
+/** Order matters: framework-specific rules override their shared prerequisites. */
+function selectedPresets(features, usesReact) {
+  const selection = {
+    typeAware: features.typeAware,
+    sizeLimits: features.sizeLimits,
+    maintainability: features.maintainability,
+    react: usesReact,
+    nextjs: features.nextjs,
+    reactPerf: features.reactPerf,
+    vitest: features.vitest,
+    tailwind: features.tailwind,
+    shadcn: features.shadcn,
+  };
+
+  return [
+    "base",
+    "antiSlop",
+    ...Object.entries(selection).flatMap(([name, enabled]) => (enabled ? [name] : [])),
+  ];
+}
+
+function selectedRules(presets, features) {
+  const selected = Object.assign({}, ...presets.map((name) => rules[name]));
+
+  if (features.namedTypes) {
+    selected["oxforge/no-inline-types"] = "error";
+  }
+
+  if (features.allowTypeGuards) {
+    selected["anti-slop/no-runtime-typeof"] = ["error", { allowInTypeGuards: true }];
+  }
+
+  return selected;
+}
+
+function customPlugins(features) {
+  const plugins = [
     { name: "anti-slop", specifier: require.resolve("@aranlucas/oxlint-plugin-anti-slop") },
   ];
 
-  const selectedRules = { ...rules.base, ...rules.antiSlop };
-  const settings = {};
-
-  if (namedTypes) {
-    jsPlugins.push({
+  if (features.namedTypes) {
+    plugins.push({
       name: "oxforge",
       specifier: fileURLToPath(new URL("../dist/plugin.js", import.meta.url)),
     });
-    selectedRules["oxforge/no-inline-types"] = "error";
   }
 
-  if (typeAware) {
-    Object.assign(selectedRules, rules.typeAware);
+  if (features.tailwind) {
+    plugins.push({ name: "tailwindcss", specifier: require.resolve("oxlint-tailwindcss") });
   }
 
-  if (allowTypeGuards) {
-    selectedRules["anti-slop/no-runtime-typeof"] = ["error", { allowInTypeGuards: true }];
+  if (features.shadcn) {
+    plugins.push({ name: "shadcn", specifier: require.resolve("@shadcn/lint") });
   }
 
-  if (sizeLimits) {
-    Object.assign(selectedRules, rules.sizeLimits);
-  }
+  return plugins;
+}
 
-  if (react || nextjs || reactPerf || shadcn) {
-    plugins.push("react", "jsx-a11y");
-    Object.assign(selectedRules, rules.react);
-  }
+function featureSettings(features, project) {
+  const settings = { ...project.settings };
 
-  if (nextjs) {
-    plugins.push("nextjs");
-    Object.assign(selectedRules, rules.nextjs);
-  }
-
-  if (reactPerf) {
-    plugins.push("react-perf");
-    Object.assign(selectedRules, rules.reactPerf);
-  }
-
-  if (vitest) {
-    plugins.push("vitest");
-    Object.assign(selectedRules, rules.vitest);
-  }
-
-  if (tailwind) {
-    if (!tailwind.stylesheet) {
+  if (features.tailwind) {
+    if (!features.tailwind.stylesheet) {
       throw new Error("Oxforge: tailwind.stylesheet must point to your Tailwind CSS entry point.");
     }
 
-    jsPlugins.push({ name: "tailwindcss", specifier: require.resolve("oxlint-tailwindcss") });
-    Object.assign(selectedRules, rules.tailwind);
     settings.tailwindcss = {
-      entryPoint: tailwind.stylesheet,
-      ...tailwind.settings,
+      entryPoint: features.tailwind.stylesheet,
+      ...features.tailwind.settings,
       ...project.settings?.tailwindcss,
     };
   }
 
-  if (shadcn) {
-    jsPlugins.push({ name: "shadcn", specifier: require.resolve("@shadcn/lint") });
-    Object.assign(selectedRules, rules.shadcn);
-    settings.shadcn = { ...shadcn, ...project.settings?.shadcn };
+  if (features.shadcn) {
+    settings.shadcn = { ...features.shadcn, ...project.settings?.shadcn };
   }
 
-  const env = { es2026: true };
+  return settings;
+}
 
-  if (react || nextjs || reactPerf || shadcn) {
-    env.browser = true;
+function testOverrides(enabled, project) {
+  if (!enabled) {
+    return {};
   }
+
+  return {
+    overrides: [
+      {
+        // Match consumer-relative paths, not an absolute parent directory named src.
+        files: ["**/src/**"],
+        rules: {
+          "vitest/consistent-test-filename": project.rules?.["vitest/consistent-test-filename"] ?? [
+            "error",
+            { ...rules.vitest["vitest/consistent-test-filename"][1], pattern: "^$" },
+          ],
+        },
+      },
+      ...(project.overrides ?? []),
+    ],
+  };
+}
+
+/** Create a fresh config; project rules, settings, and overrides win. */
+export function oxforge(options = {}) {
+  const { features, project } = splitOptions(options);
+  const usesReact = [features.react, features.nextjs, features.reactPerf, features.shadcn].some(
+    Boolean,
+  );
+  const presets = selectedPresets(features, usesReact);
+  const plugins = [
+    "eslint",
+    "typescript",
+    "unicorn",
+    "oxc",
+    "import",
+    "promise",
+    "node",
+    ...presets.flatMap((name) => presetPlugins[name] ?? []),
+  ];
+  const settings = featureSettings(features, project);
 
   return structuredClone({
     ...project,
     plugins: [...new Set([...plugins, ...(project.plugins ?? [])])],
-    jsPlugins: [...jsPlugins, ...(project.jsPlugins ?? [])],
+    jsPlugins: [...customPlugins(features), ...(project.jsPlugins ?? [])],
     categories: {
       correctness: "error",
       suspicious: "error",
       perf: "error",
-      pedantic: pedantic ? "error" : "off",
+      pedantic: features.pedantic ? "error" : "off",
       style: "off",
       restriction: "off",
       nursery: "off",
       ...project.categories,
     },
-    env: { ...env, ...project.env },
+    env: { es2026: true, ...(usesReact ? { browser: true } : {}), ...project.env },
     options: {
-      typeAware,
+      typeAware: features.typeAware,
       maxWarnings: 0,
       reportUnusedDisableDirectives: "error",
       ...project.options,
     },
     ignorePatterns: [...ignorePatterns, ...(project.ignorePatterns ?? [])],
-    settings: { ...project.settings, ...settings },
-    rules: { ...selectedRules, ...project.rules },
-    ...(vitest
-      ? {
-          overrides: [
-            {
-              // Match consumer-relative paths, not an absolute parent directory named src.
-              files: ["**/src/**"],
-              rules: {
-                "vitest/consistent-test-filename": project.rules?.[
-                  "vitest/consistent-test-filename"
-                ] ?? [
-                  "error",
-                  {
-                    ...rules.vitest["vitest/consistent-test-filename"][1],
-                    pattern: "^$",
-                  },
-                ],
-              },
-            },
-            ...(project.overrides ?? []),
-          ],
-        }
-      : {}),
+    settings,
+    rules: { ...selectedRules(presets, features), ...project.rules },
+    ...testOverrides(features.vitest, project),
   });
 }
 

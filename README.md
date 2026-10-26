@@ -94,18 +94,19 @@ For Next.js and Vitest:
 }
 ```
 
-| Preset             | Policy                                                                                                             |
-| ------------------ | ------------------------------------------------------------------------------------------------------------------ |
-| `base.json`        | Native rules, all 18 anti-slop rules, named types, strict categories, unused-disable checks.                       |
-| `recommended.json` | Base plus type-aware safety rules. Set `options.typeAware: true` in the root config and install `oxlint-tsgolint`. |
-| `type-aware.json`  | Type-aware rules only, for composing with another baseline.                                                        |
-| `react.json`       | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                               |
-| `nextjs.json`      | React plus Next.js.                                                                                                |
-| `react-perf.json`  | React plus rules against fresh JSX prop objects and functions.                                                     |
-| `vitest.json`      | Valid assertions; no focused or disabled tests.                                                                    |
-| `tailwind.json`    | Strict design-token and utility rules; use gap instead of `space-x/y`.                                             |
-| `shadcn.json`      | Variants own appearance; callers own layout.                                                                       |
-| `size-limits.json` | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                 |
+| Preset                 | Policy                                                                                                             |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `base.json`            | Native rules, all 18 anti-slop rules, named types, strict categories, unused-disable checks.                       |
+| `recommended.json`     | Base plus type-aware safety rules. Set `options.typeAware: true` in the root config and install `oxlint-tsgolint`. |
+| `type-aware.json`      | Type-aware rules only, for composing with another baseline.                                                        |
+| `react.json`           | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                               |
+| `nextjs.json`          | React plus Next.js.                                                                                                |
+| `react-perf.json`      | React plus rules against fresh JSX prop objects and functions.                                                     |
+| `vitest.json`          | Valid assertions; no focused or disabled tests.                                                                    |
+| `tailwind.json`        | Strict design-token and utility rules; use gap instead of `space-x/y`.                                             |
+| `shadcn.json`          | Variants own appearance; callers own layout.                                                                       |
+| `size-limits.json`     | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                 |
+| `maintainability.json` | Classic cyclomatic complexity below 10 and block nesting at most 3. Opt-in, with no new analyzer dependency.       |
 
 Ignore patterns belong in the project config: Oxlint resolves inherited patterns relative to the preset file inside `node_modules`. The initializer writes the standard patterns into `.oxlintrc.json`; hand-written configs should keep their existing ignores.
 
@@ -237,7 +238,10 @@ import { oxforge } from "@aranlucas/oxforge";
 export default oxforge({ nextjs: true, vitest: true });
 ```
 
-`oxforge()` accepts native config fields plus `react`, `nextjs`, `reactPerf`, `vitest`, `typeAware` (default true), `namedTypes` (default true), `allowTypeGuards`, `pedantic`, `sizeLimits`, `tailwind: { stylesheet, settings? }`, and `shadcn: { ui?, componentImports? }`. Project values win; plugin and ignore arrays are additive. `format()` from `@aranlucas/oxforge/format` accepts Oxfmt options. Static JSON presets are generated from the same rule definitions as this API.
+`oxforge()` accepts native config fields plus `react`, `nextjs`, `reactPerf`, `vitest`, `typeAware` (default true), `namedTypes` (default true), `allowTypeGuards`, `pedantic`, `sizeLimits`, `maintainability`, `tailwind: { stylesheet, settings? }`, and `shadcn: { ui?, componentImports? }`. Project values win; plugin and ignore arrays are additive. `format()` from `@aranlucas/oxforge/format` accepts Oxfmt options. Static JSON presets are generated from the same rule definitions as this API.
+
+The [maintainability workflow](docs/maintainability.md) explains how to measure a baseline,
+refactor high-complexity functions, and adopt the optional preset through normal lint commands.
 
 ## Develop and publish
 

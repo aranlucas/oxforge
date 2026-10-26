@@ -133,6 +133,7 @@ test("every native and optional preset loads in Oxlint", async (t) => {
     vitest: true,
     pedantic: true,
     sizeLimits: true,
+    maintainability: true,
     tailwind: { stylesheet: "styles.css" },
     shadcn: { ui: "@/components/ui" },
   });
@@ -143,6 +144,85 @@ test("every native and optional preset loads in Oxlint", async (t) => {
   const result = run(lintBin, ["sample.ts"], directory);
   assert.equal(result.status, 0, result.stdout + result.stderr);
 });
+
+test("undefined feature options preserve defaults without leaking into native configuration", () => {
+  assert.deepEqual(
+    oxforge({
+      react: undefined,
+      nextjs: undefined,
+      reactPerf: undefined,
+      vitest: undefined,
+      typeAware: undefined,
+      namedTypes: undefined,
+      allowTypeGuards: undefined,
+      pedantic: undefined,
+      sizeLimits: undefined,
+      maintainability: undefined,
+      tailwind: undefined,
+      shadcn: undefined,
+    }),
+    oxforge(),
+  );
+});
+
+test("maintainability is opt-in and consumer rule overrides remain authoritative", () => {
+  assert.equal(oxforge().rules["eslint/complexity"], undefined);
+  const config = oxforge({
+    maintainability: true,
+    rules: { "eslint/complexity": ["error", { max: 5 }] },
+  });
+  assert.equal(Object.hasOwn(config, "maintainability"), false);
+  assert.deepEqual(config.rules["eslint/complexity"], ["error", { max: 5 }]);
+  assert.deepEqual(config.rules["eslint/max-depth"], ["error", 3]);
+});
+
+for (const mode of ["factory", "generated"]) {
+  test(`${mode}: maintainability accepts complexity 9 and reports complexity 10`, async (t) => {
+    const configuration =
+      mode === "factory"
+        ? oxforge({ typeAware: false, maintainability: true, categories: categoriesOff })
+        : {
+            extends: [path.join(root, "configs/maintainability.json")],
+            categories: categoriesOff,
+          };
+    const branches = Array.from(
+      { length: 9 },
+      (_, index) => `if (flags[${index}]) { return ${index}; }`,
+    );
+    const source = `export function nine(flags: boolean[]) { ${branches.slice(0, 8).join(" ")} return -1; }
+export function ten(flags: boolean[]) { ${branches.join(" ")} return -1; }`;
+    const result = await lint(t, configuration, source);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    const diagnostics = JSON.parse(result.stdout).diagnostics.filter(
+      (diagnostic) => diagnostic.code === "eslint(complexity)",
+    );
+    assert.equal(diagnostics.length, 1, result.stdout);
+    assert.match(diagnostics[0].message, /`ten` has a complexity of 10\. Maximum allowed is 9/);
+  });
+
+  test(`${mode}: maintainability distinguishes depth 3 from depth 4`, async (t) => {
+    const configuration =
+      mode === "factory"
+        ? oxforge({ typeAware: false, maintainability: true, categories: categoriesOff })
+        : {
+            extends: [path.join(root, "configs/maintainability.json")],
+            categories: categoriesOff,
+          };
+    const source = `export function three(flags: boolean[]) {
+  if (flags[0]) { if (flags[1]) { if (flags[2]) { return 1; } } } return 0;
+}
+export function four(flags: boolean[]) {
+  if (flags[0]) { if (flags[1]) { if (flags[2]) { if (flags[3]) { return 1; } } } } return 0;
+}`;
+    const result = await lint(t, configuration, source);
+    assert.equal(result.status, 1, result.stdout + result.stderr);
+    const diagnostics = JSON.parse(result.stdout).diagnostics.filter(
+      (diagnostic) => diagnostic.code === "eslint(max-depth)",
+    );
+    assert.equal(diagnostics.length, 1, result.stdout);
+    assert.equal(diagnostics[0].labels[0].span.line, 5);
+  });
+}
 
 test("named types reject inline signatures and function-local declarations", async (t) => {
   const result = await lint(
