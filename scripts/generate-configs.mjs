@@ -33,6 +33,7 @@ const configs = {
   },
   shadcn: { jsPlugins: [{ name: "shadcn", specifier: "@shadcn/lint" }], rules: rules.shadcn },
   "size-limits": { rules: rules.sizeLimits },
+  maintainability: { rules: rules.maintainability },
 };
 
 await Promise.all(

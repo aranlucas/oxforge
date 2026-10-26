@@ -9,6 +9,7 @@ import formatConfig, {
 defineConfig(
   oxforge({
     nextjs: true,
+    maintainability: true,
     tailwind: { stylesheet: "app/globals.css" },
     shadcn: { ui: "@/components/ui" },
     rules: { "no-console": "off" },

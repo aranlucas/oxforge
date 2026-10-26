@@ -15,6 +15,7 @@ export type OxforgeOptions = Omit<OxlintConfig, "extends"> & {
   allowTypeGuards?: boolean;
   pedantic?: boolean;
   sizeLimits?: boolean;
+  maintainability?: boolean;
   tailwind?: false | TailwindOptions;
   shadcn?: false | NonNullable<OxlintConfig["settings"]>["shadcn"];
 };
@@ -30,7 +31,8 @@ export declare const rules: Readonly<
     | "vitest"
     | "tailwind"
     | "shadcn"
-    | "sizeLimits",
+    | "sizeLimits"
+    | "maintainability",
     NonNullable<OxlintConfig["rules"]>
   >
 >;
