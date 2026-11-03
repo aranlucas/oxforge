@@ -29,7 +29,7 @@ a machine-readable diagnostic report is useful. Substitute the project's source 
 
 ## Establish a baseline
 
-Use a separate native audit configuration to measure every function, including functions
+Save this as `complexity-audit.json` to measure every function, including functions
 already below the threshold:
 
 ```json
@@ -59,48 +59,6 @@ switch cases, ternaries, short-circuit expressions, catch clauses, optional chai
 initializers. A plain `else` adds no separate decision. The modified variant counts a whole switch
 once; do not change variants between measurements to make a result appear better.
 
-Guard clauses improve nesting even when the branch count stays the same. Prefer eliminating
-duplicate decisions or replacing uniform dispatch branches with a table. Extract helpers around
-real responsibilities, then measure the caller and every helper. Preserve failure propagation,
-cleanup, validation, and public behavior with the existing test runner.
+Guard clauses can reduce nesting without reducing branches. Measure every extracted helper as well as its caller; moving branches between functions is not evidence of simpler behavior. Preserve failure propagation, cleanup, validation, and public behavior with the existing tests.
 
-## Example: configuration composition
-
-The configuration builder previously combined feature defaults, prerequisite selection, native
-plugins, optional plugin settings, consumer overrides, and test-path policy in one function.
-With Oxlint 1.89.0, `oxforge()` measured **41**. Its refactored orchestration measures **7**;
-every extracted helper is **6 or below**. Feature selection is now an ordered table, and the
-React prerequisite is evaluated once for rules, plugins, and browser globals.
-
-```js
-const { features, project } = splitOptions(options);
-const usesReact = [features.react, features.nextjs, features.reactPerf, features.shadcn].some(
-  Boolean,
-);
-const presets = selectedPresets(features, usesReact);
-```
-
-This is the orchestration excerpt from `src/index.js`; the full function retains consumer
-precedence and returns a fresh clone. Defaults are selected only for `undefined`, matching the
-previous destructuring behavior. The refactor reduces the branches in the implementation, not
-the number of supported feature combinations. A differential check compared **4,096** existing
-configurations (all 2,048 feature combinations, with and without consumer overrides) and found
-identical results. Permanent CLI tests check both factory and generated presets at the complexity
-9/10 and nesting 3/4 boundaries, alongside existing composition and isolation tests.
-
-The existing config generator is retained because it materializes this package's rule tables
-and portable plugin paths into distributable JSON. Native Oxlint runs the resulting policy;
-there is no new wrapper, setup script, bespoke test runner, or custom complexity calculator.
-
-## Repeat across repositories
-
-For each project, record its base, source scope, largest functions, existing checks, confirmed
-findings, and validation limits. Fix one coherent behavior or module at a time. Run the project's
-normal tests, types, lint, and relevant build; commit a verified chunk; fetch and rebase before
-integration if the base moved. Reuse existing native rules for recurring findings before adding
-a shared plugin rule. New plugin rules need invalid examples, valid counterexamples, and a real
-CLI test through the published entry point.
-
-References: [Oxlint complexity](https://oxc.rs/docs/guide/usage/linter/rules/eslint/complexity),
-[configuration](https://oxc.rs/docs/guide/usage/linter/config), and
-[plugin tests](https://oxc.rs/docs/guide/usage/linter/writing-js-plugins).
+Rule reference: [Oxlint complexity](https://oxc.rs/docs/guide/usage/linter/rules/eslint/complexity).

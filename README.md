@@ -1,40 +1,19 @@
 # Oxforge
 
-**Strict types. Readable code. No slop.**
+Lucas's opinionated [Oxlint](https://oxc.rs/docs/guide/usage/linter) and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) policy. Shared presets replace repeated rule lists; local configs keep app-specific exceptions.
 
-Lucas's opinionated [Oxlint](https://oxc.rs/docs/guide/usage/linter) and [Oxfmt](https://oxc.rs/docs/guide/usage/formatter) policy, forged from the configs across his projects. Shared presets replace repeated rule lists; small local configs keep app-specific exceptions.
-
-Built on [@aranlucas/oxlint-plugin-anti-slop](https://github.com/aranlucas/oxlint-plugin-anti-slop), Lucas's published packaging fork of [Dillon Mulroy's anti-slop](https://github.com/dmmulroy/anti-slop). All 18 generic anti-slop rules are enabled. Oxforge adds a named-types plugin, strict native rules, framework presets, and shared formatting. See [provenance](NOTICE.md).
-
-Anti-slop `0.1.1` keeps consecutive single-line bindings grouped at any scope, including exported bindings. Leading comments start a new group; multiline bindings and control-flow boundaries still receive blank lines. Existing blank lines are preserved.
+Built on [@aranlucas/oxlint-plugin-anti-slop](https://github.com/aranlucas/oxlint-plugin-anti-slop), Lucas's published packaging fork of [Dillon Mulroy's anti-slop](https://github.com/dmmulroy/anti-slop). Oxforge enables its 18 generic rules and adds named types, native rules, framework presets, and shared formatting. See [provenance](NOTICE.md).
 
 ## Install
 
-Requires Node 22.18+ or 24+, Oxlint 1.88+ within v1, and Oxfmt 0.73+ within v0.
+Requires Node 22.18+, Oxlint 1.88+ within v1, and Oxfmt 0.73+ within v0.
 
 ```sh
 pnpm add -D @aranlucas/oxforge oxlint@^1.88.0 oxfmt@^0.74.0 oxlint-tsgolint@^7.0.2004
 pnpm exec oxforge init
 ```
 
-Use `--react` or `--next` for a frontend, `--vitest` for test rules, or `--no-type-aware` for a project without the checker. The initializer generates a plain JSON lint config and a static formatter import. It refuses to overwrite existing configs.
-
-`.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "extends": ["./node_modules/@aranlucas/oxforge/configs/recommended.json"],
-  "options": { "typeAware": true },
-  "ignorePatterns": ["**/dist/**", "**/build/**", "**/coverage/**"]
-}
-```
-
-`oxfmt.config.ts`:
-
-```ts
-export { default } from "@aranlucas/oxforge/format-config";
-```
+Use `--react` or `--next` for a frontend, `--vitest` for test rules, or `--no-type-aware` for a project without the checker. The initializer writes `.oxlintrc.json` and `oxfmt.config.ts` and refuses to overwrite existing configs. For an existing project, follow [migration](#migrate-an-existing-project).
 
 Add scripts to `package.json`:
 
@@ -49,35 +28,9 @@ Add scripts to `package.json`:
 }
 ```
 
-Oxlint and Oxfmt discover these files directly. Editors, CI, and the normal CLIs use the same policy.
+## Choose presets
 
-### TypeScript config
-
-With Oxlint's `oxlint.config.ts`, import the config object instead of pointing at JSON files. Package imports work there, and options are typed:
-
-```ts
-import { defineConfig } from "oxlint";
-import { oxforge } from "@aranlucas/oxforge";
-
-export default defineConfig({
-  extends: [oxforge({ react: true, vitest: true })],
-});
-```
-
-## Upgrading from 0.1.x
-
-Version 0.2.0 is a compatibility-affecting policy update: stricter defaults can report errors in
-code that passed 0.1.3. Dependencies declared as `^0.1.3` do not select 0.2.0 automatically.
-See the [0.2.0 release candidate and migration notes](https://github.com/aranlucas/oxforge/blob/f273129/CHANGELOG.md#020-unreleased) before upgrading.
-Preparing or merging this version does not publish it or update consumers. Keep existing local
-protections until the released package passes the consuming project's package-age/security gates
-and its lint, type, test, and build checks.
-
-## Plugins and presets
-
-Oxlint's `plugins` array selects built-in Rust plugins such as `eslint`, `typescript`, `unicorn`, and `react`. Third-party custom rules use `jsPlugins`; shared rule settings use `extends`. Adding a plugin alone does not select all of Oxforge's opinionated rule settings. The presets declare the required built-in and custom plugins for you. See [Oxlint's config reference](https://oxc.rs/docs/guide/usage/linter/config-file-reference) and [JS plugin documentation](https://oxc.rs/docs/guide/usage/linter/js-plugins).
-
-JSON `extends` accepts file paths, so the explicit `./node_modules/` path is required. Bare package names in JSON `extends` are not supported by Oxlint 1.88.0. Install Oxforge in the package containing the config; for a workspace dependency at a parent level, adjust the relative path to that dependency's `node_modules`.
+In JSON configs, use file paths in `extends`. Install Oxforge in the package containing the config; for a workspace dependency at a parent level, adjust the relative path to that dependency's `node_modules`.
 
 For Next.js and Vitest:
 
@@ -90,99 +43,64 @@ For Next.js and Vitest:
     "./node_modules/@aranlucas/oxforge/configs/vitest.json"
   ],
   "options": { "typeAware": true },
-  "env": { "node": true }
+  "env": { "node": true },
+  "ignorePatterns": ["**/dist/**", "**/build/**", "**/coverage/**", "**/.next/**"]
 }
 ```
 
-| Preset                 | Policy                                                                                                             |
-| ---------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `base.json`            | Native rules, all 18 anti-slop rules, named types, strict categories, unused-disable checks.                       |
-| `recommended.json`     | Base plus type-aware safety rules. Set `options.typeAware: true` in the root config and install `oxlint-tsgolint`. |
-| `type-aware.json`      | Type-aware rules only, for composing with another baseline.                                                        |
-| `react.json`           | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                               |
-| `nextjs.json`          | React plus Next.js.                                                                                                |
-| `react-perf.json`      | React plus rules against fresh JSX prop objects and functions.                                                     |
-| `vitest.json`          | Valid assertions; no focused or disabled tests.                                                                    |
-| `tailwind.json`        | Strict design-token and utility rules; use gap instead of `space-x/y`.                                             |
-| `shadcn.json`          | Variants own appearance; callers own layout.                                                                       |
-| `size-limits.json`     | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                 |
-| `maintainability.json` | Classic cyclomatic complexity below 10 and block nesting at most 3. Opt-in, with no new analyzer dependency.       |
+| Preset                 | Use for                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `base.json`            | Native and anti-slop rules, named types, strict categories, unused-disable checks.                                       |
+| `recommended.json`     | Base plus type-aware safety. Set `options.typeAware: true` in the root and install `oxlint-tsgolint`.                    |
+| `type-aware.json`      | Type-aware rules only, to compose with another baseline.                                                                 |
+| `react.json`           | React, hooks, compiler rules, automatic JSX runtime, accessibility, browser globals.                                     |
+| `nextjs.json`          | React plus Next.js.                                                                                                      |
+| `react-perf.json`      | React plus checks against fresh JSX prop objects and functions.                                                          |
+| `vitest.json`          | Valid assertions, test placement, no focused or disabled tests.                                                          |
+| `tailwind.json`        | Strict design-token and utility rules.                                                                                   |
+| `shadcn.json`          | Variants own appearance; callers own layout.                                                                             |
+| `size-limits.json`     | 300-line files, 120-line functions, 16 imports; comments and blank lines excluded.                                       |
+| `maintainability.json` | Opt-in classic cyclomatic complexity at most 9 and block nesting at most 3; see the [workflow](docs/maintainability.md). |
 
-Ignore patterns belong in the project config: Oxlint resolves inherited patterns relative to the preset file inside `node_modules`. The initializer writes the standard patterns into `.oxlintrc.json`; hand-written configs should keep their existing ignores.
-
-Framework presets are additive. `recommended.json` includes no frontend framework by itself. Pedantic rules are enabled by default; explicit rule settings take precedence. Opt out with `categories: { "pedantic": "off" }`.
-
-Install optional plugins before extending their presets:
+Presets declare their plugins and rules together; adding a plugin alone does not select the policy. Framework presets are additive; `recommended.json` includes no frontend framework. Install optional plugins before extending their presets:
 
 ```sh
 pnpm add -D oxlint-tailwindcss@^1.16.0 @shadcn/lint@^0.2.1
 ```
 
-Keep app-specific paths and exceptions in native JSON fields:
+Keep app-specific values in native config fields: `settings.tailwindcss.entryPoint` for the stylesheet, `settings.shadcn.ui` for UI imports, and `env.node` or `env.worker` for runtime globals. Local `rules`, `settings`, and file-specific `overrides` take precedence. Disable named types with `"oxforge/no-inline-types": "off"`, or pedantic checks with `"categories": { "pedantic": "off" }`.
 
-```json
-{
-  "extends": [
-    "./node_modules/@aranlucas/oxforge/configs/recommended.json",
-    "./node_modules/@aranlucas/oxforge/configs/nextjs.json",
-    "./node_modules/@aranlucas/oxforge/configs/tailwind.json",
-    "./node_modules/@aranlucas/oxforge/configs/shadcn.json"
-  ],
-  "options": { "typeAware": true },
-  "settings": {
-    "next": { "rootDir": "." },
-    "tailwindcss": { "entryPoint": "src/app/globals.css" },
-    "shadcn": { "ui": "@/components/ui" }
-  },
-  "ignorePatterns": ["src/generated/**"],
-  "rules": { "eslint/no-console": "off" },
-  "overrides": [
-    {
-      "files": ["tests/strict-fake.ts"],
-      "rules": {
-        "anti-slop/no-runtime-typeof": ["error", { "allowInTypeGuards": true }]
-      }
-    }
-  ]
-}
+Ignore patterns belong in the project config: inherited patterns resolve relative to the preset inside `node_modules`. The initializer writes standard ignores locally; hand-written configs should retain their existing exclusions.
+
+### Programmatic configuration
+
+For `oxlint.config.ts`, compose typed config objects:
+
+```ts
+import { defineConfig } from "oxlint";
+import { oxforge } from "@aranlucas/oxforge";
+
+export default defineConfig({
+  extends: [oxforge({ nextjs: true, vitest: true, env: { node: true } })],
+});
 ```
 
-Local rules take precedence over inherited settings. To turn off named types, set `oxforge/no-inline-types: "off"`. For a Worker or Node project, set `env.worker` or `env.node`. React Native can use `react.json` with its existing `__DEV__` global, import allowlist, and platform-specific accessibility overrides.
-
-The shadcn preset preserves the shared Card spacing, Carousel gutter, and Skeleton rounding contracts from the shopping project. Custom class allowlists, UI implementation exceptions, SVG exceptions, and SDK-specific import restrictions stay local.
-
-## Stricter shared defaults and adoption
-
-The shared defaults include strict equality at null boundaries, CSS-only side-effect imports,
-and component-only exports in React modules. Next.js retains its existing metadata and
-route-configuration export names; those names are not allowed by the generic React preset.
-`typescript/prefer-readonly-parameter-types` remains disabled in every preset.
-
-The Vitest preset requires unit tests in `test/` folders with a `.test` suffix. End-to-end tests
-may use an `e2e/` folder or an `.e2e` suffix. Test paths cannot contain a `src/` segment relative
-to the consumer project. Filename checks do not identify arbitrary test code in helper files.
-
-`no-unused-vars: "error"` uses Oxlint's native defaults. Named underscore-prefixed variables and
-parameters remain allowed; a bare `_` parameter is checked. Removing explicit ignore patterns
-does not mean all underscore-prefixed names now fail. See the [rule documentation](https://oxc.rs/docs/guide/usage/linter/rules/eslint/no-unused-vars).
-
-These changes can reveal existing source violations. Do not remove stricter project protection
-until a released shared version containing the same effective behavior is actually installed and
-validated with that project's normal checks. In particular, Raleigh's narrower Next.js export
-allowlist remains a stricter local policy. This source change does not release a package or update
-consumer lockfiles. Keep package-age and security policies in place during adoption. See the
-[consumer evidence and migration guidance](docs/strict-policy-adoption.md).
+See [OxforgeOptions](src/index.d.ts) for feature switches and plugin settings. Project values win; plugin and ignore arrays are additive. JSON presets are generated from the same rule definitions.
 
 ## Formatting
 
-Defaults: 100 columns, semicolons, double quotes, two spaces, trailing commas, LF endings, sorted package manifests, and preserved prose wrapping. Import sorting is opt-in.
+Use the shared static config in `oxfmt.config.ts`:
 
-Override the static config with ordinary object spread:
+```ts
+export { default } from "@aranlucas/oxforge/format-config";
+```
+
+To keep local exceptions, spread the shared config:
 
 ```ts
 import config from "@aranlucas/oxforge/format-config";
 
-const projectConfig = {
+export default {
   ...config,
   printWidth: 80,
   sortTailwindcss: {
@@ -191,74 +109,40 @@ const projectConfig = {
   },
   ignorePatterns: [...(config.ignorePatterns ?? []), "src/generated/**"],
 };
-
-export default projectConfig;
 ```
 
-Oxfmt does not offer JSON preset inheritance, so its shared config uses a static module export. No function call is needed. See [Oxfmt's configuration documentation](https://oxc.rs/docs/guide/usage/formatter/config).
-
-Vienna can keep `printWidth: 120`, `semi: false`, and `singleQuote: true`. The system-design projects can keep `quoteProps: "preserve"`; projects relying on manifest order can keep `sortPackageJson: false`. Documentation can keep `semi: false` and `trailingComma: "es5"`.
-
-## Policy and audit
-
-- Strict correctness, suspicious-code, performance, and pedantic categories. Warnings fail the run; unused disable comments are errors.
-- No `any`, non-null assertions, chained assertions, vague `unknown` APIs, reflection escape hatches, module mocking, or unsafe dictionary types. Assertions need safety comments.
-- Named module-level object and tuple types. `oxforge/no-inline-types` covers signatures, casts, generics, and local declarations.
-- Kebab-case filenames, strict equality with `== null` allowed, control-flow braces, precise imports, handled promises, immutable array operations, and readable spacing.
-- The initializer writes project-local ignores for build output, dependencies, coverage, and agent directories. App-specific generated files stay in app configs.
-
-The audit covers 75 local project directories, including 63 owned Git repositories, 59 Oxlint configs, 35 Oxfmt configs, and 257 distinct explicit Oxlint rules. [Inventory](docs/inventory.md), [policy decisions and coverage](docs/policy.md), and [the raw snapshot](docs/projects.json) record the source settings and conflicts. Legacy ESLint rules with no native Oxlint equivalent are documented there.
+Import sorting is opt-in. The [`format()` factory](src/format.d.ts) from `@aranlucas/oxforge/format` also accepts Oxfmt options and adds local ignore patterns to the shared ones.
 
 ## Migrate an existing project
 
-1. Install Oxforge and the required tools with pnpm. Add optional plugins for the presets you select.
-2. Add the desired presets to the existing `.oxlintrc.json` through `extends`.
-3. Remove repeated rules supplied by those presets. Keep differing rules, `settings`, `env`, `globals`, generated-file ignores, and file-specific overrides. Additional local plugins still use `jsPlugins`.
-4. Replace `.oxfmtrc.json` with `oxfmt.config.ts` importing the static formatter config and retaining relevant exceptions.
-5. Run `pnpm lint` and `pnpm format:check`. Oxforge strengthens several existing policies; review diagnostics before applying fixes.
+1. Install Oxforge and the tools required by your selected presets.
+2. Add presets to the existing `.oxlintrc.json` through `extends`. Keep differing rules, `settings`, `env`, `globals`, generated-file ignores, local plugins in `jsPlugins`, and file-specific overrides.
+3. Replace the existing formatter config with `oxfmt.config.ts`, retaining local exceptions. Keep one lint and one format config per directory.
+4. Run the consuming project's lint, formatting, type, test, and build checks. Review diagnostics before applying fixes.
 
-Keep only one lint and one format config per directory. Nested Oxlint configs must explicitly extend the parent; parent configs are not merged automatically. Passing `--config` disables nested lint config lookup. Root-only `options.typeAware` and `options.typeCheck` belong in the root config, not a shared preset or a nested config. See [nested config behavior](https://oxc.rs/docs/guide/usage/linter/nested-config).
+Keep stricter local protection until a released shared version with equivalent behavior is installed and verified under the project's package-age and security policies. To recover from an incompatible upgrade, pin the previous working version and restore its lockfile. Oxforge source changes and releases do not update consumer dependencies.
 
-```json
-{
-  "extends": ["../../.oxlintrc.json"],
-  "env": { "node": true }
-}
-```
+Adoption boundaries that need review:
 
-Existing projects have not been modified by this extraction. Their exceptions are recorded in the inventory for migration.
+- Strict equality includes null boundaries; side-effect imports allow CSS only. Environment initialization imports need a justified local exception.
+- `typescript/prefer-readonly-parameter-types` is disabled, including in the type-aware preset. For mutable SDK/framework boundaries, preserve the actual API contract rather than adding casts or changing I/O ordering to satisfy lint.
+- React modules reject unrelated constant exports. Next.js adds its own export allowlist in [rules/nextjs.json](rules/nextjs.json); preserve any narrower local allowlist until separately reviewed.
+- The Vitest preset requires unit tests in `test/` folders with a `.test` suffix. End-to-end tests may use an `e2e/` folder or an `.e2e` suffix. Test paths cannot contain a consumer-relative `src/` segment. Filename checks cannot identify arbitrary test code in helpers.
+- `no-unused-vars` uses native defaults: named underscore-prefixed variables and parameters remain allowed; a bare `_` parameter is checked.
 
-## Optional programmatic API
+Nested Oxlint configs must explicitly extend their parent. Passing `--config` disables nested config discovery. Root-only `options.typeAware` and `options.typeCheck` belong in the root, not shared presets or nested configs.
 
-The original typed factories remain available for projects that prefer composing options in code:
-
-```ts
-import { oxforge } from "@aranlucas/oxforge";
-
-export default oxforge({ nextjs: true, vitest: true });
-```
-
-`oxforge()` accepts native config fields plus `react`, `nextjs`, `reactPerf`, `vitest`, `typeAware` (default true), `namedTypes` (default true), `allowTypeGuards`, `pedantic`, `sizeLimits`, `maintainability`, `tailwind: { stylesheet, settings? }`, and `shadcn: { ui?, componentImports? }`. Project values win; plugin and ignore arrays are additive. `format()` from `@aranlucas/oxforge/format` accepts Oxfmt options. Static JSON presets are generated from the same rule definitions as this API.
-
-The [maintainability workflow](docs/maintainability.md) explains how to measure a baseline,
-refactor high-complexity functions, and adopt the optional preset through normal lint commands.
+See [policy rationale and migration provenance](docs/policy.md) for deliberate conflicts and legacy ESLint constraints, and the [roadmap](ROADMAP.md) for proposed adoption work.
 
 ## Develop and publish
 
 ```sh
 pnpm install --frozen-lockfile
 pnpm check
-pnpm pack
 ```
 
-Releases are published automatically from `main` by semantic-release. See [docs/releasing.md](docs/releasing.md).
+`pnpm check` builds, checks API types, lints, checks formatting, and runs checkout and installed-package tests. Use `pnpm test` during checkout development or `pnpm test:package` for package-boundary failures; the latter packs and installs a temporary consumer and does not publish.
 
-The build emits the typed plugin, checks package metadata with Publint, and generates deterministic JSON presets. `pnpm check` builds first, checks the public API types, lints the package using its JSON preset, verifies formatting, and runs both Vitest projects. `pnpm test` and `pnpm test:watch` run the checkout tests during development.
-
-`pnpm test:package` creates a native `pnpm pack` archive and installs it in a separate temporary consumer, with peer versions taken from the repository's frozen install. It verifies physical JS/JSON export resolution, installed TypeScript declarations (including rejected options), CLI initialization, preset inheritance, formatter output, and real custom/type-aware lint diagnostics. Temporary files are removed even when a hook or assertion fails. This project is part of the CI and publication gates through `pnpm check`.
-
-Package commands share a four-minute suite budget, with shorter per-command limits and bounded output. Execa 10.2.0, already used by the release toolchain and now an explicit development dependency, handles subprocess timeouts and descendant cleanup. The fixture helper only shares the deadline and checks expected exits; it does not implement a second test runner. POSIX regression tests verify cleanup after timeouts, excessive stdout/stderr, and an exited parent that leaves a descendant holding its pipes open. Descendants that create their own process group are outside that cleanup contract; CI currently runs on Ubuntu.
-
-Publishing runs `pnpm check` first. `pnpm pack` builds again through `prepack` and creates the local archive without publishing it. Keep `prepack` build-only: calling the package tests there would recursively pack the package. Version 0.1.1 enables pedantic checks by default, uses the standard filename-case rule options, and adds Unicorn checks for error messages, specific disable comments, `Object.fromEntries`, `String.raw`, and immutable array reversal. The current CI runs `pnpm check` on Ubuntu; it has no Node-version or operating-system matrix. The inventory records the migration inputs; current preset compatibility and package contracts are verified by `pnpm check`.
+Releases run automatically from `main`; see [releasing](docs/releasing.md) for commit semantics, publishing setup, and packaging constraints.
 
 MIT licensed. See [LICENSE](LICENSE) and [NOTICE.md](NOTICE.md).
