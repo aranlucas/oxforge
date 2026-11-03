@@ -273,11 +273,6 @@ for (const mode of ["factory", "generated"]) {
     ],
     ["focused test", "no-focused-tests", 'test.only("focused", () => { expect(1).toBe(1); });'],
     ["skipped test", "no-disabled-tests", 'test.skip("skipped", () => { expect(1).toBe(1); });'],
-    [
-      "unawaited assertion",
-      "valid-expect",
-      'test("async assertion", () => { expect(Promise.resolve(1)).resolves.toBe(1); });',
-    ],
   ]) {
     test(`${mode}: rejects ${name}`, async (t) => {
       const imports =

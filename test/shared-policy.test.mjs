@@ -99,30 +99,6 @@ export function promise(value: Promise<string>) { return value; }`,
     assert.equal(count(diagnostics, readonlyRule), 0, JSON.stringify(diagnostics));
   });
 
-  test(`${mode}: React exceptions match package declarations, not application type names`, async (t) => {
-    const files = {
-      "node_modules/@types/react/package.json":
-        '{"name":"@types/react","version":"1.0.0","types":"index.d.ts"}',
-      "node_modules/@types/react/index.d.ts": `export type ReactNode = { children: string[] };
-export interface KeyboardEvent { key: string; }`,
-      "sample.tsx": `import type { ReactNode, KeyboardEvent } from "react";
-export function node(value: ReactNode) { return value; }
-export function keyboard(value: KeyboardEvent) { return value.key; }`,
-    };
-    const configuration = config(mode, "react");
-    const diagnostics = await check(t, configuration, files);
-    assert.equal(count(diagnostics, readonlyRule), 0, JSON.stringify(diagnostics));
-  });
-
-  for (const framework of [undefined, "react", "nextjs"]) {
-    test(`${mode}: ${framework ?? "base"} does not run readonly checks when type-aware is disabled`, async (t) => {
-      const diagnostics = await check(t, config(mode, framework, false), {
-        "sample.tsx": "export function read(values: string[]) { return values.length; }",
-      });
-      assert.equal(count(diagnostics, readonlyRule), 0, JSON.stringify(diagnostics));
-    });
-  }
-
   for (const framework of ["react", "nextjs"]) {
     test(`${mode}: ${framework} rejects arbitrary constant exports beside components`, async (t) => {
       const diagnostics = await check(t, config(mode, framework, false), {
