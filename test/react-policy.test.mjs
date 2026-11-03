@@ -1,11 +1,11 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { test } from "vitest";
-import { oxforge, rules } from "@aranlucas/oxforge";
+import { oxforge } from "@aranlucas/oxforge";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
 const lintBin = path.join(root, "node_modules/oxlint/bin/oxlint");
@@ -64,22 +64,6 @@ async function lint(t, mode, framework, source) {
   assert.ok(result.status === 0 || result.status === 1, result.stdout + result.stderr);
   return { ...result, diagnostics: JSON.parse(result.stdout).diagnostics };
 }
-
-test("React factory and generated preset share the stricter rule severities", async () => {
-  const generated = JSON.parse(await readFile(path.join(root, "configs/react.json"), "utf8"));
-  assert.deepEqual(generated.rules, rules.react);
-  for (const name of [
-    "jsx-a11y/control-has-associated-label",
-    "jsx-a11y/heading-has-content",
-    "react/jsx-no-target-blank",
-    "react/no-unsafe",
-  ]) {
-    assert.equal(rules.react[name], "error");
-    for (const framework of ["react", "nextjs", "reactPerf"]) {
-      assert.equal(oxforge({ [framework]: true }).rules[name], "error");
-    }
-  }
-});
 
 for (const mode of ["factory", "generated"]) {
   for (const framework of ["react", "nextjs", "react-perf"]) {

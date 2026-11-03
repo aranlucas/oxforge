@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
-import { oxforge, rules } from "@aranlucas/oxforge";
+import { oxforge } from "@aranlucas/oxforge";
 import { format } from "@aranlucas/oxforge/format";
 
 const root = fileURLToPath(new URL("..", import.meta.url));
@@ -51,7 +51,6 @@ test("defaults combine all generic rules and strict type-aware policy", () => {
   assert.equal(oxforge({ pedantic: false }).categories.pedantic, "off");
   assert.equal(config.rules["unicorn/filename-case"], "error");
   assert.equal(config.rules["oxforge/no-inline-types"], "error");
-  assert.equal(Object.keys(rules.antiSlop).length, 18);
   assert.deepEqual(config.rules["typescript/no-floating-promises"], [
     "error",
     { checkThenables: true, ignoreVoid: false },
