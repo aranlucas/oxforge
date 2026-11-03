@@ -4,13 +4,6 @@ Updated 2026-10-26. Proposed developer-facing releases; the current planning pas
 does not publish packages or update consumers. Digits/MCP feature delivery has
 portfolio priority.
 
-## Starting point
-
-Baseline `aea798908d97c70590ebb646917842b745c92662`: the [package](README.md)
-already supplies native lint/format presets, framework profiles, initialization,
-an opt-in maintainability gate and installed-tarball consumer tests. The next
-value to test is easier policy adoption without losing project-specific safety.
-
 ## Ordered releases
 
 1. **Adopt a focused reliability profile.** Offer a clearly scoped opt-in
@@ -47,6 +40,4 @@ lower complexity number alone are not success. Stop widening defaults when
 noise exceeds the value of the findings.
 
 Use the [maintainability workflow](docs/maintainability.md) and native Oxlint
-reports for comparable baselines. Generic custom detection belongs in the
-anti-slop package only when native rules cannot express the demonstrated case;
-Oxforge owns selection and composition, consumers own local policy.
+reports for comparable baselines.
