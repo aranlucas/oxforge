@@ -1,3 +1,10 @@
+## [0.3.1](https://github.com/aranlucas/oxforge/compare/v0.3.0...v0.3.1) (2026-11-06)
+
+
+### Bug Fixes
+
+* protect dangling config links during initialization ([#34](https://github.com/aranlucas/oxforge/issues/34)) ([3fc44a3](https://github.com/aranlucas/oxforge/commit/3fc44a3a720db20909c10d3daca5695c4caa5bc0))
+
 # [0.3.0](https://github.com/aranlucas/oxforge/compare/v0.2.4...v0.3.0) (2026-10-26)
 
 
