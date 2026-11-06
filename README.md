@@ -141,7 +141,7 @@ pnpm install --frozen-lockfile
 pnpm check
 ```
 
-`pnpm check` builds, checks API types, lints, checks formatting, and runs checkout and installed-package tests. Use `pnpm test` during checkout development or `pnpm test:package` for package-boundary failures; the latter packs and installs a temporary consumer and does not publish.
+`pnpm check` builds, checks API types, lints, checks formatting, and runs checkout, installed-package, and deterministic e2e CLI tests. Development checks require Node 24.8+ (or 22.22.3+ on Node 22) for e2e. Use `pnpm test` during checkout development or `pnpm test:package` for package-boundary failures; the latter packs and installs a temporary consumer and does not publish.
 
 Releases run automatically from `main`; see [releasing](docs/releasing.md) for commit semantics, publishing setup, and packaging constraints.
 

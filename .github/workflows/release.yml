@@ -33,6 +33,7 @@ jobs:
         with:
           cache: true
           require-lockfile: true
+          runtime: node@24
       - name: Verify
         run: pnpm check
       - name: Release

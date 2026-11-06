@@ -26,6 +26,7 @@ jobs:
       - uses: pnpm/setup@a0881977cd8ea73b1ed212236c99ca10dcc80cf4 # v3.1.1
         with:
           require-lockfile: true
+          runtime: node@24
       - name: Demonstrate dangling-config regression against the audit baseline
         shell: bash
         run: |
@@ -45,4 +46,12 @@ jobs:
         with:
           name: reliability-check
           path: reliability-check.log
+          if-no-files-found: ignore
+      - name: Upload CLI journey evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: cli-e2e
+          path: .e2e/
+          include-hidden-files: true
           if-no-files-found: ignore
