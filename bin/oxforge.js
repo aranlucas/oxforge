@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-import { access, writeFile } from "node:fs/promises";
+import { lstat, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { ignorePatterns } from "../src/ignore-patterns.js";
 
@@ -11,7 +11,7 @@ const allowed = new Set(["--react", "--next", "--vitest", "--no-type-aware"]);
 
 async function exists(file) {
   try {
-    await access(file);
+    await lstat(file);
 
     return true;
   } catch (error) {
