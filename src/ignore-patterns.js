@@ -1,0 +1,22 @@
+export const ignorePatterns = [
+  "**/node_modules/**",
+  "**/dist/**",
+  "**/build/**",
+  "**/coverage/**",
+  "**/.next/**",
+  "**/.expo/**",
+  "**/.vercel/**",
+  ...[
+    "agent",
+    "agents",
+    "claude",
+    "codex",
+    "continue",
+    "cursor",
+    "gemini",
+    "opencode",
+    "pi",
+    "roo",
+    "windsurf",
+  ].map((name) => `**/.${name}/**`),
+];

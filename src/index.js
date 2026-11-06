@@ -1,5 +1,9 @@
 import { createRequire } from "node:module";
 import { fileURLToPath } from "node:url";
+import { ignorePatterns } from "./ignore-patterns.js";
+import { nativePresets } from "./presets.js";
+
+export { ignorePatterns } from "./ignore-patterns.js";
 
 const require = createRequire(import.meta.url);
 
@@ -19,29 +23,6 @@ export const rules = Object.freeze({
   maintainability: load("maintainability"),
 });
 
-export const ignorePatterns = [
-  "**/node_modules/**",
-  "**/dist/**",
-  "**/build/**",
-  "**/coverage/**",
-  "**/.next/**",
-  "**/.expo/**",
-  "**/.vercel/**",
-  ...[
-    "agent",
-    "agents",
-    "claude",
-    "codex",
-    "continue",
-    "cursor",
-    "gemini",
-    "opencode",
-    "pi",
-    "roo",
-    "windsurf",
-  ].map((name) => `**/.${name}/**`),
-];
-
 const featureDefaults = {
   react: false,
   nextjs: false,
@@ -57,14 +38,6 @@ const featureDefaults = {
   shadcn: false,
 };
 
-const presetPlugins = {
-  react: ["react", "jsx-a11y"],
-  nextjs: ["nextjs"],
-  reactPerf: ["react-perf"],
-  vitest: ["vitest"],
-};
-
-/** Preserve destructuring defaults: only undefined selects a feature's default. */
 function splitOptions(options) {
   const features = {};
   const project = { ...options };
@@ -180,7 +153,6 @@ function testOverrides(enabled, project) {
   };
 }
 
-/** Create a fresh config; project rules, settings, and overrides win. */
 export function oxforge(options = {}) {
   const { features, project } = splitOptions(options);
   const usesReact = [features.react, features.nextjs, features.reactPerf, features.shadcn].some(
@@ -195,7 +167,7 @@ export function oxforge(options = {}) {
     "import",
     "promise",
     "node",
-    ...presets.flatMap((name) => presetPlugins[name] ?? []),
+    ...presets.flatMap((name) => nativePresets[name]?.plugins ?? []),
   ];
   const settings = featureSettings(features, project);
 
@@ -213,7 +185,7 @@ export function oxforge(options = {}) {
       nursery: "off",
       ...project.categories,
     },
-    env: { es2026: true, ...(usesReact ? { browser: true } : {}), ...project.env },
+    env: { es2026: true, ...(usesReact ? nativePresets.react.env : {}), ...project.env },
     options: {
       typeAware: features.typeAware,
       maxWarnings: 0,

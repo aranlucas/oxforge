@@ -6,8 +6,8 @@ import staticConfig, {
 } from "@aranlucas/oxforge/format-config";
 
 test("Tailwind sorting stays opt-in for the generic formatter entrypoints", () => {
-  assert.equal(staticConfig, formatConfig);
-  assert.equal(staticTailwindSortConfig, tailwindSortConfig);
+  assert.deepEqual(staticConfig, formatConfig);
+  assert.deepEqual(staticTailwindSortConfig, tailwindSortConfig);
   assert.equal(Object.hasOwn(formatConfig, "sortTailwindcss"), false);
   assert.equal(Object.hasOwn(format(), "sortTailwindcss"), false);
   assert.equal(format({ sortTailwindcss: false }).sortTailwindcss, false);
@@ -70,7 +70,7 @@ test("Tailwind results do not share mutable arrays with options or other calls",
 import tailwindConfig, { formatTailwindConfig } from "@aranlucas/oxforge/format-tailwind";
 
 test("Tailwind default preset includes the complete base and enables shared sorting", () => {
-  assert.equal(tailwindConfig, formatTailwindConfig);
+  assert.deepEqual(tailwindConfig, formatTailwindConfig);
   assert.deepEqual(tailwindConfig, format({ sortTailwindcss: true }));
   assert.deepEqual(tailwindConfig.sortTailwindcss, tailwindSortConfig);
   assert.notEqual(tailwindConfig.ignorePatterns, formatConfig.ignorePatterns);

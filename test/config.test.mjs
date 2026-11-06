@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { test } from "vitest";
-import { mkdir, mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
+import { copyFile, mkdir, mkdtemp, writeFile, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
@@ -229,7 +229,9 @@ test("named types reject inline signatures and function-local declarations", asy
     {
       plugins: [],
       categories: categoriesOff,
-      jsPlugins: oxforge({ typeAware: false }).jsPlugins.slice(1),
+      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter(
+        (plugin) => plugin.name === "oxforge",
+      ),
       rules: { "oxforge/no-inline-types": "error" },
     },
     "export function read(value: { id: string }): [string, number] { type Local = { id: string }; return [value.id, 1]; }\n",
@@ -246,7 +248,9 @@ test("named module and namespace declarations are valid", async (t) => {
     {
       plugins: [],
       categories: categoriesOff,
-      jsPlugins: oxforge({ typeAware: false }).jsPlugins.slice(1),
+      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter(
+        (plugin) => plugin.name === "oxforge",
+      ),
       rules: { "oxforge/no-inline-types": "error" },
     },
     "export type Item = { id: string; nested: { count: number } };\nexport type Pair = [Item, number];\nexport namespace Domain { export interface Entry { id: string } }\n",
@@ -383,3 +387,35 @@ for (const mode of ["factory", "generated"]) {
     }
   });
 }
+
+test("formatter and initializer operate without lint resources", async (t) => {
+  const directory = await fixture(t);
+  await mkdir(path.join(directory, "src"));
+  await mkdir(path.join(directory, "bin"));
+  for (const filename of [
+    "src/ignore-patterns.js",
+    "src/format.js",
+    "src/format-config.js",
+    "src/format-tailwind.js",
+    "bin/oxforge.js",
+  ]) {
+    await copyFile(path.join(root, filename), path.join(directory, filename));
+  }
+  const probe = run(
+    "--input-type=module",
+    [
+      "--eval",
+      'import config from "./src/format-tailwind.js"; console.log(JSON.stringify(config));',
+    ],
+    directory,
+  );
+  assert.equal(probe.status, 0, probe.stderr);
+  const formatted = JSON.parse(probe.stdout);
+  assert.equal(formatted.printWidth, 100);
+  assert.ok(formatted.sortTailwindcss.functions.includes("cn"));
+  const initialized = run(path.join(directory, "bin/oxforge.js"), ["init"], directory);
+  assert.equal(initialized.status, 0, initialized.stderr);
+  const lintConfig = JSON.parse(await readFile(path.join(directory, ".oxlintrc.json"), "utf8"));
+  assert.deepEqual(lintConfig.ignorePatterns, formatted.ignorePatterns);
+  assert.match(await readFile(path.join(directory, "oxfmt.config.ts"), "utf8"), /format-config/);
+});

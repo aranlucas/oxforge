@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 import { access, writeFile } from "node:fs/promises";
 import path from "node:path";
-import { ignorePatterns } from "../src/index.js";
+import { ignorePatterns } from "../src/ignore-patterns.js";
 
 const [command, ...args] = process.argv.slice(2);
 
