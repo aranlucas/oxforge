@@ -1,6 +1,7 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { oxforge, rules } from "../src/index.js";
 import { format } from "oxfmt";
+import { nativePresets } from "../src/presets.js";
 
 await mkdir("configs", { recursive: true });
 
@@ -19,11 +20,11 @@ const configs = {
   base,
   recommended: { extends: ["./base.json", "./type-aware.json"] },
   "type-aware": { rules: rules.typeAware },
-  react: { plugins: ["react", "jsx-a11y"], env: { browser: true }, rules: rules.react },
-  nextjs: { extends: ["./react.json"], plugins: ["nextjs"], rules: rules.nextjs },
-  "react-perf": { extends: ["./react.json"], plugins: ["react-perf"], rules: rules.reactPerf },
+  react: { ...nativePresets.react, rules: rules.react },
+  nextjs: { ...nativePresets.nextjs, rules: rules.nextjs },
+  "react-perf": { ...nativePresets.reactPerf, rules: rules.reactPerf },
   vitest: {
-    plugins: ["vitest"],
+    ...nativePresets.vitest,
     rules: rules.vitest,
     overrides: oxforge({ vitest: true, typeAware: false }).overrides,
   },

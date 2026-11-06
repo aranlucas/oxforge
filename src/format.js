@@ -1,4 +1,4 @@
-import { ignorePatterns } from "./index.js";
+import { ignorePatterns } from "./ignore-patterns.js";
 
 export const tailwindSortConfig = {
   functions: ["cn", "clsx", "cva", "twMerge", "twJoin"],
