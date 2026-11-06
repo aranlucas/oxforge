@@ -229,7 +229,9 @@ test("named types reject inline signatures and function-local declarations", asy
     {
       plugins: [],
       categories: categoriesOff,
-      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter((plugin) => plugin.name === "oxforge"),
+      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter(
+        (plugin) => plugin.name === "oxforge",
+      ),
       rules: { "oxforge/no-inline-types": "error" },
     },
     "export function read(value: { id: string }): [string, number] { type Local = { id: string }; return [value.id, 1]; }\n",
@@ -246,7 +248,9 @@ test("named module and namespace declarations are valid", async (t) => {
     {
       plugins: [],
       categories: categoriesOff,
-      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter((plugin) => plugin.name === "oxforge"),
+      jsPlugins: oxforge({ typeAware: false }).jsPlugins.filter(
+        (plugin) => plugin.name === "oxforge",
+      ),
       rules: { "oxforge/no-inline-types": "error" },
     },
     "export type Item = { id: string; nested: { count: number } };\nexport type Pair = [Item, number];\nexport namespace Domain { export interface Entry { id: string } }\n",
@@ -399,7 +403,10 @@ test("formatter and initializer operate without lint resources", async (t) => {
   }
   const probe = run(
     "--input-type=module",
-    ["--eval", 'import config from "./src/format-tailwind.js"; console.log(JSON.stringify(config));'],
+    [
+      "--eval",
+      'import config from "./src/format-tailwind.js"; console.log(JSON.stringify(config));',
+    ],
     directory,
   );
   assert.equal(probe.status, 0, probe.stderr);
